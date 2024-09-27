@@ -33,9 +33,7 @@ CREATE TABLE Proyectos(
 CREATE TABLE Eventos(
 	IdEvento INT PRIMARY KEY AUTO_INCREMENT,
     NombreEvento VARCHAR(45) NOT NULL,
-    FechaEvento DATE NOT NULL,
-    IdAsesorEvento INT NOT NULL,
-    FOREIGN KEY(IdAsesorEvento) REFERENCES Asesores(IdAsesor)
+    FechaEvento DATE NOT NULL
 );
 
 CREATE TABLE AlumnoPorEvento(

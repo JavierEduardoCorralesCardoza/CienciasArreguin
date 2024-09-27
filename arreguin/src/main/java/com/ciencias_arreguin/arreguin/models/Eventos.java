@@ -18,8 +18,4 @@ public class Eventos {
     
     @Column(name = "FechaEvento", nullable = false)
     private Date fecha_evento;
-    
-    @ManyToOne
-    @JoinColumn(name = "IdAsesorEvento", nullable = false)
-    private Asesores asesor_evento;
 }
