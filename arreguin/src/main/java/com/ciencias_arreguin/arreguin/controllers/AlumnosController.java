@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ciencias_arreguin.arreguin.models.Alumnos;
 import com.ciencias_arreguin.arreguin.services.AlumnosServices;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/alumnos")
@@ -20,5 +23,11 @@ public class AlumnosController {
     public List<Alumnos> getAlumnos() {
         return alumnos_services.getAlumnos();
     }
+
+    @PostMapping()
+    public Alumnos postAlumno(@RequestBody Alumnos alumno) {
+        return alumnos_services.postAlumno(alumno);
+    }
+    
 
 }

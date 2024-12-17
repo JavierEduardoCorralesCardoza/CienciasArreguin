@@ -8,19 +8,19 @@ public class Apoyos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IdApoyo")
-    private int idApoyo;
+    private int id_apoyo;
     
     @Column(name = "PatrocinadorApoyo", nullable = false)
-    private String patrocinadorApoyo;
+    private String patrocinador_apoyo;
     
     @Column(name = "DescripcionApoyo", nullable = false)
-    private String descripcionApoyo;
+    private String descripcion_apoyo;
     
     @ManyToOne
     @JoinColumn(name = "IdAlumnoPorEventoApoyo")
-    private AlumnoPorEvento alumnoPorEventoApoyo;
+    private AlumnoPorEvento alumno_por_evento_apoyo;
     
     @ManyToOne
     @JoinColumn(name = "IdAsesorPorEventoApoyo")
-    private AsesorPorEvento asesorPorEventoApoyo;
+    private AsesorPorEvento asesor_por_evento_apoyo;
 }
