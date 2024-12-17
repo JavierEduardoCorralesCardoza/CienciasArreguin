@@ -64,7 +64,7 @@ CREATE TABLE ProyectoPorEvento(
 CREATE TABLE Apoyos(
 	IdApoyo INT PRIMARY KEY AUTO_INCREMENT,
     PatrocinadorApoyo VARCHAR(45) NOT NULL,
-    DescripcionApoyo INT NOT NULL,
+    DescripcionApoyo VARCHAR(45) NOT NULL,
     IdAlumnoPorEventoApoyo INT,
     IdAsesorPorEventoApoyo INT,
     FOREIGN KEY(IdAlumnoPorEventoApoyo) REFERENCES AlumnoPorEvento(IdAlumnoPorEvento),

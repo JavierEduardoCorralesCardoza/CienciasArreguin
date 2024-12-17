@@ -17,4 +17,8 @@ public class AlumnosServices {
     public List<Alumnos> getAlumnos() {
         return alumnos_repository.findAll();
     }
+
+    public Alumnos postAlumno(Alumnos alumno) {
+        return alumnos_repository.save(alumno);
+    }
 }

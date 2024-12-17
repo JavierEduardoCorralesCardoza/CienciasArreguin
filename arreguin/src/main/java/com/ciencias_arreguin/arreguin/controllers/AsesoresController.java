@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ciencias_arreguin.arreguin.models.Asesores;
 import com.ciencias_arreguin.arreguin.services.AsesoresServices;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/asesores")
@@ -20,4 +23,10 @@ public class AsesoresController {
     public List<Asesores> getAsesores() {
         return asesores_services.getAsesores();
     }
+
+    @PostMapping()
+    public Asesores postAsesor(@RequestBody Asesores asesor) {
+        return asesores_services.postAsesor(asesor);
+    }
+    
 }

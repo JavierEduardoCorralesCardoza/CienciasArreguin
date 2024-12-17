@@ -8,13 +8,13 @@ public class ProyectoPorEvento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IdProyectoPorEvento")
-    private int idProyectoPorEvento;
+    private int id_proyecto_por_evento;
     
     @ManyToOne
     @JoinColumn(name = "IdProyectoEvento", nullable = false)
-    private Proyectos proyectoEvento;
+    private Proyectos proyecto_evento;
     
     @ManyToOne
     @JoinColumn(name = "IdEventoProyecto", nullable = false)
-    private Eventos eventoProyecto;
+    private Eventos evento_proyecto;
 }

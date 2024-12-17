@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ciencias_arreguin.arreguin.models.Eventos;
 import com.ciencias_arreguin.arreguin.services.EventosServices;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/eventos")
@@ -20,4 +22,10 @@ public class EventosController {
     public List<Eventos> getEventos() {
         return eventos_services.getEventos();
     }
+
+    @PostMapping()
+    public Eventos postEvento(@RequestBody Eventos evento) {
+        return eventos_services.postEvento(evento);
+    }
+    
 }

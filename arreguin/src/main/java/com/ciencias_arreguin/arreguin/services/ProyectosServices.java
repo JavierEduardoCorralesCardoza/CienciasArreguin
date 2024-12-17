@@ -17,4 +17,8 @@ public class ProyectosServices {
     public List<Proyectos> getProyectos() {
         return proyectos_repository.findAll();
     }
+
+    public Proyectos postProyecto(Proyectos proyecto) {
+        return proyectos_repository.save(proyecto);
+    }
 }

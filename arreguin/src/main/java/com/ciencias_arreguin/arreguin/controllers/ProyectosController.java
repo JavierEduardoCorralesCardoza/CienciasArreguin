@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ciencias_arreguin.arreguin.models.Proyectos;
 import com.ciencias_arreguin.arreguin.services.ProyectosServices;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/proyectos")
@@ -20,4 +23,10 @@ public class ProyectosController {
     public List<Proyectos> getProyectos() {
         return proyectos_services.getProyectos();
     }
+
+    @PostMapping()
+    public Proyectos postMethodName(@RequestBody Proyectos proyecto) {
+        return proyectos_services.postProyecto(proyecto);
+    }
+    
 }

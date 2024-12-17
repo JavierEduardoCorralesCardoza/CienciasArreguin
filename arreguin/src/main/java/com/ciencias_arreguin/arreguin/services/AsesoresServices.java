@@ -17,4 +17,8 @@ public class AsesoresServices {
     public List<Asesores> getAsesores() {
         return asesores_repository.findAll();
     }
+
+    public Asesores postAsesor(Asesores asesor) {
+        return asesores_repository.save(asesor);
+    }
 }
