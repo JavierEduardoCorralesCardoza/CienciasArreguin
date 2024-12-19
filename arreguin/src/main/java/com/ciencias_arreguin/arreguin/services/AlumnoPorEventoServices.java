@@ -17,4 +17,8 @@ public class AlumnoPorEventoServices {
     public List<AlumnoPorEvento> getAlumnoPorEvento() {
         return alumno_por_evento_repository.findAll();
     }
+
+    public AlumnoPorEvento postAlumnoPorEvento(AlumnoPorEvento alumnoPorEvento) {
+        return alumno_por_evento_repository.save(alumnoPorEvento);
+    }
 }
