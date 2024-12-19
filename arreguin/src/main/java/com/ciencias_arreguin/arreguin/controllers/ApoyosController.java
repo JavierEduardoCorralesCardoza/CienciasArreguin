@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ciencias_arreguin.arreguin.models.Apoyos;
 import com.ciencias_arreguin.arreguin.services.ApoyosServices;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/apoyos")
@@ -20,4 +23,10 @@ public class ApoyosController {
     public List<Apoyos> getApoyos() {
         return apoyos_services.getApoyos();
     }
+
+    @PostMapping()
+    public Apoyos postApoyo(@RequestBody Apoyos apoyo) {
+        return apoyos_services.postApoyo(apoyo);
+    }
+    
 }

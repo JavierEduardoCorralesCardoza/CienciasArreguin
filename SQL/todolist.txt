@@ -1,0 +1,3 @@
+Cambia todas los atributos de las entidades al estandar de jpa
+Despues de eso confirma que todo este jalando como debe, reinicia la db
+Sigue haciendo los get de un solo registro para todas las entidades

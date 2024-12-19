@@ -24,8 +24,8 @@ public class ProyectosController {
         return proyectos_services.getProyectos();
     }
 
-    @PostMapping()
-    public Proyectos postMethodName(@RequestBody Proyectos proyecto) {
+    @PostMapping
+    public Proyectos postProyecto(@RequestBody Proyectos proyecto) {
         return proyectos_services.postProyecto(proyecto);
     }
     

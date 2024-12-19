@@ -12,9 +12,34 @@ public class ProyectoPorEvento {
     
     @ManyToOne
     @JoinColumn(name = "IdProyectoEvento", nullable = false)
-    private Proyectos proyecto_evento;
+    private Proyectos id_proyecto_evento;
     
     @ManyToOne
     @JoinColumn(name = "IdEventoProyecto", nullable = false)
-    private Eventos evento_proyecto;
+    private Eventos id_evento_proyecto;
+
+    public int getId_proyecto_por_evento() {
+        return id_proyecto_por_evento;
+    }
+
+    public void setId_proyecto_por_evento(int id_proyecto_por_evento) {
+        this.id_proyecto_por_evento = id_proyecto_por_evento;
+    }
+
+    public Proyectos getId_proyecto_evento() {
+        return id_proyecto_evento;
+    }
+
+    public void setId_proyecto_evento(Proyectos id_proyecto_evento) {
+        this.id_proyecto_evento = id_proyecto_evento;
+    }
+
+    public Eventos getId_evento_proyecto() {
+        return id_evento_proyecto;
+    }
+
+    public void setId_evento_proyecto(Eventos id_evento_proyecto) {
+        this.id_evento_proyecto = id_evento_proyecto;
+    }
+    
 }

@@ -9,49 +9,49 @@ public class AlumnoPorEvento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IdAlumnoPorEvento")
-    private int id_alumno_por_evento;
+    private int idAlumnoPorEvento;
     
     @Column(name = "ResultadoAlumnoPorEvento", nullable = false)
-    private String resultado_alumno_por_evento;
+    private String resultadoAlumnoPorEvento;
     
     @ManyToOne
     @JoinColumn(name = "IdAlumnoEvento", nullable = false)
-    private Alumnos id_alumno_evento;
+    private Alumnos idAlumnoEvento;
     
     @ManyToOne
     @JoinColumn(name = "IdEventoAlumno", nullable = false)
-    private Eventos id_evento_alumno;
+    private Eventos idEventoAlumno;
 
-    public int getId_alumno_por_evento() {
-        return id_alumno_por_evento;
+    public int getIdAlumnoPorEvento() {
+        return idAlumnoPorEvento;
     }
 
-    public void setId_alumno_por_evento(int id_alumno_por_evento) {
-        this.id_alumno_por_evento = id_alumno_por_evento;
+    public void setIdAlumnoPorEvento(int idAlumnoPorEvento) {
+        this.idAlumnoPorEvento = idAlumnoPorEvento;
     }
 
-    public String getResultado_alumno_por_evento() {
-        return resultado_alumno_por_evento;
+    public String getResultadoAlumnoPorEvento() {
+        return resultadoAlumnoPorEvento;
     }
 
-    public void setResultado_alumno_por_evento(String resultado_alumno_por_evento) {
-        this.resultado_alumno_por_evento = resultado_alumno_por_evento;
+    public void setResultadoAlumnoPorEvento(String resultadoAlumnoPorEvento) {
+        this.resultadoAlumnoPorEvento = resultadoAlumnoPorEvento;
     }
 
-    public Alumnos getId_alumno_evento() {
-        return id_alumno_evento;
+    public Alumnos getIdAlumnoEvento() {
+        return idAlumnoEvento;
     }
 
-    public void setId_alumno_evento(Alumnos id_alumno_evento) {
-        this.id_alumno_evento = id_alumno_evento;
+    public void setIdAlumnoEvento(Alumnos idAlumnoEvento) {
+        this.idAlumnoEvento = idAlumnoEvento;
     }
 
-    public Eventos getId_evento_alumno() {
-        return id_evento_alumno;
+    public Eventos getIdEventoAlumno() {
+        return idEventoAlumno;
     }
 
-    public void setId_evento_alumno(Eventos id_evento_alumno) {
-        this.id_evento_alumno = id_evento_alumno;
+    public void setIdEventoAlumno(Eventos idEventoAlumno) {
+        this.idEventoAlumno = idEventoAlumno;
     }
     
 }

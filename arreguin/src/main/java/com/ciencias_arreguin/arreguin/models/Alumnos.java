@@ -1,10 +1,13 @@
 package com.ciencias_arreguin.arreguin.models;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,6 +30,9 @@ public class Alumnos {
 
     @Column(name = "ImagenAlumno", length = 45)
     private String imagen_alumno;
+
+    @OneToMany(mappedBy = "idAlumnoEvento")
+    private List<AlumnoPorEvento> lista_alumno_por_evento;
 
     public int getId_alumno() {
         return id_alumno;
@@ -66,6 +72,14 @@ public class Alumnos {
 
     public void setImagen_alumno(String imagen_alumno) {
         this.imagen_alumno = imagen_alumno;
+    }
+
+    public List<AlumnoPorEvento> getLista_alumno_por_evento() {
+        return lista_alumno_por_evento;
+    }
+
+    public void setLista_alumno_por_evento(List<AlumnoPorEvento> lista_alumno_por_evento) {
+        this.lista_alumno_por_evento = lista_alumno_por_evento;
     }
     
 }

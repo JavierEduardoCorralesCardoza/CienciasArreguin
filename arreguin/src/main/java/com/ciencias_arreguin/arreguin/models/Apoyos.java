@@ -18,9 +18,50 @@ public class Apoyos {
     
     @ManyToOne
     @JoinColumn(name = "IdAlumnoPorEventoApoyo")
-    private AlumnoPorEvento alumno_por_evento_apoyo;
+    private AlumnoPorEvento id_alumno_por_evento_apoyo;
     
     @ManyToOne
     @JoinColumn(name = "IdAsesorPorEventoApoyo")
-    private AsesorPorEvento asesor_por_evento_apoyo;
+    private AsesorPorEvento id_asesor_por_evento_apoyo;
+
+    public int getId_apoyo() {
+        return id_apoyo;
+    }
+
+    public void setId_apoyo(int id_apoyo) {
+        this.id_apoyo = id_apoyo;
+    }
+
+    public String getPatrocinador_apoyo() {
+        return patrocinador_apoyo;
+    }
+
+    public void setPatrocinador_apoyo(String patrocinador_apoyo) {
+        this.patrocinador_apoyo = patrocinador_apoyo;
+    }
+
+    public String getDescripcion_apoyo() {
+        return descripcion_apoyo;
+    }
+
+    public void setDescripcion_apoyo(String descripcion_apoyo) {
+        this.descripcion_apoyo = descripcion_apoyo;
+    }
+
+    public AlumnoPorEvento getId_alumno_por_evento_apoyo() {
+        return id_alumno_por_evento_apoyo;
+    }
+
+    public void setId_alumno_por_evento_apoyo(AlumnoPorEvento id_alumno_por_evento_apoyo) {
+        this.id_alumno_por_evento_apoyo = id_alumno_por_evento_apoyo;
+    }
+
+    public AsesorPorEvento getId_asesor_por_evento_apoyo() {
+        return id_asesor_por_evento_apoyo;
+    }
+
+    public void setId_asesor_por_evento_apoyo(AsesorPorEvento id_asesor_por_evento_apoyo) {
+        this.id_asesor_por_evento_apoyo = id_asesor_por_evento_apoyo;
+    }
+    
 }

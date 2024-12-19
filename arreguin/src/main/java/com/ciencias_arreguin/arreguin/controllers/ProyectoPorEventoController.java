@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ciencias_arreguin.arreguin.models.ProyectoPorEvento;
 import com.ciencias_arreguin.arreguin.services.ProyectoPorEventoServices;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/proyecto_por_evento")
@@ -17,7 +20,13 @@ public class ProyectoPorEventoController {
     private ProyectoPorEventoServices proyecto_por_evento_services;
 
     @GetMapping
-    public List<ProyectoPorEvento> getProyectoPorEventos() {
+    public List<ProyectoPorEvento> getProyectoPorEvento() {
         return proyecto_por_evento_services.getProyectoPorEvento();
     }
+
+    @PostMapping
+    public ProyectoPorEvento postProyectoPorEvento(@RequestBody ProyectoPorEvento proyecto_por_evento) {
+        return proyecto_por_evento_services.postProyectoPorEvento(proyecto_por_evento);
+    }
+    
 }
