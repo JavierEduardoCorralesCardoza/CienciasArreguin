@@ -17,4 +17,8 @@ public class ApoyosServices {
     public List<Apoyos> getApoyos() {
         return apoyos_repository.findAll();
     }
+
+    public Apoyos postApoyo(Apoyos apoyo) {
+        return apoyos_repository.save(apoyo);
+    }
 }

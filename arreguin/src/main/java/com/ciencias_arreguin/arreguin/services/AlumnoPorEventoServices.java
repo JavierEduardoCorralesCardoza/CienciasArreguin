@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ciencias_arreguin.arreguin.models.AlumnoPorEvento;
+import com.ciencias_arreguin.arreguin.models.Alumnos;
+import com.ciencias_arreguin.arreguin.models.Eventos;
 import com.ciencias_arreguin.arreguin.repositories.AlumnoPorEventoRepository;
 
 @Service
@@ -20,5 +22,9 @@ public class AlumnoPorEventoServices {
 
     public AlumnoPorEvento postAlumnoPorEvento(AlumnoPorEvento alumnoPorEvento) {
         return alumno_por_evento_repository.save(alumnoPorEvento);
+    }
+
+    public AlumnoPorEvento getAlumnoPorEventoByAttributes(Alumnos id_alumno_evento, Eventos id_evento_alumno) {
+        return alumno_por_evento_repository.findByIdAlumnoEventoAndIdEventoAlumno(id_alumno_evento, id_evento_alumno);
     }
 }

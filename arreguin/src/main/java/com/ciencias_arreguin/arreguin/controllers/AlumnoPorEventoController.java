@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ciencias_arreguin.arreguin.models.AlumnoPorEvento;
+import com.ciencias_arreguin.arreguin.models.Alumnos;
+import com.ciencias_arreguin.arreguin.models.Eventos;
 import com.ciencias_arreguin.arreguin.services.AlumnoPorEventoServices;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +26,12 @@ public class AlumnoPorEventoController {
     public List<AlumnoPorEvento> getAlumnoPorEvento() {
         return alumno_por_evento_services.getAlumnoPorEvento();
     }
+
+    @GetMapping("/busqueda")
+    public AlumnoPorEvento getAlumnoPorEventoByAttributes(@RequestParam Alumnos idAlumnoEvento, @RequestParam Eventos idEventoAlumno) {
+        return alumno_por_evento_services.getAlumnoPorEventoByAttributes(idAlumnoEvento, idEventoAlumno);
+    }
+    
 
     @PostMapping()
     public AlumnoPorEvento postAlumnoPorEvento(@RequestBody AlumnoPorEvento alumnoPorEvento) {

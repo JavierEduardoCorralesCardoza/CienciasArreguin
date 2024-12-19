@@ -18,7 +18,7 @@ public class AsesorPorEventoServices {
         return asesor_por_evento_repository.findAll();
     }
 
-    public AsesorPorEvento postAsesorPorEvento(AsesorPorEvento entity) {
-        return asesor_por_evento_repository.save(entity);
+    public AsesorPorEvento postAsesorPorEvento(AsesorPorEvento asesorPorEvento) {
+        return asesor_por_evento_repository.save(asesorPorEvento);
     }
 }

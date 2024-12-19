@@ -25,8 +25,8 @@ public class AsesorPorEventoController {
     }
 
     @PostMapping()
-    public AsesorPorEvento postAsesorPorEvento(@RequestBody AsesorPorEvento entity) {
-        return asesor_por_evento_services.postAsesorPorEvento(entity);
+    public AsesorPorEvento postAsesorPorEvento(@RequestBody AsesorPorEvento asesorPorEvento) {
+        return asesor_por_evento_services.postAsesorPorEvento(asesorPorEvento);
     }
     
 }

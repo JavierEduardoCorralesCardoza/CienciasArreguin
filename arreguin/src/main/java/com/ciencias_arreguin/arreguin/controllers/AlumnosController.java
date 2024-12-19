@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/alumnos")
 public class AlumnosController {
-     @Autowired
+
+    @Autowired
     private AlumnosServices alumnos_services;
 
     @GetMapping
@@ -24,7 +25,9 @@ public class AlumnosController {
         return alumnos_services.getAlumnos();
     }
 
-    @PostMapping()
+
+
+    @PostMapping
     public Alumnos postAlumno(@RequestBody Alumnos alumno) {
         return alumnos_services.postAlumno(alumno);
     }
