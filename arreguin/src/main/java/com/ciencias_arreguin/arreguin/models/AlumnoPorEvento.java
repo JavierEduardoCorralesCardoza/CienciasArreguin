@@ -1,5 +1,9 @@
 package com.ciencias_arreguin.arreguin.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -16,10 +20,12 @@ public class AlumnoPorEvento {
     
     @ManyToOne
     @JoinColumn(name = "IdAlumnoEvento", nullable = false)
+    @JsonManagedReference
     private Alumnos idAlumnoEvento;
     
     @ManyToOne
     @JoinColumn(name = "IdEventoAlumno", nullable = false)
+    @JsonManagedReference
     private Eventos idEventoAlumno;
 
     public int getIdAlumnoPorEvento() {
@@ -38,6 +44,7 @@ public class AlumnoPorEvento {
         this.resultadoAlumnoPorEvento = resultadoAlumnoPorEvento;
     }
 
+    @JsonProperty("idAlumnoEvento")
     public Alumnos getIdAlumnoEvento() {
         return idAlumnoEvento;
     }
@@ -46,6 +53,7 @@ public class AlumnoPorEvento {
         this.idAlumnoEvento = idAlumnoEvento;
     }
 
+    @JsonProperty("idEventoAlumno")
     public Eventos getIdEventoAlumno() {
         return idEventoAlumno;
     }

@@ -3,8 +3,8 @@ import API_URL from '../utils/config.js';
 function postEvento(event) {
 
     const data = {
-        nombre_evento: event.target.eventoNombre.value,
-        fecha_evento: event.target.eventoFecha.value,
+        nombreEvento: event.target.eventoNombre.value,
+        fechaEvento: event.target.eventoFecha.value,
     };
     
     fetch(`${API_URL}/eventos`, {

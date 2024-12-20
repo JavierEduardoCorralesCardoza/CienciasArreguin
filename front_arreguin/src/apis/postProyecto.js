@@ -3,9 +3,9 @@ import API_URL from '../utils/config.js';
 function postProyecto(event) {
 
     const data = {
-        nombre_proyecto: event.target.proyectoNombre.value,
-        categoria_proyecto: event.target.proyectoCategoria.value,
-        descripcion_proyecto: event.target.proyectoDescripcion.value,
+        nombreProyecto: event.target.proyectoNombre.value,
+        categoriaProyecto: event.target.proyectoCategoria.value,
+        descripcionProyecto: event.target.proyectoDescripcion.value,
     };
     
     fetch(`${API_URL}/proyectos`, {

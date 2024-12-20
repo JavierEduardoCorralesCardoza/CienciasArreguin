@@ -21,4 +21,8 @@ public class AlumnosServices {
     public Alumnos postAlumno(Alumnos alumno) {
         return alumnos_repository.save(alumno);
     }
+
+    public Alumnos getAlumnoById(int id) {
+        return alumnos_repository.findById(id).get();
+    }
 }

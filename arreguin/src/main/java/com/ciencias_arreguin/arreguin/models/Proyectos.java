@@ -9,47 +9,47 @@ public class Proyectos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IdProyecto")
-    private int id_proyecto;
+    private int idProyecto;
     
     @Column(name = "NombreProyecto", nullable = false)
-    private String nombre_proyecto;
+    private String nombreProyecto;
     
     @Column(name = "CategoriaProyecto", nullable = false)
-    private String categoria_proyecto;
+    private String categoriaProyecto;
     
     @Column(name = "DescripcionProyecto", nullable = false)
-    private String descripcion_proyecto;
+    private String descripcionProyecto;
 
-    public int getId_proyecto() {
-        return id_proyecto;
+    public int getIdProyecto() {
+        return idProyecto;
     }
 
-    public void setId_proyecto(int id_proyecto) {
-        this.id_proyecto = id_proyecto;
+    public void setIdProyecto(int idProyecto) {
+        this.idProyecto = idProyecto;
     }
 
-    public String getNombre_proyecto() {
-        return nombre_proyecto;
+    public String getNombreProyecto() {
+        return nombreProyecto;
     }
 
-    public void setNombre_proyecto(String nombre_proyecto) {
-        this.nombre_proyecto = nombre_proyecto;
+    public void setNombreProyecto(String nombreProyecto) {
+        this.nombreProyecto = nombreProyecto;
     }
 
-    public String getCategoria_proyecto() {
-        return categoria_proyecto;
+    public String getCategoriaProyecto() {
+        return categoriaProyecto;
     }
 
-    public void setCategoria_proyecto(String categoria_proyecto) {
-        this.categoria_proyecto = categoria_proyecto;
+    public void setCategoriaProyecto(String categoriaProyecto) {
+        this.categoriaProyecto = categoriaProyecto;
     }
 
-    public String getDescripcion_proyecto() {
-        return descripcion_proyecto;
+    public String getDescripcionProyecto() {
+        return descripcionProyecto;
     }
 
-    public void setDescripcion_proyecto(String descripcion_proyecto) {
-        this.descripcion_proyecto = descripcion_proyecto;
+    public void setDescripcionProyecto(String descripcionProyecto) {
+        this.descripcionProyecto = descripcionProyecto;
     }
     
 }

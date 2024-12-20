@@ -8,60 +8,60 @@ public class Apoyos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IdApoyo")
-    private int id_apoyo;
+    private int idApoyo;
     
     @Column(name = "PatrocinadorApoyo", nullable = false)
-    private String patrocinador_apoyo;
+    private String patrocinadorApoyo;
     
     @Column(name = "DescripcionApoyo", nullable = false)
-    private String descripcion_apoyo;
+    private String descripcionApoyo;
     
     @ManyToOne
     @JoinColumn(name = "IdAlumnoPorEventoApoyo")
-    private AlumnoPorEvento id_alumno_por_evento_apoyo;
+    private AlumnoPorEvento idAlumnoPorEventoApoyo;
     
     @ManyToOne
     @JoinColumn(name = "IdAsesorPorEventoApoyo")
-    private AsesorPorEvento id_asesor_por_evento_apoyo;
+    private AsesorPorEvento idAsesorPorEventoApoyo;
 
-    public int getId_apoyo() {
-        return id_apoyo;
+    public int getIdApoyo() {
+        return idApoyo;
     }
 
-    public void setId_apoyo(int id_apoyo) {
-        this.id_apoyo = id_apoyo;
+    public void setIdApoyo(int idApoyo) {
+        this.idApoyo = idApoyo;
     }
 
-    public String getPatrocinador_apoyo() {
-        return patrocinador_apoyo;
+    public String getPatrocinadorApoyo() {
+        return patrocinadorApoyo;
     }
 
-    public void setPatrocinador_apoyo(String patrocinador_apoyo) {
-        this.patrocinador_apoyo = patrocinador_apoyo;
+    public void setPatrocinadorApoyo(String patrocinadorApoyo) {
+        this.patrocinadorApoyo = patrocinadorApoyo;
     }
 
-    public String getDescripcion_apoyo() {
-        return descripcion_apoyo;
+    public String getDescripcionApoyo() {
+        return descripcionApoyo;
     }
 
-    public void setDescripcion_apoyo(String descripcion_apoyo) {
-        this.descripcion_apoyo = descripcion_apoyo;
+    public void setDescripcionApoyo(String descripcionApoyo) {
+        this.descripcionApoyo = descripcionApoyo;
     }
 
-    public AlumnoPorEvento getId_alumno_por_evento_apoyo() {
-        return id_alumno_por_evento_apoyo;
+    public AlumnoPorEvento getIdAlumnoPorEventoApoyo() {
+        return idAlumnoPorEventoApoyo;
     }
 
-    public void setId_alumno_por_evento_apoyo(AlumnoPorEvento id_alumno_por_evento_apoyo) {
-        this.id_alumno_por_evento_apoyo = id_alumno_por_evento_apoyo;
+    public void setIdAlumnoPorEventoApoyo(AlumnoPorEvento idAlumnoPorEventoApoyo) {
+        this.idAlumnoPorEventoApoyo = idAlumnoPorEventoApoyo;
     }
 
-    public AsesorPorEvento getId_asesor_por_evento_apoyo() {
-        return id_asesor_por_evento_apoyo;
+    public AsesorPorEvento getIdAsesorPorEventoApoyo() {
+        return idAsesorPorEventoApoyo;
     }
 
-    public void setId_asesor_por_evento_apoyo(AsesorPorEvento id_asesor_por_evento_apoyo) {
-        this.id_asesor_por_evento_apoyo = id_asesor_por_evento_apoyo;
+    public void setIdAsesorPorEventoApoyo(AsesorPorEvento idAsesorPorEventoApoyo) {
+        this.idAsesorPorEventoApoyo = idAsesorPorEventoApoyo;
     }
     
 }
