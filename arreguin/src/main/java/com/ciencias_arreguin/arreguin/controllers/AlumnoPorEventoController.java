@@ -28,11 +28,15 @@ public class AlumnoPorEventoController {
     }
 
     @GetMapping("/busqueda")
+    public AlumnoPorEvento getAlumnoPorEventoById(@RequestParam int id) {
+        return alumno_por_evento_services.getAlumnoPorEventoById(id);
+    }
+
+    @GetMapping("/busqueda_atributos")
     public AlumnoPorEvento getAlumnoPorEventoByAttributes(@RequestParam Alumnos idAlumnoEvento, @RequestParam Eventos idEventoAlumno) {
         return alumno_por_evento_services.getAlumnoPorEventoByAttributes(idAlumnoEvento, idEventoAlumno);
     }
     
-
     @PostMapping()
     public AlumnoPorEvento postAlumnoPorEvento(@RequestBody AlumnoPorEvento alumnoPorEvento) {
         return alumno_por_evento_services.postAlumnoPorEvento(alumnoPorEvento);

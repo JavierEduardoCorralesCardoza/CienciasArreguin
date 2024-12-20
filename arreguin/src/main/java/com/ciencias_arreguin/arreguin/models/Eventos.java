@@ -3,6 +3,9 @@ package com.ciencias_arreguin.arreguin.models;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -12,47 +15,48 @@ public class Eventos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IdEvento")
-    private int id_evento;
+    private int idEvento;
     
     @Column(name = "NombreEvento", nullable = false)
-    private String nombre_evento;
+    private String nombreEvento;
     
     @Column(name = "FechaEvento", nullable = false)
-    private LocalDate fecha_evento;
+    private LocalDate fechaEvento;
 
     @OneToMany(mappedBy = "idEventoAlumno")
-    private List<AlumnoPorEvento> lista_alumno_por_evento;
+    @JsonBackReference
+    private List<AlumnoPorEvento> listaAlumnoPorEvento;
 
-    public int getId_evento() {
-        return id_evento;
+    public int getIdEvento() {
+        return idEvento;
     }
 
-    public void setId_evento(int id_evento) {
-        this.id_evento = id_evento;
+    public void setIdEvento(int idEvento) {
+        this.idEvento = idEvento;
     }
 
-    public String getNombre_evento() {
-        return nombre_evento;
+    public String getNombreEvento() {
+        return nombreEvento;
     }
 
-    public void setNombre_evento(String nombre_evento) {
-        this.nombre_evento = nombre_evento;
+    public void setNombreEvento(String nombreEvento) {
+        this.nombreEvento = nombreEvento;
     }
 
-    public LocalDate getFecha_evento() {
-        return fecha_evento;
+    public LocalDate getFechaEvento() {
+        return fechaEvento;
     }
 
-    public void setFecha_evento(LocalDate fecha_evento) {
-        this.fecha_evento = fecha_evento;
+    public void setFechaEvento(LocalDate fechaEvento) {
+        this.fechaEvento = fechaEvento;
     }
 
-    public List<AlumnoPorEvento> getLista_alumno_por_evento() {
-        return lista_alumno_por_evento;
+    public List<AlumnoPorEvento> getListaAlumnoPorEvento() {
+        return listaAlumnoPorEvento;
     }
 
-    public void setLista_alumno_por_evento(List<AlumnoPorEvento> lista_alumno_por_evento) {
-        this.lista_alumno_por_evento = lista_alumno_por_evento;
+    public void setListaAlumnoPorEvento(List<AlumnoPorEvento> listaAlumnoPorEvento) {
+        this.listaAlumnoPorEvento = listaAlumnoPorEvento;
     }
     
 }

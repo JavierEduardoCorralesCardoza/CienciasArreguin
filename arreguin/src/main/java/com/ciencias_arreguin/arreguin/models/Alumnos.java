@@ -2,6 +2,9 @@ package com.ciencias_arreguin.arreguin.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,69 +20,69 @@ public class Alumnos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IdAlumno")
-    private int id_alumno;
+    private int idAlumno;
 
     @Column(name = "CorreoAlumno", nullable = false, length = 45)
-    private String correo_alumno;
+    private String correoAlumno;
 
     @Column(name = "ContrasenaAlumno", nullable = false, length = 45)
-    private String contrasena_alumno;
+    private String contrasenaAlumno;
 
     @Column(name = "NombreAlumno", nullable = false, length = 45)
-    private String nombre_alumno;
+    private String nombreAlumno;
 
     @Column(name = "ImagenAlumno", length = 45)
-    private String imagen_alumno;
+    private String imagenAlumno;
 
     @OneToMany(mappedBy = "idAlumnoEvento")
-    private List<AlumnoPorEvento> lista_alumno_por_evento;
+    @JsonBackReference
+    private List<AlumnoPorEvento> listaAlumnoPorEvento;
 
-    public int getId_alumno() {
-        return id_alumno;
+    public int getIdAlumno() {
+        return idAlumno;
     }
 
-    public void setId_alumno(int id_alumno) {
-        this.id_alumno = id_alumno;
+    public void setIdAlumno(int idAlumno) {
+        this.idAlumno = idAlumno;
     }
 
-    public String getCorreo_alumno() {
-        return correo_alumno;
+    public String getCorreoAlumno() {
+        return correoAlumno;
     }
 
-    public void setCorreo_alumno(String correo_alumno) {
-        this.correo_alumno = correo_alumno;
+    public void setCorreoAlumno(String correoAlumno) {
+        this.correoAlumno = correoAlumno;
     }
 
-    public String getContrasena_alumno() {
-        return contrasena_alumno;
+    public String getContrasenaAlumno() {
+        return contrasenaAlumno;
     }
 
-    public void setContrasena_alumno(String contrasena_alumno) {
-        this.contrasena_alumno = contrasena_alumno;
+    public void setContrasenaAlumno(String contrasenaAlumno) {
+        this.contrasenaAlumno = contrasenaAlumno;
     }
 
-    public String getNombre_alumno() {
-        return nombre_alumno;
+    public String getNombreAlumno() {
+        return nombreAlumno;
     }
 
-    public void setNombre_alumno(String nombre_alumno) {
-        this.nombre_alumno = nombre_alumno;
+    public void setNombreAlumno(String nombreAlumno) {
+        this.nombreAlumno = nombreAlumno;
     }
 
-    public String getImagen_alumno() {
-        return imagen_alumno;
+    public String getImagenAlumno() {
+        return imagenAlumno;
     }
 
-    public void setImagen_alumno(String imagen_alumno) {
-        this.imagen_alumno = imagen_alumno;
+    public void setImagenAlumno(String imagenAlumno) {
+        this.imagenAlumno = imagenAlumno;
     }
 
-    public List<AlumnoPorEvento> getLista_alumno_por_evento() {
-        return lista_alumno_por_evento;
+    public List<AlumnoPorEvento> getListaAlumnoPorEvento() {
+        return listaAlumnoPorEvento;
     }
 
-    public void setLista_alumno_por_evento(List<AlumnoPorEvento> lista_alumno_por_evento) {
-        this.lista_alumno_por_evento = lista_alumno_por_evento;
+    public void setListaAlumnoPorEvento(List<AlumnoPorEvento> listaAlumnoPorEvento) {
+        this.listaAlumnoPorEvento = listaAlumnoPorEvento;
     }
-    
 }

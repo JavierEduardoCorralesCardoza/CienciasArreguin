@@ -24,6 +24,10 @@ public class AlumnoPorEventoServices {
         return alumno_por_evento_repository.save(alumnoPorEvento);
     }
 
+    public AlumnoPorEvento getAlumnoPorEventoById(int id) {
+        return alumno_por_evento_repository.findById(id).get();
+    }
+
     public AlumnoPorEvento getAlumnoPorEventoByAttributes(Alumnos id_alumno_evento, Eventos id_evento_alumno) {
         return alumno_por_evento_repository.findByIdAlumnoEventoAndIdEventoAlumno(id_alumno_evento, id_evento_alumno);
     }

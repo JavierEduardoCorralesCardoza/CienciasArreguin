@@ -9,58 +9,57 @@ public class Asesores {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IdAsesor")
-    private int id_asesor;
+    private int idAsesor;
     
     @Column(name = "CorreoAsesor", nullable = false)
-    private String correo_asesor;
+    private String correoAsesor;
     
     @Column(name = "ContrasenaAsesor", nullable = false)
-    private String contrasena_asesor;
+    private String contrasenaAsesor;
     
     @Column(name = "NombreAsesor", nullable = false)
-    private String nombre_asesor;
+    private String nombreAsesor;
     
     @Column(name = "ImagenAsesor")
-    private String imagen_asesor;
+    private String imagenAsesor;
 
-    public int getId_asesor() {
-        return id_asesor;
+    public int getIdAsesor() {
+        return idAsesor;
     }
 
-    public void setId_asesor(int id_asesor) {
-        this.id_asesor = id_asesor;
+    public void setIdAsesor(int idAsesor) {
+        this.idAsesor = idAsesor;
     }
 
-    public String getCorreo_asesor() {
-        return correo_asesor;
+    public String getCorreoAsesor() {
+        return correoAsesor;
     }
 
-    public void setCorreo_asesor(String correo_asesor) {
-        this.correo_asesor = correo_asesor;
+    public void setCorreoAsesor(String correoAsesor) {
+        this.correoAsesor = correoAsesor;
     }
 
-    public String getContrasena_asesor() {
-        return contrasena_asesor;
+    public String getContrasenaAsesor() {
+        return contrasenaAsesor;
     }
 
-    public void setContrasena_asesor(String contrasena_asesor) {
-        this.contrasena_asesor = contrasena_asesor;
+    public void setContrasenaAsesor(String contrasenaAsesor) {
+        this.contrasenaAsesor = contrasenaAsesor;
     }
 
-    public String getNombre_asesor() {
-        return nombre_asesor;
+    public String getNombreAsesor() {
+        return nombreAsesor;
     }
 
-    public void setNombre_asesor(String nombre_asesor) {
-        this.nombre_asesor = nombre_asesor;
+    public void setNombreAsesor(String nombreAsesor) {
+        this.nombreAsesor = nombreAsesor;
     }
 
-    public String getImagen_asesor() {
-        return imagen_asesor;
+    public String getImagenAsesor() {
+        return imagenAsesor;
     }
 
-    public void setImagen_asesor(String imagen_asesor) {
-        this.imagen_asesor = imagen_asesor;
+    public void setImagenAsesor(String imagenAsesor) {
+        this.imagenAsesor = imagenAsesor;
     }
-    
 }

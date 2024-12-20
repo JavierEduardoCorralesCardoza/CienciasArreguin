@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ciencias_arreguin.arreguin.models.Alumnos;
@@ -25,7 +26,10 @@ public class AlumnosController {
         return alumnos_services.getAlumnos();
     }
 
-
+    @GetMapping("/busqueda")
+    public Alumnos getAlumnoById(@RequestParam int id) {
+        return alumnos_services.getAlumnoById(id);
+    }
 
     @PostMapping
     public Alumnos postAlumno(@RequestBody Alumnos alumno) {
