@@ -21,4 +21,8 @@ public class AsesoresServices {
     public Asesores postAsesor(Asesores asesor) {
         return asesores_repository.save(asesor);
     }
+
+    public Asesores getAsesorById(int id) {
+        return asesores_repository.findById(id).get();
+    }
 }

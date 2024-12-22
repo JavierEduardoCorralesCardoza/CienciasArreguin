@@ -24,6 +24,11 @@ public class ProyectosController {
         return proyectos_services.getProyectos();
     }
 
+    @GetMapping("/busqueda")
+    public Proyectos getProyectoById(int id) {
+        return proyectos_services.getProyectoById(id);
+    }
+
     @PostMapping
     public Proyectos postProyecto(@RequestBody Proyectos proyecto) {
         return proyectos_services.postProyecto(proyecto);

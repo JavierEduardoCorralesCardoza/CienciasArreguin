@@ -1,5 +1,5 @@
 import React from "react";
-import postAlumno from "../apis/postAlumno";
+import postAlumno from "../apis/post/postAlumno";
 
 function CrearAlumno(){
 

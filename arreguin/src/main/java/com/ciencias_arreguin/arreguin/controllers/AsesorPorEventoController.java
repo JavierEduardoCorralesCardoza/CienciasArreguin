@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ciencias_arreguin.arreguin.models.AsesorPorEvento;
@@ -22,6 +23,11 @@ public class AsesorPorEventoController {
     @GetMapping
     public List<AsesorPorEvento> getAsesorPorEvento() {
         return asesor_por_evento_services.getAsesorPorEvento();
+    }
+
+    @GetMapping("/busqueda")
+    public AsesorPorEvento getAsesorPorEventoById(@RequestParam int id) {
+        return asesor_por_evento_services.getAsesorPorEventoById(id);
     }
 
     @PostMapping()

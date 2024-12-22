@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 
@@ -24,8 +23,16 @@ public class Eventos {
     private LocalDate fechaEvento;
 
     @OneToMany(mappedBy = "idEventoAlumno")
-    @JsonBackReference
+    @JsonBackReference(value = "evento-alumno")
     private List<AlumnoPorEvento> listaAlumnoPorEvento;
+
+    @OneToMany(mappedBy = "idEventoAsesor")
+    @JsonBackReference(value = "evento-asesor")
+    private List<AsesorPorEvento> listaAsesorPorEvento;
+
+    @OneToMany(mappedBy = "idEventoProyecto")
+    @JsonBackReference(value = "evento-proyecto")
+    private List<ProyectoPorEvento> listaProyectoPorEvento;
 
     public int getIdEvento() {
         return idEvento;
@@ -57,6 +64,22 @@ public class Eventos {
 
     public void setListaAlumnoPorEvento(List<AlumnoPorEvento> listaAlumnoPorEvento) {
         this.listaAlumnoPorEvento = listaAlumnoPorEvento;
+    }
+
+    public List<AsesorPorEvento> getListaAsesorPorEvento() {
+        return listaAsesorPorEvento;
+    }
+
+    public void setListaAsesorPorEvento(List<AsesorPorEvento> listaAsesorPorEvento) {
+        this.listaAsesorPorEvento = listaAsesorPorEvento;
+    }
+
+    public List<ProyectoPorEvento> getListaProyectoPorEvento() {
+        return listaProyectoPorEvento;
+    }
+
+    public void setListaProyectoPorEvento(List<ProyectoPorEvento> listaProyectoPorEvento) {
+        this.listaProyectoPorEvento = listaProyectoPorEvento;
     }
     
 }

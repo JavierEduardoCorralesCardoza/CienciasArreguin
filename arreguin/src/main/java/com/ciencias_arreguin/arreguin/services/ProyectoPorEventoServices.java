@@ -21,4 +21,8 @@ public class ProyectoPorEventoServices {
     public ProyectoPorEvento postProyectoPorEvento(ProyectoPorEvento proyecto_por_evento) {
         return proyecto_por_evento_repository.save(proyecto_por_evento);
     }
+
+    public ProyectoPorEvento getProyectoPorEventoById(int id) {
+        return proyecto_por_evento_repository.findById(id).get();
+    }
 }

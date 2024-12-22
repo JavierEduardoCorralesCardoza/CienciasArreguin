@@ -1,4 +1,4 @@
-import API_URL from '../utils/config.js';
+import API_URL from '../../utils/config.js';
 
 function postProyecto(event) {
 

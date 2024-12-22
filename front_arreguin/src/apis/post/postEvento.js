@@ -1,14 +1,15 @@
-import API_URL from '../utils/config.js';
+import API_URL from '../../utils/config.js';
 
-function postAlumnoPorEvento(event) {
+function postEvento(event) {
 
     const data = {
-        resultadoAlumnoPorEvento: event.target.alumnmoPorEventoResultado.value,
-        idAlumnoEvento: event.target.alumnoEventoId.value,
-        idEventoAlumno: event.target.eventoAlumnoId.value,
+        nombreEvento: event.target.eventoNombre.value,
+        fechaEvento: event.target.eventoFecha.value,
     };
+
+    console.log(data);
     
-    fetch(`${API_URL}/alumno_por_evento`, {
+    fetch(`${API_URL}/eventos`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -24,4 +25,4 @@ function postAlumnoPorEvento(event) {
     });
 }
 
-export default postAlumnoPorEvento;
+export default postEvento;

@@ -21,4 +21,8 @@ public class AsesorPorEventoServices {
     public AsesorPorEvento postAsesorPorEvento(AsesorPorEvento asesorPorEvento) {
         return asesor_por_evento_repository.save(asesorPorEvento);
     }
+
+    public AsesorPorEvento getAsesorPorEventoById(int id) {
+        return asesor_por_evento_repository.findById(id).get();
+    }
 }

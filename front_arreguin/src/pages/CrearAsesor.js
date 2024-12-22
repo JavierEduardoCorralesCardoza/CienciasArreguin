@@ -1,5 +1,5 @@
 import React from "react";
-import postAsesor from "../apis/postAsesor";
+import postAsesor from "../apis/post/postAsesor";
 
 function CrearAsesor(){
 

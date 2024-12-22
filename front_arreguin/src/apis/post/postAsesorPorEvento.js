@@ -1,10 +1,10 @@
-import API_URL from '../utils/config.js';
+import API_URL from '../../utils/config.js';
 
 function postAsesorPorEvento(event) {
 
     const data = {
-        idAsesorEvento: event.target.asesorEventoId.value,
-        idEventoAsesor: event.target.eventoAsesorId.value,
+        idAsesorEvento: {idAsesor: event.target.asesorEventoId.value},
+        idEventoAsesor: {idEvento: event.target.eventoAsesorId.value}
     };
     
     fetch(`${API_URL}/asesor_por_evento`, {

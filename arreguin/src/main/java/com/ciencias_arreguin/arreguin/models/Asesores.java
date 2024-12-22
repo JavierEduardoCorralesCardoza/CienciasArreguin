@@ -1,5 +1,9 @@
 package com.ciencias_arreguin.arreguin.models;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -22,6 +26,10 @@ public class Asesores {
     
     @Column(name = "ImagenAsesor")
     private String imagenAsesor;
+
+    @OneToMany(mappedBy = "idAsesorEvento")
+    @JsonBackReference(value = "asesor-evento")
+    private List<AsesorPorEvento> listaAsesorPorEvento;
 
     public int getIdAsesor() {
         return idAsesor;
@@ -62,4 +70,13 @@ public class Asesores {
     public void setImagenAsesor(String imagenAsesor) {
         this.imagenAsesor = imagenAsesor;
     }
+
+    public List<AsesorPorEvento> getListaAsesorPorEvento() {
+        return listaAsesorPorEvento;
+    }
+
+    public void setListaAsesorPorEvento(List<AsesorPorEvento> listaAsesorPorEvento) {
+        this.listaAsesorPorEvento = listaAsesorPorEvento;
+    }
+    
 }
