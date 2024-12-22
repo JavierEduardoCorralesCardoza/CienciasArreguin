@@ -11,6 +11,8 @@ import com.ciencias_arreguin.arreguin.models.Apoyos;
 import com.ciencias_arreguin.arreguin.services.ApoyosServices;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -23,6 +25,12 @@ public class ApoyosController {
     public List<Apoyos> getApoyos() {
         return apoyos_services.getApoyos();
     }
+
+    @GetMapping("/busqueda")
+    public Apoyos getApoyoById(@RequestParam int id) {
+        return apoyos_services.getApoyoById(id);
+    }
+    
 
     @PostMapping()
     public Apoyos postApoyo(@RequestBody Apoyos apoyo) {

@@ -37,7 +37,7 @@ public class AlumnoPorEventoController {
         return alumno_por_evento_services.getAlumnoPorEventoByAttributes(idAlumnoEvento, idEventoAlumno);
     }
     
-    @PostMapping()
+    @PostMapping
     public AlumnoPorEvento postAlumnoPorEvento(@RequestBody AlumnoPorEvento alumnoPorEvento) {
         return alumno_por_evento_services.postAlumnoPorEvento(alumnoPorEvento);
     }

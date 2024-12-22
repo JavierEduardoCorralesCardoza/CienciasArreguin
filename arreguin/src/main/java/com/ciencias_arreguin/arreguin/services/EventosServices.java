@@ -21,4 +21,8 @@ public class EventosServices {
     public Eventos postEvento(Eventos evento) {
         return eventos_repository.save(evento);
     }
+
+    public Eventos getEventoById(int id) {
+        return eventos_repository.findById(id).get();
+    }
 }

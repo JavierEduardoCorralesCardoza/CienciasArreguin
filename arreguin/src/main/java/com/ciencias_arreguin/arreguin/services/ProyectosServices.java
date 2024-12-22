@@ -21,4 +21,8 @@ public class ProyectosServices {
     public Proyectos postProyecto(Proyectos proyecto) {
         return proyectos_repository.save(proyecto);
     }
+
+    public Proyectos getProyectoById(int id) {
+        return proyectos_repository.findById(id).get();
+    }
 }

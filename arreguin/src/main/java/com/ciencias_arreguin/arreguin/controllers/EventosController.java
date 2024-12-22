@@ -23,6 +23,11 @@ public class EventosController {
         return eventos_services.getEventos();
     }
 
+    @GetMapping("/busqueda")
+    public Eventos getEventoById(int id) {
+        return eventos_services.getEventoById(id);
+    }
+
     @PostMapping()
     public Eventos postEvento(@RequestBody Eventos evento) {
         return eventos_services.postEvento(evento);

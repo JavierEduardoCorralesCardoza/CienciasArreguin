@@ -1,5 +1,5 @@
 import React from "react";
-import postProyecto from "../apis/postProyecto";
+import postProyecto from "../apis/post/postProyecto";
 
 function CrearProyecto(){
     const handleSubmit = (event) => {

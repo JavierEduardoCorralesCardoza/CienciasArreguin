@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ciencias_arreguin.arreguin.models.Asesores;
@@ -22,6 +23,11 @@ public class AsesoresController {
     @GetMapping
     public List<Asesores> getAsesores() {
         return asesores_services.getAsesores();
+    }
+
+    @GetMapping("/busqueda")
+    public Asesores getAsesorById(@RequestParam int id) {
+        return asesores_services.getAsesorById(id);
     }
 
     @PostMapping()

@@ -1,4 +1,4 @@
-import API_URL from '../utils/config.js';
+import API_URL from '../../utils/config.js';
 
 function postAsesor(event) {
 

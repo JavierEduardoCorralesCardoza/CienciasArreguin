@@ -24,6 +24,11 @@ public class ProyectoPorEventoController {
         return proyecto_por_evento_services.getProyectoPorEvento();
     }
 
+    @GetMapping("/busqueda")
+    public ProyectoPorEvento getProyectoPorEventoById(int id) {
+        return proyecto_por_evento_services.getProyectoPorEventoById(id);
+    }
+
     @PostMapping
     public ProyectoPorEvento postProyectoPorEvento(@RequestBody ProyectoPorEvento proyecto_por_evento) {
         return proyecto_por_evento_services.postProyectoPorEvento(proyecto_por_evento);

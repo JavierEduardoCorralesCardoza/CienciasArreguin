@@ -21,4 +21,8 @@ public class ApoyosServices {
     public Apoyos postApoyo(Apoyos apoyo) {
         return apoyos_repository.save(apoyo);
     }
+
+    public Apoyos getApoyoById(int id) {
+        return apoyos_repository.findById(id).get();
+    }
 }
