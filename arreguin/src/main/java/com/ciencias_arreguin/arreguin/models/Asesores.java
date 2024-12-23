@@ -27,9 +27,9 @@ public class Asesores {
     @Column(name = "ImagenAsesor")
     private String imagenAsesor;
 
-    @OneToMany(mappedBy = "idAsesorEvento")
-    @JsonBackReference(value = "asesor-evento")
-    private List<AsesorPorEvento> listaAsesorPorEvento;
+    @OneToMany(mappedBy = "idAsesorParticipacion")
+    @JsonBackReference(value = "asesor-participacion")
+    private List<Participaciones> listaAsesorParticipacion;
 
     public int getIdAsesor() {
         return idAsesor;
@@ -71,12 +71,12 @@ public class Asesores {
         this.imagenAsesor = imagenAsesor;
     }
 
-    public List<AsesorPorEvento> getListaAsesorPorEvento() {
-        return listaAsesorPorEvento;
+    public List<Participaciones> getListaAsesorParticipacion() {
+        return listaAsesorParticipacion;
     }
 
-    public void setListaAsesorPorEvento(List<AsesorPorEvento> listaAsesorPorEvento) {
-        this.listaAsesorPorEvento = listaAsesorPorEvento;
+    public void setListaAsesorParticipacion(List<Participaciones> listaAsesorParticipacion) {
+        this.listaAsesorParticipacion = listaAsesorParticipacion;
     }
     
 }

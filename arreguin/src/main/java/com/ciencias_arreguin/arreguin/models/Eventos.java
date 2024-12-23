@@ -22,17 +22,9 @@ public class Eventos {
     @Column(name = "FechaEvento", nullable = false)
     private LocalDate fechaEvento;
 
-    @OneToMany(mappedBy = "idEventoAlumno")
-    @JsonBackReference(value = "evento-alumno")
-    private List<AlumnoPorEvento> listaAlumnoPorEvento;
-
-    @OneToMany(mappedBy = "idEventoAsesor")
-    @JsonBackReference(value = "evento-asesor")
-    private List<AsesorPorEvento> listaAsesorPorEvento;
-
-    @OneToMany(mappedBy = "idEventoProyecto")
-    @JsonBackReference(value = "evento-proyecto")
-    private List<ProyectoPorEvento> listaProyectoPorEvento;
+    @OneToMany(mappedBy = "idEventoParticipacion")
+    @JsonBackReference(value = "evento-participacion")
+    private List<Participaciones> listaEventoParticipacion;
 
     public int getIdEvento() {
         return idEvento;
@@ -58,28 +50,12 @@ public class Eventos {
         this.fechaEvento = fechaEvento;
     }
 
-    public List<AlumnoPorEvento> getListaAlumnoPorEvento() {
-        return listaAlumnoPorEvento;
+    public List<Participaciones> getListaEventoParticipacion() {
+        return listaEventoParticipacion;
     }
 
-    public void setListaAlumnoPorEvento(List<AlumnoPorEvento> listaAlumnoPorEvento) {
-        this.listaAlumnoPorEvento = listaAlumnoPorEvento;
-    }
-
-    public List<AsesorPorEvento> getListaAsesorPorEvento() {
-        return listaAsesorPorEvento;
-    }
-
-    public void setListaAsesorPorEvento(List<AsesorPorEvento> listaAsesorPorEvento) {
-        this.listaAsesorPorEvento = listaAsesorPorEvento;
-    }
-
-    public List<ProyectoPorEvento> getListaProyectoPorEvento() {
-        return listaProyectoPorEvento;
-    }
-
-    public void setListaProyectoPorEvento(List<ProyectoPorEvento> listaProyectoPorEvento) {
-        this.listaProyectoPorEvento = listaProyectoPorEvento;
+    public void setListaEventoParticipacion(List<Participaciones> listaEventoParticipacion) {
+        this.listaEventoParticipacion = listaEventoParticipacion;
     }
     
 }

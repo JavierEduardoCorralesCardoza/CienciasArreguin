@@ -13,13 +13,9 @@ function Perfil() {
             <br />
             <Link to="/crear_alumno">Crear Alumno</Link>
             <br />
-            <Link to="/crear_alumno_por_evento">Crear Alumno Por Evento</Link>
-            <br />
-            <Link to="/crear_asesor_por_evento">Crear Asesor Por Evento</Link>
-            <br />
-            <Link to="/crear_proyecto_por_evento">Crear Proyecto Por Evento</Link>
-            <br />
             <Link to="/crear_apoyo">Crear Apoyo</Link>
+            <br />
+            <Link to="/crear_participacion">Crear Participacion</Link>
         </div>
     );
 }

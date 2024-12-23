@@ -35,6 +35,4 @@ public class AlumnosController {
     public Alumnos postAlumno(@RequestBody Alumnos alumno) {
         return alumnos_services.postAlumno(alumno);
     }
-    
-
 }

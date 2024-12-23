@@ -5,10 +5,8 @@ import CrearEvento from './pages/CrearEvento';
 import CrearProyecto from './pages/CrearProyecto';
 import CrearAsesor from './pages/CrearAsesor';
 import CrearAlumno from './pages/CrearAlumno';
-import CrearAlumnoPorEvento from './pages/CrearAlumnoPorEvento';
-import CrearAsesorPorEvento from './pages/CrearAsesorPorEvento';
-import CrearProyectoPorEvento from './pages/CrearProyectoPorEvento';
 import CrearApoyo from './pages/CrearApoyo';
+import CrearParticipacion from './pages/CrearParticipacion';
 
 function App() {
   return (
@@ -19,10 +17,8 @@ function App() {
         <Route path='/crear_proyecto' element={<CrearProyecto/>} />
         <Route path='/crear_asesor' element={<CrearAsesor/>} />
         <Route path='/crear_alumno' element={<CrearAlumno/>} />
-        <Route path='/crear_alumno_por_evento' element={<CrearAlumnoPorEvento/>} />
-        <Route path='/crear_asesor_por_evento' element={<CrearAsesorPorEvento/>} />
-        <Route path='/crear_proyecto_por_evento' element={<CrearProyectoPorEvento/>} />
         <Route path='/crear_apoyo' element={<CrearApoyo/>} />
+        <Route path='/crear_participacion' element={<CrearParticipacion/>} />
       </Routes>
     </Router>
   );
