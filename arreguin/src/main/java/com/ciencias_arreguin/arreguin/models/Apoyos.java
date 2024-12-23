@@ -1,5 +1,9 @@
 package com.ciencias_arreguin.arreguin.models;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -16,13 +20,13 @@ public class Apoyos {
     @Column(name = "DescripcionApoyo", nullable = false)
     private String descripcionApoyo;
     
-    @ManyToOne
-    @JoinColumn(name = "IdAlumnoPorEventoApoyo")
-    private AlumnoPorEvento idAlumnoPorEventoApoyo;
-    
-    @ManyToOne
-    @JoinColumn(name = "IdAsesorPorEventoApoyo")
-    private AsesorPorEvento idAsesorPorEventoApoyo;
+    @OneToMany(mappedBy = "idApoyoAlumnoParticipacion")
+    @JsonBackReference(value = "apoyo-alumno-participacion")
+    private List<Participaciones> listaApoyoAlumnoParticipacion;
+
+    @OneToMany(mappedBy = "idApoyoAsesorParticipacion")
+    @JsonBackReference(value = "apoyo-asesor-participacion")
+    private List<Participaciones> listaApoyoAsesorParticipacion;
 
     public int getIdApoyo() {
         return idApoyo;
@@ -48,20 +52,20 @@ public class Apoyos {
         this.descripcionApoyo = descripcionApoyo;
     }
 
-    public AlumnoPorEvento getIdAlumnoPorEventoApoyo() {
-        return idAlumnoPorEventoApoyo;
+    public List<Participaciones> getListaApoyoAlumnoParticipacion() {
+        return listaApoyoAlumnoParticipacion;
     }
 
-    public void setIdAlumnoPorEventoApoyo(AlumnoPorEvento idAlumnoPorEventoApoyo) {
-        this.idAlumnoPorEventoApoyo = idAlumnoPorEventoApoyo;
+    public void setListaApoyoAlumnoParticipacion(List<Participaciones> listaApoyoAlumnoParticipacion) {
+        this.listaApoyoAlumnoParticipacion = listaApoyoAlumnoParticipacion;
     }
 
-    public AsesorPorEvento getIdAsesorPorEventoApoyo() {
-        return idAsesorPorEventoApoyo;
+    public List<Participaciones> getListaApoyoAsesorParticipacion() {
+        return listaApoyoAsesorParticipacion;
     }
 
-    public void setIdAsesorPorEventoApoyo(AsesorPorEvento idAsesorPorEventoApoyo) {
-        this.idAsesorPorEventoApoyo = idAsesorPorEventoApoyo;
+    public void setListaApoyoAsesorParticipacion(List<Participaciones> listaApoyoAsesorParticipacion) {
+        this.listaApoyoAsesorParticipacion = listaApoyoAsesorParticipacion;
     }
     
 }

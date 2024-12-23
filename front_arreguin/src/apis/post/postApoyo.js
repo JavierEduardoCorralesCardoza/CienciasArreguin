@@ -4,9 +4,7 @@ function postApoyo(event) {
     
     const data = {
         patrocinadorApoyo: event.target.apoyoPatrocinador.value,
-        descripcionApoyo: event.target.apoyoDescripcion.value,
-        idAlumnoPorEventoApoyo: {idAlumnoPorEvento: event.target.apoyoIdAlumnoPorEvento.value},
-        idAsesorPorEventoApoyo: {idAsesorPorEvento: event.target.apoyoIdAsesorPorEvento.value}
+        descripcionApoyo: event.target.apoyoDescripcion.value
     };
 
     console.log(data);

@@ -33,9 +33,9 @@ public class Alumnos {
     @Column(name = "ImagenAlumno", length = 45)
     private String imagenAlumno;
 
-    @OneToMany(mappedBy = "idAlumnoEvento")
-    @JsonBackReference(value = "alumno-evento")
-    private List<AlumnoPorEvento> listaAlumnoPorEvento;
+    @OneToMany(mappedBy = "idAlumnoParticipacion")
+    @JsonBackReference(value = "alumno-participacion")
+    private List<Participaciones> listaAlumnoParticipacion;
 
     public int getIdAlumno() {
         return idAlumno;
@@ -77,11 +77,12 @@ public class Alumnos {
         this.imagenAlumno = imagenAlumno;
     }
 
-    public List<AlumnoPorEvento> getListaAlumnoPorEvento() {
-        return listaAlumnoPorEvento;
+    public List<Participaciones> getListaAlumnoParticipacion() {
+        return listaAlumnoParticipacion;
     }
 
-    public void setListaAlumnoPorEvento(List<AlumnoPorEvento> listaAlumnoPorEvento) {
-        this.listaAlumnoPorEvento = listaAlumnoPorEvento;
+    public void setListaAlumnoParticipacion(List<Participaciones> listaAlumnoParticipacion) {
+        this.listaAlumnoParticipacion = listaAlumnoParticipacion;
     }
+    
 }

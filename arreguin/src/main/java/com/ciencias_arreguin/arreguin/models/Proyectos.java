@@ -24,9 +24,9 @@ public class Proyectos {
     @Column(name = "DescripcionProyecto", nullable = false)
     private String descripcionProyecto;
 
-    @OneToMany(mappedBy = "idProyectoEvento")
-    @JsonBackReference(value = "proyecto-evento")
-    private List<ProyectoPorEvento> proyectoPorEvento;
+    @OneToMany(mappedBy = "idProyectoParticipacion")
+    @JsonBackReference(value = "proyecto-participacion")
+    private List<Participaciones> listaProyectoParticipacion;
 
     public int getIdProyecto() {
         return idProyecto;
@@ -60,12 +60,12 @@ public class Proyectos {
         this.descripcionProyecto = descripcionProyecto;
     }
 
-    public List<ProyectoPorEvento> getProyectoPorEvento() {
-        return proyectoPorEvento;
+    public List<Participaciones> getListaProyectoParticipacion() {
+        return listaProyectoParticipacion;
     }
 
-    public void setProyectoPorEvento(List<ProyectoPorEvento> proyectoPorEvento) {
-        this.proyectoPorEvento = proyectoPorEvento;
+    public void setListaProyectoParticipacion(List<Participaciones> listaProyectoParticipacion) {
+        this.listaProyectoParticipacion = listaProyectoParticipacion;
     }
     
 }

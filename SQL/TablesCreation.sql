@@ -1,11 +1,9 @@
 DROP TABLE IF EXISTS Apoyos;
-DROP TABLE IF EXISTS ProyectoPorEvento;
-DROP TABLE IF EXISTS AsesorPorEvento;
-DROP TABLE IF EXISTS AlumnoPorEvento;
 DROP TABLE IF EXISTS Eventos;
 DROP TABLE IF EXISTS Proyectos;
 DROP TABLE IF EXISTS Asesores;
 DROP TABLE IF EXISTS Alumnos;
+DROP TABLE IF EXISTS Participaciones;
 
 CREATE TABLE Alumnos(
 	IdAlumno INT PRIMARY KEY AUTO_INCREMENT,
@@ -36,37 +34,24 @@ CREATE TABLE Eventos(
     FechaEvento DATE NOT NULL
 );
 
-CREATE TABLE AlumnoPorEvento(
-	IdAlumnoPorEvento INT PRIMARY KEY AUTO_INCREMENT,
-    ResultadoAlumnoPorEvento VARCHAR(45) NOT NULL,
-    IdAlumnoEvento INT NOT NULL,
-    IdEventoAlumno INT NOT NULL,
-    FOREIGN KEY(IdAlumnoEvento) REFERENCES Alumnos(IdAlumno),
-    FOREIGN KEY(IdEventoAlumno) REFERENCES Eventos(IdEvento)
-);
-
-CREATE TABLE AsesorPorEvento(
-	IdAsesorPorEvento INT PRIMARY KEY AUTO_INCREMENT,
-    IdAsesorEvento INT NOT NULL,
-    IdEventoAsesor INT NOT NULL,
-    FOREIGN KEY(IdAsesorEvento) REFERENCES Asesores(IdAsesor),
-    FOREIGN KEY(IdEventoAsesor) REFERENCES Eventos(IdEvento)
-);
-
-CREATE TABLE ProyectoPorEvento(
-	IdProyectoPorEvento INT PRIMARY KEY AUTO_INCREMENT,
-    IdProyectoEvento INT NOT NULL,
-    IdEventoProyecto INT NOT NULL,
-    FOREIGN KEY(IdProyectoEvento) REFERENCES Proyectos(IdProyecto),
-    FOREIGN KEY(IdEventoProyecto) REFERENCES Eventos(IdEvento)
-);
-
 CREATE TABLE Apoyos(
 	IdApoyo INT PRIMARY KEY AUTO_INCREMENT,
     PatrocinadorApoyo VARCHAR(45) NOT NULL,
-    DescripcionApoyo VARCHAR(45) NOT NULL,
-    IdAlumnoPorEventoApoyo INT,
-    IdAsesorPorEventoApoyo INT,
-    FOREIGN KEY(IdAlumnoPorEventoApoyo) REFERENCES AlumnoPorEvento(IdAlumnoPorEvento),
-    FOREIGN KEY(IdAsesorPorEventoApoyo) REFERENCES AsesorPorEvento(IdAsesorPorEvento)
+    DescripcionApoyo VARCHAR(45) NOT NULL
+);
+
+CREATE TABLE Participaciones(
+	IdParticipacion INT PRIMARY KEY AUTO_INCREMENT,
+    IdAlumnoParticipacion INT NOT NULL,
+    IdAsesorParticipacion INT NOT NULL,
+    IdEventoParticipacion INT NOT NULL,
+    IdProyectoParticipacion INT NOT NULL,
+    IdApoyoAlumnoParticipacion INT,
+    IdApoyoAsesorParticipacion INT,
+    FOREIGN KEY(IdAlumnoParticipacion) REFERENCES Alumnos(IdAlumno),
+    FOREIGN KEY(IdAsesorParticipacion) REFERENCES Asesores(IdAsesor),
+    FOREIGN KEY(IdEventoParticipacion) REFERENCES Eventos(IdEvento),
+    FOREIGN KEY(IdProyectoParticipacion) REFERENCES Proyectos(IdProyecto),
+    FOREIGN KEY(IdApoyoAlumnoParticipacion) REFERENCES Apoyos(IdApoyo),
+    FOREIGN KEY(IdApoyoAsesorParticipacion) REFERENCES Apoyos(IdApoyo)
 );
