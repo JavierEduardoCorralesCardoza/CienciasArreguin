@@ -25,4 +25,15 @@ public class AsesoresServices {
     public Asesores getAsesorById(int id) {
         return asesores_repository.findById(id).get();
     }
+
+    public Asesores putAsesor(int id, Asesores asesor) {
+        Asesores asesor_actual = asesores_repository.findById(id).get();
+
+        asesor_actual.setCorreoAsesor(asesor.getCorreoAsesor());
+        asesor_actual.setContrasenaAsesor(asesor.getContrasenaAsesor());
+        asesor_actual.setNombreAsesor(asesor.getNombreAsesor());
+        asesor_actual.setImagenAsesor(asesor.getImagenAsesor());
+
+        return asesores_repository.save(asesor_actual);
+    }
 }

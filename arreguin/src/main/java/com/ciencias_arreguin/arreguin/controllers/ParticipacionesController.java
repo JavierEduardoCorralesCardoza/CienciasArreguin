@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ciencias_arreguin.arreguin.models.Participaciones;
 import com.ciencias_arreguin.arreguin.services.ParticipacionesServices;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController
 @RequestMapping("/participaciones")
@@ -33,5 +36,10 @@ public class ParticipacionesController {
     @PostMapping
     public Participaciones postParticipacion(@RequestBody Participaciones participacion) {
         return participaciones_services.postParticipacion(participacion);
+    }
+
+    @PutMapping("/{id}")
+    public Participaciones putParticipacion(@PathVariable int id, @RequestBody Participaciones participacion) {
+        return participaciones_services.putParticipacion(id, participacion);
     }
 }

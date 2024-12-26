@@ -12,6 +12,9 @@ import com.ciencias_arreguin.arreguin.models.Alumnos;
 import com.ciencias_arreguin.arreguin.services.AlumnosServices;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 
 @RestController
@@ -34,5 +37,10 @@ public class AlumnosController {
     @PostMapping
     public Alumnos postAlumno(@RequestBody Alumnos alumno) {
         return alumnos_services.postAlumno(alumno);
+    }
+
+    @PutMapping("/{id}")
+    public Alumnos putAlumno(@PathVariable int id, @RequestBody Alumnos alumno) {
+        return alumnos_services.putAlumno(id, alumno);
     }
 }

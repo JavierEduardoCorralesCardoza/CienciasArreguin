@@ -1,5 +1,5 @@
 import React from "react";
-import postEvento from "../apis/post/postEvento";
+import postEvento from "../../apis/post/postEvento";
 
 function CrearEvento(){
     const handleSubmit = (event) => {

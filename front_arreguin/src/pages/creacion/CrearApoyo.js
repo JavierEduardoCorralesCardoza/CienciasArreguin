@@ -1,5 +1,5 @@
 import React from 'react'
-import postApoyo from '../apis/post/postApoyo';
+import postApoyo from '../../apis/post/postApoyo';
 
 function CrearApoyo(){
 

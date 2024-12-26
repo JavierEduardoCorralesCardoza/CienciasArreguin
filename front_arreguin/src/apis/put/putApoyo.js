@@ -1,16 +1,14 @@
 import API_URL from "../../utils/config";
 
-function postProyectoPorEvento(event){
-
+function putApoyo(event,id) {
+    
     const data = {
-        idProyectoEvento: {idProyecto: event.target.proyectoEventoId.value},
-        idEventoProyecto: {idEvento: event.target.eventoProyectoId.value}
+        patrocinadorApoyo: event.target.apoyoPatrocinador.value,
+        descripcionApoyo: event.target.apoyoDescripcion.value
     };
-
-    console.log(data);
-
-    fetch(`${API_URL}/proyecto_por_evento`, {
-        method: 'POST',
+    
+    fetch(`${API_URL}/apoyos/${id}`, {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -25,4 +23,4 @@ function postProyectoPorEvento(event){
     });
 }
 
-export default postProyectoPorEvento;
+export default putApoyo;

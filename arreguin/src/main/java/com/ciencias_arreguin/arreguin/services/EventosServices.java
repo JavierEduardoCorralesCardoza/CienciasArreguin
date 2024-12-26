@@ -25,4 +25,13 @@ public class EventosServices {
     public Eventos getEventoById(int id) {
         return eventos_repository.findById(id).get();
     }
+
+    public Eventos putEvento(int id, Eventos evento) {
+        Eventos evento_actual = eventos_repository.findById(id).get();
+
+        evento_actual.setNombreEvento(evento.getNombreEvento());
+        evento_actual.setFechaEvento(evento.getFechaEvento());
+
+        return eventos_repository.save(evento_actual);
+    }
 }

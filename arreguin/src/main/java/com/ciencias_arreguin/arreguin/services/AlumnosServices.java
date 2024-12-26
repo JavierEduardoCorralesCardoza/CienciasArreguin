@@ -25,4 +25,15 @@ public class AlumnosServices {
     public Alumnos getAlumnoById(int id) {
         return alumnos_repository.findById(id).get();
     }
+
+    public Alumnos putAlumno(int id, Alumnos alumno) {
+        Alumnos alumno_actualizado = alumnos_repository.findById(id).get();
+        
+        alumno_actualizado.setCorreoAlumno(alumno.getCorreoAlumno());
+        alumno_actualizado.setContrasenaAlumno(alumno.getContrasenaAlumno());
+        alumno_actualizado.setNombreAlumno(alumno.getNombreAlumno());
+        alumno_actualizado.setImagenAlumno(alumno.getImagenAlumno());
+
+        return alumnos_repository.save(alumno_actualizado);
+    }
 }

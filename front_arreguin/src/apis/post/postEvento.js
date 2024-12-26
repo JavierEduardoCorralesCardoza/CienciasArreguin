@@ -4,7 +4,7 @@ function postEvento(event) {
 
     const data = {
         nombreEvento: event.target.eventoNombre.value,
-        fechaEvento: event.target.eventoFecha.value,
+        fechaEvento: event.target.eventoFecha.value
     };
 
     console.log(data);

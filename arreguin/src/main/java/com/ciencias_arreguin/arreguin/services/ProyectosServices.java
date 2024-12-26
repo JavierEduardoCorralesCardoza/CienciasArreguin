@@ -25,4 +25,14 @@ public class ProyectosServices {
     public Proyectos getProyectoById(int id) {
         return proyectos_repository.findById(id).get();
     }
+
+    public Proyectos putProyecto(int id, Proyectos proyecto) {
+        Proyectos proyecto_actual = proyectos_repository.findById(id).get();
+
+        proyecto_actual.setNombreProyecto(proyecto.getNombreProyecto());
+        proyecto_actual.setCategoriaProyecto(proyecto.getCategoriaProyecto());
+        proyecto_actual.setDescripcionProyecto(proyecto.getDescripcionProyecto());
+        
+        return proyectos_repository.save(proyecto_actual);
+    }
 }

@@ -1,15 +1,15 @@
-import API_URL from '../../utils/config.js';
+import API_URL from "../../utils/config";
 
-function postProyecto(event) {
-
+function putProyecto(event, id) {
+    
     const data = {
         nombreProyecto: event.target.proyectoNombre.value,
         categoriaProyecto: event.target.proyectoCategoria.value,
         descripcionProyecto: event.target.proyectoDescripcion.value
     };
     
-    fetch(`${API_URL}/proyectos`, {
-        method: 'POST',
+    fetch(`${API_URL}/proyectos/${id}`, {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -24,4 +24,4 @@ function postProyecto(event) {
     });
 }
 
-export default postProyecto;
+export default putProyecto;

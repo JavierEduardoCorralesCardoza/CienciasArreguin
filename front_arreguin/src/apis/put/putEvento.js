@@ -1,14 +1,14 @@
-import API_URL from '../../utils/config.js';
+import API_URL from "../../utils/config";
 
-function postAsesorPorEvento(event) {
-
+function putEvento(event, id) {
+    
     const data = {
-        idAsesorEvento: {idAsesor: event.target.asesorEventoId.value},
-        idEventoAsesor: {idEvento: event.target.eventoAsesorId.value}
+        nombreEvento: event.target.eventoNombre.value,
+        fechaEvento: event.target.eventoFecha.value
     };
     
-    fetch(`${API_URL}/asesor_por_evento`, {
-        method: 'POST',
+    fetch(`${API_URL}/eventos/${id}`, {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -23,4 +23,4 @@ function postAsesorPorEvento(event) {
     });
 }
 
-export default postAsesorPorEvento;
+export default putEvento;
