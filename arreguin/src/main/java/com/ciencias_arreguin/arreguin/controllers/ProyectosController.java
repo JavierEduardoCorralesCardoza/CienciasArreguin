@@ -11,6 +11,9 @@ import com.ciencias_arreguin.arreguin.models.Proyectos;
 import com.ciencias_arreguin.arreguin.services.ProyectosServices;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 
 @RestController
@@ -34,4 +37,8 @@ public class ProyectosController {
         return proyectos_services.postProyecto(proyecto);
     }
     
+    @PutMapping("/{id}")
+    public Proyectos putProyecto(@PathVariable int id, @RequestBody Proyectos proyecto) {
+        return proyectos_services.putProyecto(id, proyecto);
+    }
 }

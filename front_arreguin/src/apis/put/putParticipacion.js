@@ -1,7 +1,7 @@
 import API_URL from "../../utils/config";
 
-function postParticipacion(event) {
-
+function putParticipacion(event, id) {
+    
     const data = {
         idAlumnoParticipacion: { idAlumno: event.target.alumnoParticipacionId.value},
         idAsesorParticipacion: { idAsesor: event.target.asesorParticipacionId.value},
@@ -11,8 +11,8 @@ function postParticipacion(event) {
         idApoyoAsesorParticipacion: { idApoyo: event.target.apoyoAsesorParticipacionId.value}
     };
     
-    fetch(`${API_URL}/participaciones`, {
-        method: 'POST',
+    fetch(`${API_URL}/participaciones/${id}`, {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -27,4 +27,4 @@ function postParticipacion(event) {
     });
 }
 
-export default postParticipacion;
+export default putParticipacion;

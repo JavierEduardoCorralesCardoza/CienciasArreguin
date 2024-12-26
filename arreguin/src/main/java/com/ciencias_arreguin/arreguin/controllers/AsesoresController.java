@@ -12,6 +12,9 @@ import com.ciencias_arreguin.arreguin.models.Asesores;
 import com.ciencias_arreguin.arreguin.services.AsesoresServices;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 
 @RestController
@@ -35,4 +38,8 @@ public class AsesoresController {
         return asesores_services.postAsesor(asesor);
     }
     
+    @PutMapping("/{id}")
+    public Asesores putAsesor(@PathVariable int id, @RequestBody Asesores asesor) {
+        return asesores_services.putAsesor(id, asesor);
+    }
 }

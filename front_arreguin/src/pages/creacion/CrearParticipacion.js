@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import postParticipacion from "../apis/post/postParticipacion";
-import getGeneral from "../apis/get/getGeneral";
+import postParticipacion from "../../apis/post/postParticipacion";
+import getGeneral from "../../apis/get/getGeneral";
 
 function CrearParticipacion(){
 

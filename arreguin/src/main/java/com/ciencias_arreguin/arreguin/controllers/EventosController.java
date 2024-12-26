@@ -11,6 +11,9 @@ import com.ciencias_arreguin.arreguin.models.Eventos;
 import com.ciencias_arreguin.arreguin.services.EventosServices;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController
 @RequestMapping("/eventos")
@@ -32,5 +35,9 @@ public class EventosController {
     public Eventos postEvento(@RequestBody Eventos evento) {
         return eventos_services.postEvento(evento);
     }
-    
+
+    @PutMapping("/{id}")
+    public Eventos putEvento(@PathVariable int id, @RequestBody Eventos evento) {
+        return eventos_services.putEvento(id, evento);
+    }
 }

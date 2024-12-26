@@ -1,5 +1,4 @@
-Crear tabla que muestre todos los eventos con sus respectiva informacion, y una vez que este todo agregarle filtros
-
-Despues hacer apartados, uno de creacion (asesores, alumnos, proyectos, eventos), uno de asignacion (asesor alumno proyecto por evento), uno de edicion (todos) y uno de busqueda (asesor, alumno, proyecto y evento)
-
-Checar si puedes generalizar los post y los getById como lo hiciste con los get
+Hacer que los elementos de las tablas sean botones que te lleven al perfil de la entidad
+Hacer los perfiles de las entidades de forma general
+Agregar en los prefiles el boton para editar la entidad y hacer el modulo de editar de forma general
+Checar si los post lo puedes hacer de forma general, usando un json de ejemplo con la estructura de cada entidad
