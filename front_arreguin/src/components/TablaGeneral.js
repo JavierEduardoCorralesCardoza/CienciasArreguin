@@ -1,8 +1,16 @@
 import React, {useState, useEffect} from "react";
 import getGeneral from "../apis/get/getGeneral";
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 function TablaGeneral() {
+
+    const traduccion = {
+        alumnos: "alumno",
+        asesores: "asesor",
+        eventos: "evento",
+        proyectos: "proyecto",
+        apoyos: "apoyo",
+    }
 
     const [entidades, setEntidades] = useState(null);
     const [atributos, setAtributos] = useState(null);
@@ -63,10 +71,11 @@ function TablaGeneral() {
                     </thead>
                     <tbody>
                         {dataFiltrada.map((elemento, index) => {
+                            const id = elemento[atributos[0]];
                             return (
                                 <tr key={index}>
                                     {atributos.map((atributo) => {
-                                        return <td key={atributo}>{elemento[atributo]}</td>
+                                        return <td key={atributo}><Link to={`/perfil/${traduccion[entidad]}/${id}`}>{elemento[atributo]}</Link></td>
                                     })}
                                 </tr>
                             )

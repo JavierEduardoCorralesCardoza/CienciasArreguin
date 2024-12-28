@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import { Link } from 'react-router-dom';
 import getGeneral from "../apis/get/getGeneral";
 
 function TablaPrincipal() {
@@ -158,13 +159,13 @@ function TablaPrincipal() {
                         <tbody>
                             {participacionesFiltradas.map((participacion) => (
                                 <tr key={participacion.idParticipacion}>
-                                    <td>{participacion.idParticipacion}</td>
-                                    <td>{participacion.idAlumnoParticipacion.nombreAlumno}</td>
-                                    <td>{participacion.idAsesorParticipacion.nombreAsesor}</td>
-                                    <td>{participacion.idEventoParticipacion.nombreEvento}</td>
-                                    <td>{participacion.idProyectoParticipacion.nombreProyecto}</td>
-                                    <td>{participacion.idApoyoAlumnoParticipacion.descripcionApoyo}</td>
-                                    <td>{participacion.idApoyoAsesorParticipacion.descripcionApoyo}</td>
+                                    <td><Link to={`/perfil/participacion/${participacion.idParticipacion}`}>{participacion.idParticipacion}</Link></td>
+                                    <td><Link to={`/perfil/alumno/${participacion.idAlumnoParticipacion.idAlumno}`}>{participacion.idAlumnoParticipacion.nombreAlumno}</Link></td>
+                                    <td><Link to={`/perfil/asesor/${participacion.idAsesorParticipacion.idAsesor}`}>{participacion.idAsesorParticipacion.nombreAsesor}</Link></td>
+                                    <td><Link to={`/perfil/evento/${participacion.idEventoParticipacion.idEvento}`}>{participacion.idEventoParticipacion.nombreEvento}</Link></td>
+                                    <td><Link to={`/perfil/proyecto/${participacion.idProyectoParticipacion.idProyecto}`}>{participacion.idProyectoParticipacion.nombreProyecto}</Link></td>
+                                    <td><Link to={`/perfil/apoyo/${participacion.idApoyoAlumnoParticipacion.idApoyo}`}>{participacion.idApoyoAlumnoParticipacion.descripcionApoyo}</Link></td>
+                                    <td><Link to={`/perfil/apoyo/${participacion.idApoyoAlumnoParticipacion.idApoyo}`}>{participacion.idApoyoAsesorParticipacion.descripcionApoyo}</Link></td>
                                 </tr>
                             ))}
                         </tbody>

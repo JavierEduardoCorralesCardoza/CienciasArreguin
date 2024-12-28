@@ -8,6 +8,7 @@ import CrearAlumno from './pages/creacion/CrearAlumno';
 import CrearApoyo from './pages/creacion/CrearApoyo';
 import CrearParticipacion from './pages/creacion/CrearParticipacion';
 import TablaGeneral from './components/TablaGeneral';
+import PerfilGeneral from './pages/perfiles/PerfilGeneral';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path='/crear_apoyo' element={<CrearApoyo/>} />
         <Route path='/crear_participacion' element={<CrearParticipacion/>} />
         <Route path='/visualizar/:entidad' element={<TablaGeneral/>} />
+        <Route path='/perfil/:entidad/:id' element={<PerfilGeneral/>} />
       </Routes>
     </Router>
   );
