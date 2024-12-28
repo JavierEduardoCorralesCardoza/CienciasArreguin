@@ -3,10 +3,10 @@ import API_URL from "../../utils/config";
 function putAsesor(event,id) {
     
     const data = {
-        correoAsesor: event.target.asesorCorreo.value,
-        contrasenaAsesor: event.target.asesorContraseña.value,
-        nombreAsesor: event.target.asesorNombre.value,
-        imagenAsesor: event.target.asesorFoto.value
+        correoAsesor: event.target.correoAsesor.value,
+        contrasenaAsesor: event.target.contrasenaAsesor.value,
+        nombreAsesor: event.target.nombreAsesor.value,
+        imagenAsesor: event.target.imagenAsesor.value
     };
     
     fetch(`${API_URL}/asesores/${id}`, {

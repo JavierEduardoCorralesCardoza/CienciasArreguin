@@ -1,0 +1,212 @@
+{
+    "entidades": {
+        "alumno": {
+            "atributos": {
+                "correoAlumno": {
+                    "tipo": "text",
+                    "requerido": true
+                },
+                "contrasenaAlumno": {
+                    "tipo": "text",
+                    "requerido": true
+                },
+                "nombreAlumno": {
+                    "tipo": "text",
+                    "requerido": true
+                },
+                "imagenAlumno": {
+                    "tipo": "text",
+                    "requerido": false
+                }
+            },
+            "plural": "alumnos"
+        },
+        "asesor": {
+            "atributos": {
+                "correoAsesor": {
+                    "tipo": "text",
+                    "requerido": true
+                },
+                "contrasenaAsesor": {
+                    "tipo": "text",
+                    "requerido": true
+                },
+                "nombreAsesor": {
+                    "tipo": "text",
+                    "requerido": true
+                },
+                "imagenAsesor": {
+                    "tipo": "text",
+                    "requerido": false
+                }
+            },
+            "plural": "asesores"
+        },
+        "apoyo": {
+            "atributos": {
+                "patrocinadorApoyo": {
+                    "tipo": "text",
+                    "requerido": true
+                },
+                "descripcionApoyo": {
+                    "tipo": "text",
+                    "requerido": true
+                }
+            },
+            "plural": "apoyos"
+        },
+        "evento": {
+            "atributos": {
+                "nombreEvento": {
+                    "tipo": "text",
+                    "requerido": true
+                },
+                "fechaEvento": {
+                    "tipo": "date",
+                    "requerido": true
+                }
+            },
+            "plural": "eventos"
+        },
+        "proyecto": {
+            "atributos": {
+                "nombreProyecto": {
+                    "tipo": "string",
+                    "requerido": true
+                },
+                "categoriaProyecto": {
+                    "tipo": "string",
+                    "requerido": true
+                },
+                "descripcionProyecto": {
+                    "tipo": "string",
+                    "requerido": true
+                }
+            },
+            "plural": "proyectos"
+        },
+        "participacion": {
+            "atributos": {
+                "idAlumnoParticipacion": {
+                    "tipo": "number",
+                    "requerido": true,
+                    "atributos": {
+                        "idAlumno": {
+                            "tipo": "number",
+                            "requerido": true
+                        },
+                        "correoAlumno": {
+                            "tipo": "text",
+                            "requerido": true
+                        },
+                        "contrasenaAlumno": {
+                            "tipo": "text",
+                            "requerido": true
+                        },
+                        "nombreAlumno": {
+                            "tipo": "text",
+                            "requerido": true
+                        },
+                        "imagenAlumno": {
+                            "tipo": "text",
+                            "requerido": false
+                        }
+                    }
+                },
+                "idAsesorParticipacion": {
+                    "atributos": {
+                        "idAsesor": {
+                            "tipo": "number",
+                            "requerido": true
+                        },
+                        "correoAsesor": {
+                            "tipo": "text",
+                            "requerido": true
+                        },
+                        "contrasenaAsesor": {
+                            "tipo": "text",
+                            "requerido": true
+                        },
+                        "nombreAsesor": {
+                            "tipo": "text",
+                            "requerido": true
+                        },
+                        "imagenAsesor": {
+                            "tipo": "text",
+                            "requerido": false
+                        }
+                    }
+                },
+                "idEventoParticipacion": {
+                    "atributos": {
+                        "idEvento": {
+                            "tipo": "number",
+                            "requerido": true
+                        },
+                        "nombreEvento": {
+                            "tipo": "text",
+                            "requerido": true
+                        },
+                        "fechaEvento": {
+                            "tipo": "date",
+                            "requerido": true
+                        }
+                    }
+                },
+                "idProyectoParticipacion": {
+                    "atributos": {
+                        "idProyecto": {
+                            "tipo": "number",
+                            "requerido": true
+                        },
+                        "nombreProyecto": {
+                            "tipo": "string",
+                            "requerido": true
+                        },
+                        "categoriaProyecto": {
+                            "tipo": "string",
+                            "requerido": true
+                        },
+                        "descripcionProyecto": {
+                            "tipo": "string",
+                            "requerido": true
+                        }
+                    }
+                },
+                "idApoyoAlumnoParticipacion": {
+                    "atributos": {
+                        "idApoyo": {
+                            "tipo": "number",
+                            "requerido": true
+                        },
+                        "nombreApoyo": {
+                            "tipo": "text",
+                            "requerido": true
+                        },
+                        "descripcionApoyo": {
+                            "tipo": "text",
+                            "requerido": true
+                        }
+                    }
+                },
+                "idApoyoAsesorParticipacion": {
+                    "atributos": {
+                        "idApoyo": {
+                            "tipo": "number",
+                            "requerido": true
+                        },
+                        "nombreApoyo": {
+                            "tipo": "text",
+                            "requerido": true
+                        },
+                        "descripcionApoyo": {
+                            "tipo": "text",
+                            "requerido": true
+                        }
+                    }
+                }
+            },
+            "plural": "participaciones"
+        }
+    }
+}

@@ -3,12 +3,12 @@ import API_URL from "../../utils/config";
 function putParticipacion(event, id) {
     
     const data = {
-        idAlumnoParticipacion: { idAlumno: event.target.alumnoParticipacionId.value},
-        idAsesorParticipacion: { idAsesor: event.target.asesorParticipacionId.value},
-        idEventoParticipacion: { idEvento: event.target.eventoParticipacionId.value},
-        idProyectoParticipacion: { idProyecto: event.target.proyectoParticipacionId.value},
-        idApoyoAlumnoParticipacion: { idApoyo: event.target.apoyoAlumnoParticipacionId.value},
-        idApoyoAsesorParticipacion: { idApoyo: event.target.apoyoAsesorParticipacionId.value}
+        idAlumnoParticipacion: { idAlumno: event.target.idAlumnoParticipacion.value},
+        idAsesorParticipacion: { idAsesor: event.target.idAsesorParticipacion.value},
+        idEventoParticipacion: { idEvento: event.target.idEventoParticipacion.value},
+        idProyectoParticipacion: { idProyecto: event.target.idProyectoParticipacion.value},
+        idApoyoAlumnoParticipacion: { idApoyo: event.target.idApoyoAlumnoParticipacion.value},
+        idApoyoAsesorParticipacion: { idApoyo: event.target.idApoyoAsesorParticipacion.value}
     };
     
     fetch(`${API_URL}/participaciones/${id}`, {

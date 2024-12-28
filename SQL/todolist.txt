@@ -1,4 +1,1 @@
-Hacer que los elementos de las tablas sean botones que te lleven al perfil de la entidad
-Hacer los perfiles de las entidades de forma general
-Agregar en los prefiles el boton para editar la entidad y hacer el modulo de editar de forma general
-Checar si los post lo puedes hacer de forma general, usando un json de ejemplo con la estructura de cada entidad
+Hacer el sistema de roles (admin, asesor y alumno), que el asesor pueda ver su perfil y el de sus alumnos, que el alumno pueda ver su perfil y el de sus asesores, las tablas van a estar limitadas a los proyectos en los que haya participado cada parte

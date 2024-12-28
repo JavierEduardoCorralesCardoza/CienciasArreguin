@@ -3,8 +3,8 @@ import API_URL from "../../utils/config";
 function putApoyo(event,id) {
     
     const data = {
-        patrocinadorApoyo: event.target.apoyoPatrocinador.value,
-        descripcionApoyo: event.target.apoyoDescripcion.value
+        patrocinadorApoyo: event.target.patrocinadorApoyo.value,
+        descripcionApoyo: event.target.descripcionApoyo.value
     };
     
     fetch(`${API_URL}/apoyos/${id}`, {
