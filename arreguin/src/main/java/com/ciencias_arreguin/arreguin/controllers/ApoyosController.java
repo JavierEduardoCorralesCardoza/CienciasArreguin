@@ -7,16 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ciencias_arreguin.arreguin.models.Apoyos;
+import com.ciencias_arreguin.arreguin.dtos.ApoyosDTO;
 import com.ciencias_arreguin.arreguin.services.ApoyosServices;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
-
-
 
 @RestController
 @RequestMapping("/apoyos")
@@ -25,22 +22,22 @@ public class ApoyosController {
     private ApoyosServices apoyos_services;
 
     @GetMapping
-    public List<Apoyos> getApoyos() {
+    public List<ApoyosDTO> getApoyos() {
         return apoyos_services.getApoyos();
     }
 
     @GetMapping("/busqueda")
-    public Apoyos getApoyoById(@RequestParam int id) {
+    public ApoyosDTO getApoyoById(@RequestParam int id) {
         return apoyos_services.getApoyoById(id);
     }
     
     @PostMapping()
-    public Apoyos postApoyo(@RequestBody Apoyos apoyo) {
+    public ApoyosDTO postApoyo(@RequestBody ApoyosDTO apoyo) {
         return apoyos_services.postApoyo(apoyo);
     }
 
     @PutMapping("/{id}")
-    public Apoyos putApoyo(@PathVariable int id, @RequestBody Apoyos apoyo) {
+    public ApoyosDTO putApoyo(@PathVariable int id, @RequestBody ApoyosDTO apoyo) {
         return apoyos_services.putApoyo(id, apoyo);
     }
 }

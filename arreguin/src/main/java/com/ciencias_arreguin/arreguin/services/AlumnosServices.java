@@ -5,35 +5,43 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ciencias_arreguin.arreguin.dtos.AlumnosDTO;
 import com.ciencias_arreguin.arreguin.models.Alumnos;
 import com.ciencias_arreguin.arreguin.repositories.AlumnosRepository;
+import com.ciencias_arreguin.arreguin.mappers.AlumnosMapper;
 
 @Service
 public class AlumnosServices {
     
     @Autowired
     private AlumnosRepository alumnos_repository;
+    
+    @Autowired
+    private AlumnosMapper alumnos_mapper;
 
-    public List<Alumnos> getAlumnos() {
-        return alumnos_repository.findAll();
+    public List<AlumnosDTO> getAlumnos() {
+        List<Alumnos> alumnos = alumnos_repository.findAll();
+        return alumnos_mapper.toDTOList(alumnos);
     }
 
-    public Alumnos postAlumno(Alumnos alumno) {
-        return alumnos_repository.save(alumno);
+    public AlumnosDTO postAlumno(AlumnosDTO alumnoDTO) {
+        Alumnos alumno = alumnos_mapper.toEntity(alumnoDTO);
+        Alumnos savedAlumno = alumnos_repository.save(alumno);
+        return alumnos_mapper.toDTO(savedAlumno);
     }
 
-    public Alumnos getAlumnoById(int id) {
-        return alumnos_repository.findById(id).get();
+    public AlumnosDTO getAlumnoById(int id) {
+        Alumnos alumno = alumnos_repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Alumno no encontrado con ID: " + id));
+        return alumnos_mapper.toDTOWithPassword(alumno);
     }
 
-    public Alumnos putAlumno(int id, Alumnos alumno) {
-        Alumnos alumno_actualizado = alumnos_repository.findById(id).get();
+    public AlumnosDTO putAlumno(int id, AlumnosDTO alumnoDTO) {
+        Alumnos alumno_actualizado = alumnos_repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Alumno no encontrado con ID: " + id));
         
-        alumno_actualizado.setCorreoAlumno(alumno.getCorreoAlumno());
-        alumno_actualizado.setContrasenaAlumno(alumno.getContrasenaAlumno());
-        alumno_actualizado.setNombreAlumno(alumno.getNombreAlumno());
-        alumno_actualizado.setImagenAlumno(alumno.getImagenAlumno());
-
-        return alumnos_repository.save(alumno_actualizado);
+        alumnos_mapper.updateEntityFromDTO(alumnoDTO, alumno_actualizado);
+        Alumnos savedAlumno = alumnos_repository.save(alumno_actualizado);
+        return alumnos_mapper.toDTO(savedAlumno);
     }
 }

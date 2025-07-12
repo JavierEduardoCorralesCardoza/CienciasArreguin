@@ -1,179 +1,363 @@
-import React, {useEffect, useState} from "react";
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, useMemo } from "react";
+import {
+  useReactTable,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getSortedRowModel,
+  getPaginationRowModel,
+  flexRender,
+} from "@tanstack/react-table";
+import { Link } from "react-router-dom";
 import getGeneral from "../apis/get/getGeneral";
 
+// Hook para debounce
+function useDebounce(value, delay) {
+  const [debounced, setDebounced] = useState(value);
+  useEffect(() => {
+    const handler = setTimeout(() => setDebounced(value), delay);
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+  return debounced;
+}
+
 function TablaPrincipal() {
+  const [participaciones, setParticipaciones] = useState(null);
+  const [alumnos, setAlumnos] = useState(null);
+  const [asesores, setAsesores] = useState(null);
+  const [eventos, setEventos] = useState(null);
+  const [proyectos, setProyectos] = useState(null);
+  const [apoyos, setApoyos] = useState(null);
 
-    const [participaciones, setParticipaciones] = useState([]);
-    const [participacionesFiltradas, setParticipacionesFiltradas] = useState([]);
-    const [alumnos, setAlumnos] = useState([]);
-    const [asesores, setAsesores] = useState([]);
-    const [eventos, setEventos] = useState([]);
-    const [proyectos, setProyectos] = useState([]);
-    const [apoyos, setApoyos] = useState([]);
-    const [filtros, setFiltros] = useState({
-        alumno: "",
-        asesor: "",
-        evento: "",
-        proyecto: "",
-        apoyo: "",
-    });
+  const [columnFilters, setColumnFilters] = useState([]);
+  const [sorting, setSorting] = useState([]);
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
+  const [globalFilter, setGlobalFilter] = useState("");
+  const debouncedGlobalFilter = useDebounce(globalFilter, 300);
 
-    useEffect(() => {
-        const getParticipaciones = async () => {
-            const response = await getGeneral("participaciones");
-            setParticipaciones(response);
-            setParticipacionesFiltradas(response);
-        }
-        getParticipaciones();
-
-        const getFiltros = async () => {
-            let response
-            response = await getGeneral("alumnos");
-            setAlumnos(response);
-
-            response = await getGeneral("asesores");
-            setAsesores(response);
-
-            response = await getGeneral("eventos");
-            setEventos(response);
-
-            response = await getGeneral("proyectos");
-            setProyectos(response);
-
-            response = await getGeneral("apoyos");
-            setApoyos(response);
-        }
-        getFiltros();
-    }, []);
-
-    const aplicarFiltros = () => {
-        let newParticipaciones
-
-        newParticipaciones = participaciones.filter((participacion) => {
-            if(filtros.alumno !== ""){
-                return participacion.idAlumnoParticipacion.idAlumno.toString() === filtros.alumno;
-            }
-
-            return true;
-        });
-
-        newParticipaciones = newParticipaciones.filter((participacion) => {
-            if(filtros.asesor !== ""){
-                return participacion.idAsesorParticipacion.idAsesor.toString() === filtros.asesor;
-            }
-
-            return true;
-        });
-
-        newParticipaciones = newParticipaciones.filter((participacion) => {
-            if(filtros.evento !== ""){
-                return participacion.idEventoParticipacion.idEvento.toString() === filtros.evento;
-            }
-
-            return true;
-        });
-
-        newParticipaciones = newParticipaciones.filter((participacion) => {
-            if(filtros.proyecto !== ""){
-                return participacion.idProyectoParticipacion.idProyecto.toString() === filtros.proyecto;
-            }
-
-            return true;
-        });
-
-        newParticipaciones = newParticipaciones.filter((participacion) => {
-            if(filtros.apoyo !== ""){
-                return participacion.idApoyoAlumnoParticipacion.idApoyo.toString() === filtros.apoyo || participacion.idApoyoAsesorParticipacion.idApoyo.toString() === filtros.apoyo;
-            }
-
-            return true;
-        });
-        setParticipacionesFiltradas(newParticipaciones);
+  useEffect(() => {
+    async function fetchData() {
+      const p = await getGeneral("participaciones/detalle");
+      setParticipaciones(p);
+      setAlumnos(await getGeneral("alumnos"));
+      setAsesores(await getGeneral("asesores"));
+      setEventos(await getGeneral("eventos"));
+      setProyectos(await getGeneral("proyectos"));
+      setApoyos(await getGeneral("apoyos"));
     }
+    fetchData();
+  }, []);
 
-    const handleFilters = (e, filtro) => {
-        setFiltros({
-            ...filtros,
-            [filtro]: e.target.value
-        });
-    }
+  // Función helper para encontrar el ID basado en el nombre
+  const findIdByName = (entities, name, idField, nameField) => {
+    if (!entities || !name) return null;
+    const entity = entities.find(e => e[nameField] === name);
+    return entity ? entity[idField] : null;
+  };
+
+  const columns = useMemo(() => [
+    {
+      accessorKey: "idParticipacion",
+      header: "ID de la Participación",
+      cell: ({ row }) => (
+        <Link to={`/perfil/participacion/${row.original.idParticipacion}`}>
+          {row.original.idParticipacion}
+        </Link>
+      ),
+      filterFn: "equals",
+    },
+    {
+      accessorKey: "nombreAlumno",
+      header: "Alumno",
+      cell: ({ row }) => {
+        const alumnoId = findIdByName(alumnos, row.original.nombreAlumno, 'idAlumno', 'nombreAlumno');
+        return (
+          <Link to={`/perfil/alumno/${alumnoId || '#'}`}>
+            {row.original.nombreAlumno}
+          </Link>
+        );
+      },
+      filterFn: "includesString",
+    },
+    {
+      accessorKey: "nombreAsesor",
+      header: "Asesor",
+      cell: ({ row }) => {
+        const asesorId = findIdByName(asesores, row.original.nombreAsesor, 'idAsesor', 'nombreAsesor');
+        return (
+          <Link to={`/perfil/asesor/${asesorId || '#'}`}>
+            {row.original.nombreAsesor}
+          </Link>
+        );
+      },
+      filterFn: "includesString",
+    },
+    {
+      accessorKey: "nombreEvento",
+      header: "Evento",
+      cell: ({ row }) => {
+        const eventoId = findIdByName(eventos, row.original.nombreEvento, 'idEvento', 'nombreEvento');
+        return (
+          <Link to={`/perfil/evento/${eventoId || '#'}`}>
+            {row.original.nombreEvento}
+          </Link>
+        );
+      },
+      filterFn: "includesString",
+    },
+    {
+      accessorKey: "nombreProyecto",
+      header: "Proyecto",
+      cell: ({ row }) => {
+        const proyectoId = findIdByName(proyectos, row.original.nombreProyecto, 'idProyecto', 'nombreProyecto');
+        return (
+          <Link to={`/perfil/proyecto/${proyectoId || '#'}`}>
+            {row.original.nombreProyecto}
+          </Link>
+        );
+      },
+      filterFn: "includesString",
+    },
+    {
+      accessorKey: "categoriaProyecto",
+      header: "Categoría",
+      filterFn: "includesString",
+    },
+    {
+      accessorKey: "descripcionApoyoAlumno",
+      header: "Apoyo al Alumno",
+      cell: ({ row }) => {
+        if (!row.original.descripcionApoyoAlumno) {
+          return "Sin apoyo";
+        }
+        const apoyoId = findIdByName(apoyos, row.original.descripcionApoyoAlumno, 'idApoyo', 'descripcionApoyo');
+        return (
+          <Link to={`/perfil/apoyo/${apoyoId || '#'}`}>
+            {row.original.descripcionApoyoAlumno}
+          </Link>
+        );
+      },
+      filterFn: "includesString",
+    },
+    {
+      accessorKey: "descripcionApoyoAsesor",
+      header: "Apoyo al Asesor",
+      cell: ({ row }) => {
+        if (!row.original.descripcionApoyoAsesor) {
+          return "Sin apoyo";
+        }
+        const apoyoId = findIdByName(apoyos, row.original.descripcionApoyoAsesor, 'idApoyo', 'descripcionApoyo');
+        return (
+          <Link to={`/perfil/apoyo/${apoyoId || '#'}`}>
+            {row.original.descripcionApoyoAsesor}
+          </Link>
+        );
+      },
+      filterFn: "includesString",
+    },
+    {
+      accessorKey: "fechaEvento",
+      header: "Fecha del Evento",
+      cell: ({ row }) => {
+        const fecha = row.original.fechaEvento;
+        return fecha ? new Date(fecha).toLocaleDateString() : "Sin fecha";
+      },
+      filterFn: "includesString",
+    },
+  ], [alumnos, asesores, eventos, proyectos, apoyos]); // Agregamos las dependencias
+
+  const table = useReactTable({
+    data: participaciones || [],
+    columns,
+    state: {
+      columnFilters,
+      sorting,
+      pagination,
+      globalFilter: debouncedGlobalFilter,
+    },
+    onColumnFiltersChange: setColumnFilters,
+    onSortingChange: setSorting,
+    onPaginationChange: setPagination,
+    onGlobalFilterChange: setGlobalFilter,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  });
+
+  // Componente select con búsqueda interna
+  function SelectFilter({ column, options, label, valueKey = "id", textKey = "name" }) {
+    const [search, setSearch] = useState("");
+    const value = column?.getFilterValue() || "";
+
+    const filteredOptions = options.filter(opt =>
+      opt[textKey].toLowerCase().includes(search.toLowerCase())
+    );
 
     return (
-        <div>
-            <h1>Tabla Principal</h1>
-            
-            { !participaciones || !alumnos || !asesores || !eventos || !proyectos || !apoyos ? (<div>Cargando...</div>) : 
-            (
-                <div>
-                    <form>
-                        <label>Filtro Alumno: </label>
-                        <select onChange={(e) => handleFilters(e, "alumno")}>
-                            <option value="">Todos</option>
-                            {alumnos.map((alumno) => (
-                                <option key={alumno.idAlumno} value={alumno.idAlumno}>{alumno.nombreAlumno}</option>
-                            ))}
-                        </select>
-                        <label>Filtro Asesor: </label>
-                        <select onChange={(e) => handleFilters(e, "asesor")}>
-                            <option value="">Todos</option>
-                            {asesores.map((asesor) => (
-                                <option key={asesor.idAsesor} value={asesor.idAsesor}>{asesor.nombreAsesor}</option>
-                            ))}
-                        </select>
-                        <label>Filtro Evento: </label>
-                        <select onChange={(e) => handleFilters(e, "evento")}>
-                            <option value="">Todos</option>
-                            {eventos.map((evento) => (
-                                <option key={evento.idEvento} value={evento.idEvento}>{evento.nombreEvento}</option>
-                            ))}
-                        </select>
-                        <label>Filtro Proyecto: </label>
-                        <select onChange={(e) => handleFilters(e, "proyecto")}>
-                            <option value="">Todos</option>
-                            {proyectos.map((proyecto) => (
-                                <option key={proyecto.idProyecto} value={proyecto.idProyecto}>{proyecto.nombreProyecto}</option>
-                            ))}
-                        </select>
-                        <label>Filtro Apoyo: </label>
-                        <select onChange={(e) => handleFilters(e, "apoyo")}>
-                            <option value="">Todos</option>
-                            {apoyos.map((apoyo) => (
-                                <option key={apoyo.idApoyo} value={apoyo.idApoyo}>{apoyo.descripcionApoyo}</option>
-                            ))}
-                        </select>
-                        <button type="button" onClick={aplicarFiltros}>Filtrar</button>
-                    </form>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID de la Participacion</th>
-                                <th>Alumno</th>
-                                <th>Asesor</th>
-                                <th>Evento</th>
-                                <th>Proyecto</th>
-                                <th>Apoyo al Alumno</th>
-                                <th>Apoyo al Asesor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {participacionesFiltradas.map((participacion) => (
-                                <tr key={participacion.idParticipacion}>
-                                    <td><Link to={`/perfil/participacion/${participacion.idParticipacion}`}>{participacion.idParticipacion}</Link></td>
-                                    <td><Link to={`/perfil/alumno/${participacion.idAlumnoParticipacion.idAlumno}`}>{participacion.idAlumnoParticipacion.nombreAlumno}</Link></td>
-                                    <td><Link to={`/perfil/asesor/${participacion.idAsesorParticipacion.idAsesor}`}>{participacion.idAsesorParticipacion.nombreAsesor}</Link></td>
-                                    <td><Link to={`/perfil/evento/${participacion.idEventoParticipacion.idEvento}`}>{participacion.idEventoParticipacion.nombreEvento}</Link></td>
-                                    <td><Link to={`/perfil/proyecto/${participacion.idProyectoParticipacion.idProyecto}`}>{participacion.idProyectoParticipacion.nombreProyecto}</Link></td>
-                                    <td><Link to={`/perfil/apoyo/${participacion.idApoyoAlumnoParticipacion.idApoyo}`}>{participacion.idApoyoAlumnoParticipacion.descripcionApoyo}</Link></td>
-                                    <td><Link to={`/perfil/apoyo/${participacion.idApoyoAlumnoParticipacion.idApoyo}`}>{participacion.idApoyoAsesorParticipacion.descripcionApoyo}</Link></td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>    
-                </div>        
-            )}
-        </div>
+      <label style={{ marginRight: 10 }}>
+        {label}:
+        <input
+          type="text"
+          placeholder={`Buscar ${label.toLowerCase()}...`}
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{ marginLeft: 5, marginRight: 5 }}
+        />
+        <select
+          value={value}
+          onChange={(e) => column?.setFilterValue(e.target.value || undefined)}
+        >
+          <option value="">Todos</option>
+          {filteredOptions.map((opt) => (
+            <option key={opt[valueKey]} value={String(opt[valueKey])}>
+              {opt[textKey]}
+            </option>
+          ))}
+        </select>
+      </label>
     );
+  }
+
+  if (
+    !participaciones ||
+    !alumnos ||
+    !asesores ||
+    !eventos ||
+    !proyectos ||
+    !apoyos
+  ) {
+    return <div>Cargando...</div>;
+  }
+
+  return (
+    <div>
+      <h1>Tabla Principal</h1>
+
+      {/* Búsqueda global */}
+      <input
+        type="text"
+        placeholder="Buscar en toda la tabla..."
+        value={globalFilter}
+        onChange={(e) => setGlobalFilter(e.target.value)}
+        style={{ marginBottom: "1rem", width: "100%", padding: "0.5rem" }}
+      />
+
+      {/* Filtros select con búsqueda */}
+      <form style={{ marginBottom: "1rem" }}>
+        {table.getColumn("nombreAlumno") && (
+          <SelectFilter
+            column={table.getColumn("nombreAlumno")}
+            options={alumnos}
+            label="Filtro Alumno"
+            valueKey="idAlumno"
+            textKey="nombreAlumno"
+          />
+        )}
+        {table.getColumn("nombreAsesor") && (
+          <SelectFilter
+            column={table.getColumn("nombreAsesor")}
+            options={asesores}
+            label="Filtro Asesor"
+            valueKey="idAsesor"
+            textKey="nombreAsesor"
+          />
+        )}
+        {table.getColumn("nombreEvento") && (
+          <SelectFilter
+            column={table.getColumn("nombreEvento")}
+            options={eventos}
+            label="Filtro Evento"
+            valueKey="idEvento"
+            textKey="nombreEvento"
+          />
+        )}
+        {table.getColumn("nombreProyecto") && (
+          <SelectFilter
+            column={table.getColumn("nombreProyecto")}
+            options={proyectos}
+            label="Filtro Proyecto"
+            valueKey="idProyecto"
+            textKey="nombreProyecto"
+          />
+        )}
+        {table.getColumn("descripcionApoyoAlumno") && (
+          <SelectFilter
+            column={table.getColumn("descripcionApoyoAlumno")}
+            options={apoyos}
+            label="Filtro Apoyo Alumno"
+            valueKey="idApoyo"
+            textKey="descripcionApoyo"
+          />
+        )}
+        {table.getColumn("descripcionApoyoAsesor") && (
+          <SelectFilter
+            column={table.getColumn("descripcionApoyoAsesor")}
+            options={apoyos}
+            label="Filtro Apoyo Asesor"
+            valueKey="idApoyo"
+            textKey="descripcionApoyo"
+          />
+        )}
+      </form>
+
+      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th
+                  key={header.id}
+                  onClick={header.column.getToggleSortingHandler()}
+                  style={{ 
+                    cursor: "pointer", 
+                    userSelect: "none",
+                    border: "1px solid #ccc",
+                    padding: "8px",
+                    backgroundColor: "#f5f5f5"
+                  }}
+                >
+                  {flexRender(header.column.columnDef.header, header.getContext())}
+                  {{
+                    asc: " 🔼",
+                    desc: " 🔽",
+                  }[header.column.getIsSorted()] ?? null}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td 
+                  key={cell.id}
+                  style={{ 
+                    border: "1px solid #ccc",
+                    padding: "8px"
+                  }}
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div style={{ marginTop: "1rem" }}>
+        <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+          Anterior
+        </button>
+        <span style={{ margin: "0 1rem" }}>
+          Página {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
+        </span>
+        <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+          Siguiente
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default TablaPrincipal;

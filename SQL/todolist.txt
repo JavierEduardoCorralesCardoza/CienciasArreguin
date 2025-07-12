@@ -1,1 +1,3 @@
-Hacer el sistema de roles (admin, asesor y alumno), que el asesor pueda ver su perfil y el de sus alumnos, que el alumno pueda ver su perfil y el de sus asesores, las tablas van a estar limitadas a los proyectos en los que haya participado cada parte
+Hacer el sistema de roles (admin, asesor y alumno), que el asesor pueda ver su perfil y el de sus alumnos, que 
+el alumno pueda ver su perfil y el de sus asesores, las tablas van a estar limitadas a los proyectos en los que 
+haya participado cada parte

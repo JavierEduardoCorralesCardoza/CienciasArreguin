@@ -5,35 +5,43 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ciencias_arreguin.arreguin.dtos.AsesoresDTO;
 import com.ciencias_arreguin.arreguin.models.Asesores;
 import com.ciencias_arreguin.arreguin.repositories.AsesoresRepository;
+import com.ciencias_arreguin.arreguin.mappers.AsesoresMapper;
 
 @Service
 public class AsesoresServices {
 
     @Autowired
     private AsesoresRepository asesores_repository;
+    
+    @Autowired
+    private AsesoresMapper asesores_mapper;
 
-    public List<Asesores> getAsesores() {
-        return asesores_repository.findAll();
+    public List<AsesoresDTO> getAsesores() {
+        List<Asesores> asesores = asesores_repository.findAll();
+        return asesores_mapper.toDTOList(asesores);
     }
 
-    public Asesores postAsesor(Asesores asesor) {
-        return asesores_repository.save(asesor);
+    public AsesoresDTO postAsesor(AsesoresDTO asesorDTO) {
+        Asesores asesor = asesores_mapper.toEntity(asesorDTO);
+        Asesores savedAsesor = asesores_repository.save(asesor);
+        return asesores_mapper.toDTO(savedAsesor);
     }
 
-    public Asesores getAsesorById(int id) {
-        return asesores_repository.findById(id).get();
+    public AsesoresDTO getAsesorById(int id) {
+        Asesores asesor = asesores_repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Asesor no encontrado con ID: " + id));
+        return asesores_mapper.toDTOWithPassword(asesor);
     }
 
-    public Asesores putAsesor(int id, Asesores asesor) {
-        Asesores asesor_actual = asesores_repository.findById(id).get();
+    public AsesoresDTO putAsesor(int id, AsesoresDTO asesorDTO) {
+        Asesores asesor_actual = asesores_repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Asesor no encontrado con ID: " + id));
 
-        asesor_actual.setCorreoAsesor(asesor.getCorreoAsesor());
-        asesor_actual.setContrasenaAsesor(asesor.getContrasenaAsesor());
-        asesor_actual.setNombreAsesor(asesor.getNombreAsesor());
-        asesor_actual.setImagenAsesor(asesor.getImagenAsesor());
-
-        return asesores_repository.save(asesor_actual);
+        asesores_mapper.updateEntityFromDTO(asesorDTO, asesor_actual);
+        Asesores savedAsesor = asesores_repository.save(asesor_actual);
+        return asesores_mapper.toDTO(savedAsesor);
     }
 }

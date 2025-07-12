@@ -5,34 +5,43 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ciencias_arreguin.arreguin.dtos.ProyectosDTO;
 import com.ciencias_arreguin.arreguin.models.Proyectos;
 import com.ciencias_arreguin.arreguin.repositories.ProyectosRepository;
+import com.ciencias_arreguin.arreguin.mappers.ProyectosMapper;
 
 @Service
 public class ProyectosServices {
 
     @Autowired
     private ProyectosRepository proyectos_repository;
+    
+    @Autowired
+    private ProyectosMapper proyectos_mapper;
 
-    public List<Proyectos> getProyectos() {
-        return proyectos_repository.findAll();
+    public List<ProyectosDTO> getProyectos() {
+        List<Proyectos> proyectos = proyectos_repository.findAll();
+        return proyectos_mapper.toDTOList(proyectos);
     }
 
-    public Proyectos postProyecto(Proyectos proyecto) {
-        return proyectos_repository.save(proyecto);
+    public ProyectosDTO postProyecto(ProyectosDTO proyectoDTO) {
+        Proyectos proyecto = proyectos_mapper.toEntity(proyectoDTO);
+        Proyectos savedProyecto = proyectos_repository.save(proyecto);
+        return proyectos_mapper.toDTO(savedProyecto);
     }
 
-    public Proyectos getProyectoById(int id) {
-        return proyectos_repository.findById(id).get();
+    public ProyectosDTO getProyectoById(int id) {
+        Proyectos proyecto = proyectos_repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Proyecto no encontrado con ID: " + id));
+        return proyectos_mapper.toDTO(proyecto);
     }
 
-    public Proyectos putProyecto(int id, Proyectos proyecto) {
-        Proyectos proyecto_actual = proyectos_repository.findById(id).get();
+    public ProyectosDTO putProyecto(int id, ProyectosDTO proyectoDTO) {
+        Proyectos proyecto_actual = proyectos_repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Proyecto no encontrado con ID: " + id));
 
-        proyecto_actual.setNombreProyecto(proyecto.getNombreProyecto());
-        proyecto_actual.setCategoriaProyecto(proyecto.getCategoriaProyecto());
-        proyecto_actual.setDescripcionProyecto(proyecto.getDescripcionProyecto());
-        
-        return proyectos_repository.save(proyecto_actual);
+        proyectos_mapper.updateEntityFromDTO(proyectoDTO, proyecto_actual);
+        Proyectos savedProyecto = proyectos_repository.save(proyecto_actual);
+        return proyectos_mapper.toDTO(savedProyecto);
     }
 }
