@@ -27,7 +27,7 @@ public class Asesores {
     @Column(name = "ImagenAsesor")
     private String imagenAsesor;
 
-    @OneToMany(mappedBy = "idAsesorParticipacion")
+    @OneToMany(mappedBy = "idAsesorParticipacion", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference(value = "asesor-participacion")
     private List<Participaciones> listaAsesorParticipacion;
 

@@ -3,6 +3,7 @@ package com.ciencias_arreguin.arreguin.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,5 +40,10 @@ public class AsesoresController {
     @PutMapping("/{id}")
     public AsesoresDTO putAsesor(@PathVariable int id, @RequestBody AsesoresDTO asesor) {
         return asesores_services.putAsesor(id, asesor);
+    }
+
+    @DeleteMapping("/{id}")
+    public AsesoresDTO deleteAsesor(@PathVariable int id) {
+        return asesores_services.deleteAsesor(id);
     }
 }

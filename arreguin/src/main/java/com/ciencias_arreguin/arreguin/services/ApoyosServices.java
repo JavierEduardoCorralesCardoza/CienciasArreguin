@@ -44,4 +44,11 @@ public class ApoyosServices {
         Apoyos savedApoyo = apoyos_repository.save(apoyo_actual);
         return apoyos_mapper.toDTO(savedApoyo);
     }
+
+    public ApoyosDTO deleteApoyo(int id) {
+        Apoyos apoyo = apoyos_repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Apoyo no encontrado con ID: " + id));
+        apoyos_repository.delete(apoyo);
+        return apoyos_mapper.toDTO(apoyo);
+    }
 }

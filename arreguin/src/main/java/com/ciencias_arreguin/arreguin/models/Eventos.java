@@ -22,7 +22,7 @@ public class Eventos {
     @Column(name = "FechaEvento", nullable = false)
     private LocalDate fechaEvento;
 
-    @OneToMany(mappedBy = "idEventoParticipacion")
+    @OneToMany(mappedBy = "idEventoParticipacion", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference(value = "evento-participacion")
     private List<Participaciones> listaEventoParticipacion;
 

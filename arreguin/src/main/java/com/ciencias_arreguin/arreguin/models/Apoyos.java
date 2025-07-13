@@ -20,11 +20,11 @@ public class Apoyos {
     @Column(name = "DescripcionApoyo", nullable = false)
     private String descripcionApoyo;
     
-    @OneToMany(mappedBy = "idApoyoAlumnoParticipacion")
+    @OneToMany(mappedBy = "idApoyoAlumnoParticipacion", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference(value = "apoyo-alumno-participacion")
     private List<Participaciones> listaApoyoAlumnoParticipacion;
 
-    @OneToMany(mappedBy = "idApoyoAsesorParticipacion")
+    @OneToMany(mappedBy = "idApoyoAsesorParticipacion", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference(value = "apoyo-asesor-participacion")
     private List<Participaciones> listaApoyoAsesorParticipacion;
 

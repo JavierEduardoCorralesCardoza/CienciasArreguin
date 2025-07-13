@@ -44,4 +44,11 @@ public class EventosServices {
         Eventos savedEvento = eventos_repository.save(evento_actual);
         return eventos_mapper.toDTO(savedEvento);
     }
+
+    public EventosDTO deleteEvento(int id) {
+        Eventos evento = eventos_repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Evento no encontrado con ID: " + id));
+        eventos_repository.delete(evento);
+        return eventos_mapper.toDTO(evento);
+    }
 }

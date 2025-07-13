@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,7 +34,7 @@ public class Alumnos {
     @Column(name = "ImagenAlumno", length = 45)
     private String imagenAlumno;
 
-    @OneToMany(mappedBy = "idAlumnoParticipacion")
+    @OneToMany(mappedBy = "idAlumnoParticipacion", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference(value = "alumno-participacion")
     private List<Participaciones> listaAlumnoParticipacion;
 
