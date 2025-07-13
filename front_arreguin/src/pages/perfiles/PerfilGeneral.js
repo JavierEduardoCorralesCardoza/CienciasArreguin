@@ -7,6 +7,7 @@ import putAsesor from "../../apis/put/putAsesor";
 import putEvento from "../../apis/put/putEvento";
 import putProyecto from "../../apis/put/putProyecto";
 import putApoyo from "../../apis/put/putApoyo";
+import deleteGeneral from "../../apis/delete/deleteGeneral";  
 
 const putFunctions = {
   alumno: putAlumno,
@@ -79,12 +80,26 @@ function PerfilGeneral() {
     setEdicion((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleDelete = async () => {
+    if (window.confirm(`¿Estás seguro de que quieres eliminar este ${entidad}?`)) {
+      try {
+        await deleteGeneral(`${estructura_clases.entidades[entidad].plural}/${id}`);
+        window.history.back();
+      } catch (e) {
+        alert("Error al eliminar el registro");
+      }
+    }
+  }
+
   return (
     <div>
       <header>
         <h1>Perfil de {entidad}</h1>
         <button type="button" onClick={() => setIsModalOpen((prev) => !prev)}>
           {isModalOpen ? "Cerrar" : "Editar"}
+        </button>
+        <button type="button" onClick={handleDelete}>
+          Eliminar
         </button>
       </header>
 

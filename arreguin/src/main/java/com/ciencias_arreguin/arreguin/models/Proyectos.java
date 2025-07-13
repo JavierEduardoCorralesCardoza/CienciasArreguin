@@ -24,7 +24,7 @@ public class Proyectos {
     @Column(name = "DescripcionProyecto", nullable = false)
     private String descripcionProyecto;
 
-    @OneToMany(mappedBy = "idProyectoParticipacion")
+    @OneToMany(mappedBy = "idProyectoParticipacion", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference(value = "proyecto-participacion")
     private List<Participaciones> listaProyectoParticipacion;
 

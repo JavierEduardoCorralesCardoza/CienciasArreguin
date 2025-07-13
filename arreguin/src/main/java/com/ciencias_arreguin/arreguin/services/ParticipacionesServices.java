@@ -148,4 +148,11 @@ public class ParticipacionesServices {
         Participaciones savedParticipacion = participaciones_repository.save(participacion_actual);
         return participaciones_mapper.toDTO(savedParticipacion);
     }
+
+    public ParticipacionesDTO deleteParticipacion(int id) {
+        Participaciones participacion = participaciones_repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Participación no encontrada con ID: " + id));
+        participaciones_repository.delete(participacion);
+        return participaciones_mapper.toDTO(participacion);
+    }
 }

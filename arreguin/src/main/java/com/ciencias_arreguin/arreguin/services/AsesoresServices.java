@@ -44,4 +44,11 @@ public class AsesoresServices {
         Asesores savedAsesor = asesores_repository.save(asesor_actual);
         return asesores_mapper.toDTO(savedAsesor);
     }
+
+    public AsesoresDTO deleteAsesor(int id) {
+        Asesores asesor = asesores_repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Asesor no encontrado con ID: " + id));
+        asesores_repository.delete(asesor);
+        return asesores_mapper.toDTO(asesor);
+    }
 }

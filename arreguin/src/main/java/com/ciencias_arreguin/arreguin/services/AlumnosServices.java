@@ -44,4 +44,12 @@ public class AlumnosServices {
         Alumnos savedAlumno = alumnos_repository.save(alumno_actualizado);
         return alumnos_mapper.toDTO(savedAlumno);
     }
+
+    public AlumnosDTO deleteAlumno(int id) {
+        Alumnos alumno = alumnos_repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Alumno no encontrado con ID: " + id));
+        
+        alumnos_repository.delete(alumno);
+        return alumnos_mapper.toDTO(alumno);
+    }
 }

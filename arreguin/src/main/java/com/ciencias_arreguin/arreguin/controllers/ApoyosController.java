@@ -3,6 +3,7 @@ package com.ciencias_arreguin.arreguin.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,5 +40,10 @@ public class ApoyosController {
     @PutMapping("/{id}")
     public ApoyosDTO putApoyo(@PathVariable int id, @RequestBody ApoyosDTO apoyo) {
         return apoyos_services.putApoyo(id, apoyo);
+    }
+
+    @DeleteMapping("/{id}")
+    public ApoyosDTO deleteApoyo(@PathVariable int id) {
+        return apoyos_services.deleteApoyo(id);
     }
 }

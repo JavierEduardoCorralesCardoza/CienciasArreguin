@@ -44,4 +44,11 @@ public class ProyectosServices {
         Proyectos savedProyecto = proyectos_repository.save(proyecto_actual);
         return proyectos_mapper.toDTO(savedProyecto);
     }
+
+    public ProyectosDTO deleteProyecto(int id) {
+        Proyectos proyecto = proyectos_repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Proyecto no encontrado con ID: " + id));
+        proyectos_repository.delete(proyecto);
+        return proyectos_mapper.toDTO(proyecto);
+    }
 }
