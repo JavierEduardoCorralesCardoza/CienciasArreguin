@@ -15,16 +15,16 @@ public class Asesores {
     @Column(name = "IdAsesor")
     private int idAsesor;
     
-    @Column(name = "CorreoAsesor", nullable = false)
+    @Column(name = "CorreoAsesor", nullable = false, length = 128)
     private String correoAsesor;
-    
-    @Column(name = "ContrasenaAsesor", nullable = false)
+
+    @Column(name = "ContrasenaAsesor", nullable = false, length = 128)
     private String contrasenaAsesor;
-    
-    @Column(name = "NombreAsesor", nullable = false)
+
+    @Column(name = "NombreAsesor", nullable = false, length = 128)
     private String nombreAsesor;
     
-    @Column(name = "ImagenAsesor")
+    @Column(name = "ImagenAsesor", length = 128)
     private String imagenAsesor;
 
     @Column(name = "rolAsesor", nullable = false)

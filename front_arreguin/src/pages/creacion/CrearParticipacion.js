@@ -139,9 +139,8 @@ function CrearParticipacion() {
           name="apoyoAlumnoParticipacionId"
           value={formData.apoyoAlumnoParticipacionId}
           onChange={handleChange}
-          required
         >
-          <option value="" disabled>
+          <option value="">
             Selecciona un apoyo
           </option>
           {opciones.apoyos.map((apoyoItem) => (
@@ -157,9 +156,8 @@ function CrearParticipacion() {
           name="apoyoAsesorParticipacionId"
           value={formData.apoyoAsesorParticipacionId}
           onChange={handleChange}
-          required
         >
-          <option value="" disabled>
+          <option value="">
             Selecciona un apoyo
           </option>
           {opciones.apoyos.map((apoyoItem) => (

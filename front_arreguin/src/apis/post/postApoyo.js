@@ -1,28 +1,19 @@
-import API_URL from "../../utils/config";
+import apiService from "../apiService.js";
 
-function postApoyo(event) {
-    
-    const data = {
-        patrocinadorApoyo: event.target.apoyoPatrocinador.value,
-        descripcionApoyo: event.target.apoyoDescripcion.value
-    };
+async function postApoyo(event) {
 
-    console.log(data);
-    
-    fetch(`${API_URL}/apoyos`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch((error) => {
+    try {
+        const data = {
+            patrocinadorApoyo: event.target.apoyoPatrocinador.value,
+            descripcionApoyo: event.target.apoyoDescripcion.value
+        };
+
+        const response = await apiService.post('/apoyos', data);
+        return response;
+    } catch (error) {
         console.error('Error:', error);
-    });
+        return null;
+    }
 }
 
 export default postApoyo;

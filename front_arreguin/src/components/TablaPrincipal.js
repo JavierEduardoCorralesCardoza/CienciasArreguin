@@ -9,6 +9,8 @@ import {
 } from "@tanstack/react-table";
 import { Link } from "react-router-dom";
 import getGeneral from "../apis/get/getGeneral";
+import { useAuth } from '../contexts/AuthContext';
+import getByIdGeneral from "../apis/getById/getByIdGeneral";
 
 // Hook para debounce
 function useDebounce(value, delay) {
@@ -34,9 +36,20 @@ function TablaPrincipal() {
   const [globalFilter, setGlobalFilter] = useState("");
   const debouncedGlobalFilter = useDebounce(globalFilter, 300);
 
+  const { currentUser, logout, isAdminUser, isAlumno, isAsesor } = useAuth();
+
   useEffect(() => {
     async function fetchData() {
-      const p = await getGeneral("participaciones/detalle");
+
+      let p = [];
+      if (isAdminUser) {
+        p = await getGeneral("participaciones/detalle");
+      }
+      else {
+        console.log(currentUser)
+        p = await getByIdGeneral(currentUser.id, `participaciones/detalle/usuario`);
+      }
+
       setParticipaciones(p);
       setAlumnos(await getGeneral("alumnos"));
       setAsesores(await getGeneral("asesores"));
@@ -196,13 +209,6 @@ function TablaPrincipal() {
     return (
       <label style={{ marginRight: 10 }}>
         {label}:
-        <input
-          type="text"
-          placeholder={`Buscar ${label.toLowerCase()}...`}
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          style={{ marginLeft: 5, marginRight: 5 }}
-        />
         <select
           value={value}
           onChange={(e) => column?.setFilterValue(e.target.value || undefined)}

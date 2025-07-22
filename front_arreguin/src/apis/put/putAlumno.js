@@ -1,6 +1,6 @@
-import API_URL from '../../utils/config.js';
+import apiService from "../apiService.js";
 
-function putAlumno(event, id) {
+async function putAlumno(event, id) {
 
     const data = {
         correoAlumno: event.target.correoAlumno.value,
@@ -8,21 +8,14 @@ function putAlumno(event, id) {
         nombreAlumno: event.target.correoAlumno.value,
         imagenAlumno: event.target.correoAlumno.value,
     };
-    
-    fetch(`${API_URL}/alumnos/${id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch((error) => {
+
+    try {
+        const response = await apiService.put(`/alumnos/${id}`, data);
+        return response;
+    } catch (error) {
         console.error('Error:', error);
-    });
+        return null;
+    }
 }
 
 export default putAlumno;

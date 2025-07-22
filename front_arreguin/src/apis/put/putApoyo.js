@@ -1,26 +1,19 @@
-import API_URL from "../../utils/config";
+import apiService from "../apiService.js";
 
-function putApoyo(event,id) {
-    
+async function putApoyo(event,id) {
+
     const data = {
         patrocinadorApoyo: event.target.patrocinadorApoyo.value,
         descripcionApoyo: event.target.descripcionApoyo.value
     };
-    
-    fetch(`${API_URL}/apoyos/${id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch((error) => {
+
+    try {
+        const response = await apiService.put(`/apoyos/${id}`, data);
+        return response;
+    } catch (error) {
         console.error('Error:', error);
-    });
+        return null;
+    }
 }
 
 export default putApoyo;

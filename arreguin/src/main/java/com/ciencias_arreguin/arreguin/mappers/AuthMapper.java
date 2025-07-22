@@ -17,7 +17,8 @@ public class AuthMapper {
             "alumno",
             alumno.getIdAlumno(),
             alumno.getNombreAlumno(),
-            mensaje
+            mensaje,
+            null // Los alumnos no tienen rol
         );
     }
 
@@ -30,7 +31,8 @@ public class AuthMapper {
             "asesor",
             asesor.getIdAsesor(),
             asesor.getNombreAsesor(),
-            mensaje
+            mensaje,
+            asesor.getRolAsesor()
         );
     }
 
@@ -38,14 +40,23 @@ public class AuthMapper {
      * Crea un LoginResponseDTO de error
      */
     public LoginResponseDTO toErrorResponseDTO(String mensaje) {
-        return new LoginResponseDTO(null, null, 0, null, mensaje);
+        return new LoginResponseDTO(null, null, 0, null, mensaje, null);
     }
 
     /**
-     * Crea un LoginResponseDTO exitoso con información del token
+     * Crea un LoginResponseDTO exitoso con información del token (para alumnos)
      */
     public LoginResponseDTO toSuccessResponseDTO(String token, String tipoUsuario, 
                                                Integer userId, String nombreUsuario, String mensaje) {
-        return new LoginResponseDTO(token, tipoUsuario, userId, nombreUsuario, mensaje);
+        return new LoginResponseDTO(token, tipoUsuario, userId, nombreUsuario, mensaje, null);
+    }
+
+    /**
+     * Crea un LoginResponseDTO exitoso con información del token (para asesores con rol)
+     */
+    public LoginResponseDTO toSuccessResponseDTOWithRole(String token, String tipoUsuario, 
+                                                       Integer userId, String nombreUsuario, 
+                                                       String mensaje, String rol) {
+        return new LoginResponseDTO(token, tipoUsuario, userId, nombreUsuario, mensaje, rol);
     }
 }
