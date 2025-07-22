@@ -6,18 +6,20 @@ public class AsesoresDTO {
     private String contrasenaAsesor;
     private String nombreAsesor;
     private String imagenAsesor;
+    private String rolAsesor;
 
     // Constructor vacío
     public AsesoresDTO() {}
 
     // Constructor con parámetros
     public AsesoresDTO(int idAsesor, String correoAsesor, String contrasenaAsesor, 
-                       String nombreAsesor, String imagenAsesor) {
+                       String nombreAsesor, String imagenAsesor, String rolAsesor) {
         this.idAsesor = idAsesor;
         this.correoAsesor = correoAsesor;
         this.contrasenaAsesor = contrasenaAsesor;
         this.nombreAsesor = nombreAsesor;
         this.imagenAsesor = imagenAsesor;
+        this.rolAsesor = rolAsesor;
     }
 
     // Getters y Setters
@@ -59,5 +61,13 @@ public class AsesoresDTO {
 
     public void setImagenAsesor(String imagenAsesor) {
         this.imagenAsesor = imagenAsesor;
+    }
+
+    public String getRolAsesor() {
+        return rolAsesor;
+    }
+
+    public void setRolAsesor(String rolAsesor) {
+        this.rolAsesor = rolAsesor;
     }
 }

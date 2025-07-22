@@ -1,20 +1,12 @@
-import API_URL from "../../utils/config";
+import apiService from "../apiService.js";
 
 async function getGeneral(ruta) {
     try {
-        const response = await fetch(`${API_URL}/${ruta}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        const data = await response.json();
-        console.log('Success:', data);
+        const data = await apiService.get(`/${ruta}`);
         return data;
     } catch (error) {
         console.error('Error:', error);
-        return null; 
+        return null;
     }
 }
 

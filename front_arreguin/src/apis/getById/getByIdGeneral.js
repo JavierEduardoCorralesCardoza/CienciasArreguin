@@ -1,16 +1,8 @@
-import API_URL from "../../utils/config";
+import apiService from "../apiService.js";
 
 async function getByIdGeneral(id, ruta) {
     try {
-        const response = await fetch(`${API_URL}/${ruta}/busqueda?id=${id}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        const data = await response.json();
-        console.log('Success:', data);
+        const data = await apiService.get(`/${ruta}/busqueda?id=${id}`);
         return data;
     } catch (error) {
         console.error('Error:', error);
