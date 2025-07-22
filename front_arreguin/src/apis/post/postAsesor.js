@@ -7,6 +7,7 @@ function postAsesor(event) {
         contrasenaAsesor: event.target.asesorContraseña.value,
         nombreAsesor: event.target.asesorNombre.value,
         imagenAsesor: event.target.asesorFoto.value,
+        rolAsesor: "asesor"
     };
     
     fetch(`${API_URL}/asesores`, {

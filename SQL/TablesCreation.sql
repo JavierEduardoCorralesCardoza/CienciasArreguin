@@ -21,7 +21,8 @@ CREATE TABLE Asesores(
     CorreoAsesor VARCHAR(45) NOT NULL,
     ContrasenaAsesor VARCHAR(45) NOT NULL,
     NombreAsesor VARCHAR(45) NOT NULL,
-    ImagenAsesor VARCHAR(45)
+    ImagenAsesor VARCHAR(45),
+    rolAsesor VARCHAR(45) NOT NULL
 );
 
 CREATE TABLE Proyectos(

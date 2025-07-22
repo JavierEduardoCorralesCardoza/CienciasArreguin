@@ -27,6 +27,9 @@ public class Asesores {
     @Column(name = "ImagenAsesor")
     private String imagenAsesor;
 
+    @Column(name = "rolAsesor", nullable = false)
+    private String rolAsesor;
+
     @OneToMany(mappedBy = "idAsesorParticipacion", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference(value = "asesor-participacion")
     private List<Participaciones> listaAsesorParticipacion;
@@ -69,6 +72,14 @@ public class Asesores {
 
     public void setImagenAsesor(String imagenAsesor) {
         this.imagenAsesor = imagenAsesor;
+    }
+
+    public String getRolAsesor() {
+        return rolAsesor;
+    }
+
+    public void setRolAsesor(String rolAsesor) {
+        this.rolAsesor = rolAsesor;
     }
 
     public List<Participaciones> getListaAsesorParticipacion() {

@@ -32,8 +32,14 @@ function TablaGeneral() {
     setLoading(true);
     setError(null);
     getGeneral(entidad)
-      .then((response) => setEntidades(response))
-      .catch(() => setError("Error al cargar datos"))
+      .then((response) => {
+        // Ensure we always set an array, even if response is null
+        setEntidades(response || []);
+      })
+      .catch(() => {
+        setError("Error al cargar datos");
+        setEntidades([]); // Set empty array on error
+      })
       .finally(() => setLoading(false));
   }, [entidad]);
 
@@ -42,10 +48,19 @@ function TablaGeneral() {
     setPagination({ pageIndex: 0, pageSize: 10 });
   }, [entidad]);
 
-  const idKey = useMemo(() => (entidades.length ? Object.keys(entidades[0])[0] : null), [entidades]);
+  // Add null/undefined check for entidades
+  const idKey = useMemo(() => {
+    if (!entidades || !Array.isArray(entidades) || entidades.length === 0) {
+      return null;
+    }
+    return Object.keys(entidades[0])[0];
+  }, [entidades]);
 
   const columns = useMemo(() => {
-    if (entidades.length === 0 || !idKey) return [];
+    // Add comprehensive checks
+    if (!entidades || !Array.isArray(entidades) || entidades.length === 0 || !idKey) {
+      return [];
+    }
 
     return Object.keys(entidades[0]).map((key) => ({
       accessorKey: key,
@@ -62,7 +77,7 @@ function TablaGeneral() {
   }, [entidades, entidad, idKey]);
 
   const table = useReactTable({
-    data: entidades,
+    data: entidades || [], // Ensure data is always an array
     columns,
     state: {
       sorting,
@@ -80,7 +95,7 @@ function TablaGeneral() {
 
   if (loading) return <p>Cargando...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
-  if (entidades.length === 0) return <p>No hay datos para mostrar</p>;
+  if (!entidades || entidades.length === 0) return <p>No hay datos para mostrar</p>;
 
   return (
     <div>
@@ -90,9 +105,10 @@ function TablaGeneral() {
         placeholder="Filtrar..."
         value={filtroGlobal}
         onChange={(e) => setFiltroGlobal(e.target.value)}
+        style={{ marginBottom: "1rem", padding: "0.5rem" }}
       />
 
-      <table>
+      <table style={{ width: "100%", borderCollapse: "collapse" }}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
@@ -105,7 +121,13 @@ function TablaGeneral() {
                     aria-sort={
                       isSorted === "asc" ? "ascending" : isSorted === "desc" ? "descending" : "none"
                     }
-                    style={{ cursor: "pointer", userSelect: "none" }}
+                    style={{ 
+                      cursor: "pointer", 
+                      userSelect: "none",
+                      border: "1px solid #ccc",
+                      padding: "8px",
+                      backgroundColor: "#f5f5f5"
+                    }}
                   >
                     {flexRender(header.column.columnDef.header, header.getContext())}
                     {isSorted === "asc" ? " 🔼" : isSorted === "desc" ? " 🔽" : ""}
@@ -120,18 +142,26 @@ function TablaGeneral() {
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                <td 
+                  key={cell.id}
+                  style={{ 
+                    border: "1px solid #ccc",
+                    padding: "8px"
+                  }}
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
               ))}
             </tr>
           ))}
         </tbody>
       </table>
 
-      <div>
+      <div style={{ marginTop: "1rem" }}>
         <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
           Anterior
         </button>
-        <span>
+        <span style={{ margin: "0 1rem" }}>
           Página {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
         </span>
         <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
