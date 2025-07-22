@@ -1,6 +1,7 @@
 package com.ciencias_arreguin.arreguin.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,6 +70,25 @@ public class ParticipacionesServices {
         Participaciones participacion = participaciones_repository.findById(id)
             .orElseThrow(() -> new RuntimeException("Participación no encontrada con ID: " + id));
         return participaciones_detalle_mapper.toDetalleDTO(participacion);
+    }
+
+    public List<ParticipacionesDetalleDTO> getParticipacionesDetalleByUsuarioId(int id_usuario) {
+        
+        // Buscar en alumnos primero
+        Optional<Alumnos> alumnoOpt = alumnos_repository.findById(id_usuario);
+        if (alumnoOpt.isPresent()) {
+            List<Participaciones> participaciones = participaciones_repository.findByIdAlumnoParticipacion(alumnoOpt.get());
+            return participaciones_detalle_mapper.toDetalleDTOList(participaciones);
+        }
+        
+        // Si no está en alumnos, buscar en asesores
+        Optional<Asesores> asesorOpt = asesores_repository.findById(id_usuario);
+        if (asesorOpt.isPresent()) {
+            List<Participaciones> participaciones = participaciones_repository.findByIdAsesorParticipacion(asesorOpt.get());
+            return participaciones_detalle_mapper.toDetalleDTOList(participaciones);
+        }
+
+        throw new RuntimeException("Usuario no encontrado con ID: " + id_usuario);
     }
 
     public ParticipacionesDTO postParticipacion(ParticipacionesDTO participacionDTO) {

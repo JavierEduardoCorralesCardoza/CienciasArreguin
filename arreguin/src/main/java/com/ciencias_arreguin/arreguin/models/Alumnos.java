@@ -22,16 +22,16 @@ public class Alumnos {
     @Column(name = "IdAlumno")
     private int idAlumno;
 
-    @Column(name = "CorreoAlumno", nullable = false, length = 45)
+    @Column(name = "CorreoAlumno", nullable = false, length = 128)
     private String correoAlumno;
 
-    @Column(name = "ContrasenaAlumno", nullable = false, length = 45)
+    @Column(name = "ContrasenaAlumno", nullable = false, length = 128)
     private String contrasenaAlumno;
 
-    @Column(name = "NombreAlumno", nullable = false, length = 45)
+    @Column(name = "NombreAlumno", nullable = false, length = 128)
     private String nombreAlumno;
 
-    @Column(name = "ImagenAlumno", length = 45)
+    @Column(name = "ImagenAlumno", length = 128)
     private String imagenAlumno;
 
     @OneToMany(mappedBy = "idAlumnoParticipacion", cascade = CascadeType.ALL, orphanRemoval = true)

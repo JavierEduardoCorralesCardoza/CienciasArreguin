@@ -49,7 +49,7 @@ public class AuthService {
                 isPasswordValid = verifyPassword(loginRequest.getContrasena(), alumno.getContrasenaAlumno());
                 
                 if (isPasswordValid) {
-                    // Generar token
+                    // Generar token para alumno (sin rol)
                     String token = jwtUtil.generateToken(
                         alumno.getIdAlumno(), 
                         "alumno", 
@@ -65,11 +65,12 @@ public class AuthService {
                 isPasswordValid = verifyPassword(loginRequest.getContrasena(), asesor.getContrasenaAsesor());
                 
                 if (isPasswordValid) {
-                    // Generar token
-                    String token = jwtUtil.generateToken(
+                    // Generar token para asesor (con rol)
+                    String token = jwtUtil.generateTokenWithRole(
                         asesor.getIdAsesor(), 
                         "asesor", 
-                        asesor.getCorreoAsesor()
+                        asesor.getCorreoAsesor(),
+                        asesor.getRolAsesor()
                     );
                     return authMapper.toLoginResponseDTO(asesor, token, "Login exitoso");
                 }
@@ -95,6 +96,7 @@ public class AuthService {
             Integer userId = jwtUtil.getUserIdFromToken(token);
             String tipoUsuario = jwtUtil.getTipoUsuarioFromToken(token);
             String email = jwtUtil.getEmailFromToken(token);
+            String rol = jwtUtil.getRolFromToken(token);
 
             // Buscar el usuario actualizado en la base de datos
             UserSearchResult searchResult = userSearchService.findUserByEmail(email);
@@ -115,12 +117,13 @@ public class AuthService {
                 );
             } else if ("asesor".equals(tipoUsuario)) {
                 Asesores asesor = searchResult.getUserAs(Asesores.class);
-                return authMapper.toSuccessResponseDTO(
+                return authMapper.toSuccessResponseDTOWithRole(
                     token, 
                     "asesor", 
                     asesor.getIdAsesor(), 
                     asesor.getNombreAsesor(),
-                    "Token válido"
+                    "Token válido",
+                    asesor.getRolAsesor()
                 );
             }
 
@@ -128,6 +131,43 @@ public class AuthService {
             
         } catch (Exception e) {
             return authMapper.toErrorResponseDTO("Error al validar token: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Verifica si un token corresponde a un usuario admin
+     */
+    public boolean isTokenFromAdmin(String token) {
+        try {
+            if (!jwtUtil.validateToken(token)) {
+                return false;
+            }
+            
+            String tipoUsuario = jwtUtil.getTipoUsuarioFromToken(token);
+            
+            // Solo los asesores pueden ser admin
+            if (!"asesor".equals(tipoUsuario)) {
+                return false;
+            }
+            
+            return jwtUtil.isAdmin(token);
+            
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Obtiene el rol del usuario desde el token
+     */
+    public String getRoleFromToken(String token) {
+        try {
+            if (!jwtUtil.validateToken(token)) {
+                return null;
+            }
+            return jwtUtil.getRolFromToken(token);
+        } catch (Exception e) {
+            return null;
         }
     }
 

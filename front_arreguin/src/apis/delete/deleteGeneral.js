@@ -1,20 +1,12 @@
-import API_URL from "../../utils/config";
+import apiService from "../apiService.js";
 
 async function deleteGeneral(ruta) {
     try {
-        const response = await fetch(`${API_URL}/${ruta}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        const data = await response.json();
-        console.log('Success:', data);
-        return data;
+        const response = await apiService.delete(`/${ruta}`);
+        return response;
     } catch (error) {
         console.error('Error:', error);
-        return null; 
+        return null;
     }
 }
 

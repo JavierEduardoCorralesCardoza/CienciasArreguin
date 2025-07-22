@@ -1,6 +1,6 @@
-import API_URL from '../../utils/config.js';
+import apiService from "../apiService.js";
 
-function postAsesor(event) {
+async function postAsesor(event) {
 
     const data = {
         correoAsesor: event.target.asesorCorreo.value,
@@ -9,21 +9,14 @@ function postAsesor(event) {
         imagenAsesor: event.target.asesorFoto.value,
         rolAsesor: "asesor"
     };
-    
-    fetch(`${API_URL}/asesores`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch((error) => {
+
+    try {
+        const response = await apiService.post('/asesores', data);
+        return response;
+    } catch (error) {
         console.error('Error:', error);
-    });
+        return null;
+    }
 }
 
 export default postAsesor;

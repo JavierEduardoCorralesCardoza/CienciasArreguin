@@ -35,7 +35,7 @@ public class AuthController {
             }
         } catch (Exception e) {
             LoginResponseDTO errorResponse = new LoginResponseDTO(
-                null, null, 0, null, "Error interno del servidor: " + e.getMessage()
+                null, null, 0, null, "Error interno del servidor: " + e.getMessage(), null
             );
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
@@ -50,7 +50,7 @@ public class AuthController {
         try {
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 LoginResponseDTO errorResponse = new LoginResponseDTO(
-                    null, null, 0, null, "Token no proporcionado o formato incorrecto"
+                    null, null, 0, null, "Token no proporcionado o formato incorrecto", null
                 );
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
             }
@@ -65,7 +65,7 @@ public class AuthController {
             }
         } catch (Exception e) {
             LoginResponseDTO errorResponse = new LoginResponseDTO(
-                null, null, 0, null, "Error al validar el token: " + e.getMessage()
+                null, null, 0, null, "Error al validar el token: " + e.getMessage(), null
             );
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
@@ -80,7 +80,7 @@ public class AuthController {
         try {
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 LoginResponseDTO errorResponse = new LoginResponseDTO(
-                    null, null, 0, null, "Token no proporcionado"
+                    null, null, 0, null, "Token no proporcionado", null
                 );
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
             }
@@ -95,9 +95,51 @@ public class AuthController {
             }
         } catch (Exception e) {
             LoginResponseDTO errorResponse = new LoginResponseDTO(
-                null, null, 0, null, "Error al obtener información del usuario: " + e.getMessage()
+                null, null, 0, null, "Error al obtener información del usuario: " + e.getMessage(), null
             );
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
+    /**
+     * Endpoint para verificar si el usuario actual es admin
+     * GET /auth/is-admin
+     */
+    @GetMapping("/is-admin")
+    public ResponseEntity<Boolean> isAdmin(@RequestHeader("Authorization") String authHeader) {
+        try {
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+            }
+
+            String token = authHeader.substring(7);
+            boolean isAdmin = authService.isTokenFromAdmin(token);
+            
+            return ResponseEntity.ok(isAdmin);
+            
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+        }
+    }
+
+    /**
+     * Endpoint para obtener el rol del usuario actual
+     * GET /auth/role
+     */
+    @GetMapping("/role")
+    public ResponseEntity<String> getUserRole(@RequestHeader("Authorization") String authHeader) {
+        try {
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            }
+
+            String token = authHeader.substring(7);
+            String role = authService.getRoleFromToken(token);
+            
+            return ResponseEntity.ok(role);
+            
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 }

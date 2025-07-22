@@ -44,6 +44,11 @@ public class ParticipacionesController {
         return participaciones_services.getParticipacionDetalleById(id);
     }
 
+    @GetMapping("/detalle/usuario/busqueda")
+    public List<ParticipacionesDetalleDTO> getParticipacionesDetalleByUsuarioId(@RequestParam int id) {
+        return participaciones_services.getParticipacionesDetalleByUsuarioId(id);
+    }
+    
     @PostMapping
     public ParticipacionesDTO postParticipacion(@RequestBody ParticipacionesDTO participacion) {
         return participaciones_services.postParticipacion(participacion);

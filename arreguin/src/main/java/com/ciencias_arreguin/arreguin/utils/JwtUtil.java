@@ -21,13 +21,28 @@ public class JwtUtil {
     private final long JWT_TOKEN_VALIDITY = 24 * 60 * 60 * 1000;
 
     /**
-     * Genera un token JWT para un usuario
+     * Genera un token JWT para un usuario alumno
      */
     public String generateToken(int userId, String tipoUsuario, String email) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userId);
         claims.put("tipoUsuario", tipoUsuario);
         claims.put("email", email);
+        // Para alumnos, no hay rol específico
+        claims.put("rol", null);
+        
+        return createToken(claims);
+    }
+
+    /**
+     * Genera un token JWT para un usuario asesor (con rol)
+     */
+    public String generateTokenWithRole(int userId, String tipoUsuario, String email, String rol) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", userId);
+        claims.put("tipoUsuario", tipoUsuario);
+        claims.put("email", email);
+        claims.put("rol", rol);
         
         return createToken(claims);
     }
@@ -63,6 +78,21 @@ public class JwtUtil {
      */
     public String getEmailFromToken(String token) {
         return getClaim(token, "email");
+    }
+
+    /**
+     * Extrae el rol del token (solo para asesores)
+     */
+    public String getRolFromToken(String token) {
+        return getClaim(token, "rol");
+    }
+
+    /**
+     * Verifica si el usuario es admin basado en el token
+     */
+    public boolean isAdmin(String token) {
+        String rol = getRolFromToken(token);
+        return "admin".equalsIgnoreCase(rol);
     }
 
     /**

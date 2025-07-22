@@ -1,26 +1,20 @@
 import API_URL from "../../utils/config";
+import apiService from "../apiService.js";
 
-function putEvento(event, id) {
-    
+async function putEvento(event, id) {
+
     const data = {
         nombreEvento: event.target.nombreEvento.value,
         fechaEvento: event.target.fechaEvento.value
     };
-    
-    fetch(`${API_URL}/eventos/${id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch((error) => {
+
+    try {
+        const response = await apiService.put(`/eventos/${id}`, data);
+        return response;
+    } catch (error) {
         console.error('Error:', error);
-    });
+        return null;
+    }
 }
 
 export default putEvento;

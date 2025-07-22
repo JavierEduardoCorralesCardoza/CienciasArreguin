@@ -6,6 +6,7 @@ public class LoginResponseDTO {
     private int idUsuario;
     private String nombreUsuario;
     private String mensaje;
+    private String rol; // Nuevo campo para el rol del asesor
 
     public LoginResponseDTO() {}
 
@@ -15,6 +16,16 @@ public class LoginResponseDTO {
         this.idUsuario = idUsuario;
         this.nombreUsuario = nombreUsuario;
         this.mensaje = mensaje;
+        this.rol = null; // Por defecto null para alumnos
+    }
+
+    public LoginResponseDTO(String token, String tipoUsuario, int idUsuario, String nombreUsuario, String mensaje, String rol) {
+        this.token = token;
+        this.tipoUsuario = tipoUsuario;
+        this.idUsuario = idUsuario;
+        this.nombreUsuario = nombreUsuario;
+        this.mensaje = mensaje;
+        this.rol = rol;
     }
 
     // Getters y setters
@@ -32,4 +43,14 @@ public class LoginResponseDTO {
     
     public String getMensaje() { return mensaje; }
     public void setMensaje(String mensaje) { this.mensaje = mensaje; }
+
+    public String getRol() { return rol; }
+    public void setRol(String rol) { this.rol = rol; }
+
+    /**
+     * Método de conveniencia para verificar si el usuario es admin
+     */
+    public boolean isAdmin() {
+        return "admin".equalsIgnoreCase(this.rol);
+    }
 }

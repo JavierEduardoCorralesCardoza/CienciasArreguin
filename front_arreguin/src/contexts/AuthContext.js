@@ -43,7 +43,8 @@ export const AuthProvider = ({ children }) => {
                         email: data.mensaje || '',
                         tipo: data.tipoUsuario,
                         nombre: data.nombreUsuario,
-                        token: data.token
+                        token: data.token,
+                        rol: data.rol || null // Agregar rol
                     });
                 } else {
                     localStorage.removeItem('authToken');
@@ -83,12 +84,14 @@ export const AuthProvider = ({ children }) => {
                     email: email,
                     tipo: data.tipoUsuario,
                     nombre: data.nombreUsuario,
-                    token: data.token
+                    token: data.token,
+                    rol: data.rol || null // Agregar rol del login
                 };
                 
                 localStorage.setItem('authToken', data.token);
                 setCurrentUser(user);
                 console.log('Token stored:', data.token.substring(0, 20) + '...');
+                console.log('User role:', data.rol);
                 return Promise.resolve(user);
             } else {
                 throw new Error(data.mensaje || 'Error en el login');
@@ -102,6 +105,44 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
         localStorage.removeItem('authToken');
         setCurrentUser(null);
+    };
+
+    // Función para verificar si el usuario es admin
+    const isAdmin = async () => {
+        const token = localStorage.getItem('authToken');
+        if (!token) return false;
+
+        try {
+            const response = await authenticatedFetch(`${API_BASE_URL}/auth/is-admin`);
+            
+            if (response.ok) {
+                const isAdmin = await response.json();
+                return isAdmin;
+            }
+            return false;
+        } catch (error) {
+            console.error('Error verificando admin:', error);
+            return false;
+        }
+    };
+
+    // Función para obtener el rol del usuario
+    const getUserRole = async () => {
+        const token = localStorage.getItem('authToken');
+        if (!token) return null;
+
+        try {
+            const response = await authenticatedFetch(`${API_BASE_URL}/auth/role`);
+            
+            if (response.ok) {
+                const role = await response.text();
+                return role === 'null' || role === '' ? null : role;
+            }
+            return null;
+        } catch (error) {
+            console.error('Error obteniendo rol:', error);
+            return null;
+        }
     };
 
     // New function to make authenticated requests
@@ -154,14 +195,36 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    // Función helper para verificar permisos de admin
+    const requireAdmin = async () => {
+        const adminStatus = await isAdmin();
+        if (!adminStatus) {
+            throw new Error('Acceso denegado: se requieren permisos de administrador');
+        }
+        return adminStatus;
+    };
+
+    // Función para verificar si el usuario actual tiene un rol específico
+    const hasRole = (requiredRole) => {
+        if (!currentUser || !currentUser.rol) return false;
+        return currentUser.rol.toLowerCase() === requiredRole.toLowerCase();
+    };
+
     const value = {
         currentUser,
         login,
         logout,
         getCurrentUserInfo,
         authenticatedFetch, // Export this for making authenticated requests
+        isAdmin, // Nueva función para verificar admin
+        getUserRole, // Nueva función para obtener rol
+        requireAdmin, // Helper para requerir permisos admin
+        hasRole, // Helper para verificar roles
+        // Propiedades de conveniencia
         isAsesor: currentUser?.tipo === 'asesor',
         isAlumno: currentUser?.tipo === 'alumno',
+        isAdminUser: currentUser?.rol?.toLowerCase() === 'admin', // Verificación local del rol
+        userRole: currentUser?.rol || null, // Rol actual del usuario
         token: currentUser?.token || localStorage.getItem('authToken')
     };
 

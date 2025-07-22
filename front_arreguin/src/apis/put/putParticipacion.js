@@ -1,7 +1,8 @@
 import API_URL from "../../utils/config";
+import apiService from "../apiService.js";
 
-function putParticipacion(event, id) {
-    
+async function putParticipacion(event, id) {
+
     const data = {
         idAlumnoParticipacion: { idAlumno: event.target.idAlumnoParticipacion.value},
         idAsesorParticipacion: { idAsesor: event.target.idAsesorParticipacion.value},
@@ -10,21 +11,14 @@ function putParticipacion(event, id) {
         idApoyoAlumnoParticipacion: { idApoyo: event.target.idApoyoAlumnoParticipacion.value},
         idApoyoAsesorParticipacion: { idApoyo: event.target.idApoyoAsesorParticipacion.value}
     };
-    
-    fetch(`${API_URL}/participaciones/${id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch((error) => {
+
+    try {
+        const response = await apiService.put(`/participaciones/${id}`, data);
+        return response;
+    } catch (error) {
         console.error('Error:', error);
-    });
+        return null;
+    }
 }
 
 export default putParticipacion;

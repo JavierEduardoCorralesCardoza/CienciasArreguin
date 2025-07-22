@@ -1,3 +1,4 @@
-Hacer el sistema de roles (admin, asesor y alumno), que el asesor pueda ver su perfil y el de sus alumnos, que 
-el alumno pueda ver su perfil y el de sus asesores, las tablas van a estar limitadas a los proyectos en los que 
-haya participado cada parte
+- Poner el apiService a todas las apiService
+- En el SecurityConfig esepcificar que rutas puede acceder que rol, al igual que en app
+- Limitar la tablaGeneral para que solo se vea la info de acuerdo al usuario
+- Limitar las columnas de la tabla principal segun el rol

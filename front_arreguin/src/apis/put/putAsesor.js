@@ -1,28 +1,22 @@
 import API_URL from "../../utils/config";
+import apiService from "../apiService.js";
 
-function putAsesor(event,id) {
-    
+async function putAsesor(event,id) {
+
     const data = {
         correoAsesor: event.target.correoAsesor.value,
         contrasenaAsesor: event.target.contrasenaAsesor.value,
         nombreAsesor: event.target.nombreAsesor.value,
         imagenAsesor: event.target.imagenAsesor.value
     };
-    
-    fetch(`${API_URL}/asesores/${id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch((error) => {
+
+    try {
+        const response = await apiService.put(`/asesores/${id}`, data);
+        return response;
+    } catch (error) {
         console.error('Error:', error);
-    });
+        return null;
+    }
 }
 
 export default putAsesor;

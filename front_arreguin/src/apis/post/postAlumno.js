@@ -1,28 +1,21 @@
-import API_URL from '../../utils/config.js';
+import apiService from '../apiService.js';
 
-function postAlumno(event) {
+async function postAlumno(event) {
 
-    const data = {
-        correoAlumno: event.target.alumnmoCorreo.value,
-        contrasenaAlumno: event.target.alumnmoContraseña.value,
-        nombreAlumno: event.target.alumnmoNombre.value,
-        imagenAlumno: event.target.alumnmoFoto.value,
-    };
-    
-    fetch(`${API_URL}/alumnos`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch((error) => {
+    try {
+        const data = {
+            correoAlumno: event.target.alumnmoCorreo.value,
+            contrasenaAlumno: event.target.alumnmoContraseña.value,
+            nombreAlumno: event.target.alumnmoNombre.value,
+            imagenAlumno: event.target.alumnmoFoto.value,
+        };
+
+        const response = await apiService.post('/alumnos', data);
+        return response;
+    } catch (error) {
         console.error('Error:', error);
-    });
+        return null;
+    }
 }
 
 export default postAlumno;

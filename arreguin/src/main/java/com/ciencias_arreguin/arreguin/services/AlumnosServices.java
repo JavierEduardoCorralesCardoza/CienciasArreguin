@@ -3,6 +3,7 @@ package com.ciencias_arreguin.arreguin.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ciencias_arreguin.arreguin.dtos.AlumnosDTO;
@@ -19,6 +20,9 @@ public class AlumnosServices {
     @Autowired
     private AlumnosMapper alumnos_mapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public List<AlumnosDTO> getAlumnos() {
         List<Alumnos> alumnos = alumnos_repository.findAll();
         return alumnos_mapper.toDTOList(alumnos);
@@ -26,6 +30,12 @@ public class AlumnosServices {
 
     public AlumnosDTO postAlumno(AlumnosDTO alumnoDTO) {
         Alumnos alumno = alumnos_mapper.toEntity(alumnoDTO);
+
+        if (alumno.getContrasenaAlumno() != null && !alumno.getContrasenaAlumno().isEmpty()) {
+            String hashedPassword = passwordEncoder.encode(alumno.getContrasenaAlumno());
+            alumno.setContrasenaAlumno(hashedPassword);
+        }
+
         Alumnos savedAlumno = alumnos_repository.save(alumno);
         return alumnos_mapper.toDTO(savedAlumno);
     }

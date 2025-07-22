@@ -46,7 +46,8 @@ public class SecurityConfig {
                 // Endpoints específicos por rol
                 .requestMatchers("/api/asesor/**").hasRole("ASESOR")
                 .requestMatchers("/api/alumno/**").hasRole("ALUMNO")
-                
+                .requestMatchers("/participaciones/detalle/usuario/busqueda").permitAll()
+
                 // Cualquier otra request requiere autenticación
                 .anyRequest().authenticated()
             )
