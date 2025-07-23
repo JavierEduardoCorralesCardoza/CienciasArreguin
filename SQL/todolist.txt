@@ -1,4 +1,2 @@
-- Poner el apiService a todas las apiService
-- En el SecurityConfig esepcificar que rutas puede acceder que rol, al igual que en app
-- Limitar la tablaGeneral para que solo se vea la info de acuerdo al usuario
-- Limitar las columnas de la tabla principal segun el rol
+- Evitar que se creen cuentas con el mismo correo
+- Evitar que se creen participaciones iguales

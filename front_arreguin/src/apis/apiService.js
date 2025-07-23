@@ -1,7 +1,7 @@
 // services/ApiService.js
 class apiService {
     constructor() {
-        this.baseURL = 'http://localhost:8080'; // Cambia según tu configuración
+        this.baseURL = 'http://localhost:8080';
     }
 
     // Obtiene el token del localStorage
@@ -43,11 +43,60 @@ class apiService {
                 return null;
             }
 
-            const data = await response.json();
-            return data;
+            // Si la respuesta es exitosa, parsear y devolver los datos
+            if (response.ok) {
+                const data = await response.json();
+                return data;
+            }
+
+            // Manejar errores HTTP
+            await this.handleHttpError(response);
+
         } catch (error) {
-            console.error('Error en petición HTTP:', error);
+            // Si es un error de red o fetch
+            if (error.name === 'TypeError' || error.message.includes('fetch')) {
+                const networkError = new Error('No se pudo conectar con el servidor. Verifique su conexión.');
+                networkError.status = 0;
+                networkError.type = 'NETWORK_ERROR';
+                throw networkError;
+            }
+            
+            // Re-lanzar otros errores ya procesados
             throw error;
+        }
+    }
+
+    async handleHttpError(response) {
+        let errorData;
+        
+        try {
+            errorData = await response.json();
+        } catch (parseError) {
+            errorData = { 
+                error: response.statusText,
+                message: response.statusText,
+                status: response.status.toString()
+            };
+        }
+
+        const errorMessage = errorData.error || errorData.message || response.statusText;
+        const errorType = this.getErrorType(response.status);
+
+        const error = new Error(errorMessage);
+        error.status = response.status;
+        error.type = errorType;
+        error.data = errorData;
+        throw error;
+    }
+
+    getErrorType(status) {
+        switch(status) {
+            case 400: return 'VALIDATION_ERROR';
+            case 401: return 'AUTH_ERROR';
+            case 404: return 'NOT_FOUND_ERROR';
+            case 409: return 'CONFLICT_ERROR';
+            case 500: return 'SERVER_ERROR';
+            default: return 'HTTP_ERROR';
         }
     }
 

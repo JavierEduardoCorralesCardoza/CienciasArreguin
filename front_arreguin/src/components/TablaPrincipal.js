@@ -40,7 +40,6 @@ function TablaPrincipal() {
 
   useEffect(() => {
     async function fetchData() {
-
       let p = [];
       if (isAdminUser) {
         p = await getGeneral("participaciones/detalle");
@@ -67,8 +66,10 @@ function TablaPrincipal() {
     return entity ? entity[idField] : null;
   };
 
-  const columns = useMemo(() => [
+  // Definir todas las columnas posibles
+  const allColumns = useMemo(() => [
     {
+      id: "idParticipacion",
       accessorKey: "idParticipacion",
       header: "ID de la Participación",
       cell: ({ row }) => (
@@ -77,8 +78,10 @@ function TablaPrincipal() {
         </Link>
       ),
       filterFn: "equals",
+      roles: ["admin"] // Solo admins pueden ver esta columna
     },
     {
+      id: "nombreAlumno",
       accessorKey: "nombreAlumno",
       header: "Alumno",
       cell: ({ row }) => {
@@ -90,8 +93,10 @@ function TablaPrincipal() {
         );
       },
       filterFn: "includesString",
+      roles: ["admin", "asesor"] // Admins y asesores pueden ver esta columna
     },
     {
+      id: "nombreAsesor",
       accessorKey: "nombreAsesor",
       header: "Asesor",
       cell: ({ row }) => {
@@ -103,8 +108,10 @@ function TablaPrincipal() {
         );
       },
       filterFn: "includesString",
+      roles: ["admin", "alumno"] // Admins y alumnos pueden ver esta columna
     },
     {
+      id: "nombreEvento",
       accessorKey: "nombreEvento",
       header: "Evento",
       cell: ({ row }) => {
@@ -116,8 +123,10 @@ function TablaPrincipal() {
         );
       },
       filterFn: "includesString",
+      roles: ["admin", "alumno", "asesor"] // Todos pueden ver esta columna
     },
     {
+      id: "nombreProyecto",
       accessorKey: "nombreProyecto",
       header: "Proyecto",
       cell: ({ row }) => {
@@ -129,13 +138,17 @@ function TablaPrincipal() {
         );
       },
       filterFn: "includesString",
+      roles: ["admin", "alumno", "asesor"] // Todos pueden ver esta columna
     },
     {
+      id: "categoriaProyecto",
       accessorKey: "categoriaProyecto",
       header: "Categoría",
       filterFn: "includesString",
+      roles: ["admin", "asesor"] // Solo admins y asesores pueden ver esta columna
     },
     {
+      id: "descripcionApoyoAlumno",
       accessorKey: "descripcionApoyoAlumno",
       header: "Apoyo al Alumno",
       cell: ({ row }) => {
@@ -150,8 +163,10 @@ function TablaPrincipal() {
         );
       },
       filterFn: "includesString",
+      roles: ["admin", "alumno"] // Admins y alumnos pueden ver esta columna
     },
     {
+      id: "descripcionApoyoAsesor",
       accessorKey: "descripcionApoyoAsesor",
       header: "Apoyo al Asesor",
       cell: ({ row }) => {
@@ -166,8 +181,10 @@ function TablaPrincipal() {
         );
       },
       filterFn: "includesString",
+      roles: ["admin", "asesor"] // Admins y asesores pueden ver esta columna
     },
     {
+      id: "fechaEvento",
       accessorKey: "fechaEvento",
       header: "Fecha del Evento",
       cell: ({ row }) => {
@@ -175,8 +192,22 @@ function TablaPrincipal() {
         return fecha ? new Date(fecha).toLocaleDateString() : "Sin fecha";
       },
       filterFn: "includesString",
+      roles: ["admin", "alumno", "asesor"] // Todos pueden ver esta columna
     },
-  ], [alumnos, asesores, eventos, proyectos, apoyos]); // Agregamos las dependencias
+  ], [alumnos, asesores, eventos, proyectos, apoyos]);
+
+  // Filtrar columnas según el rol del usuario
+  const columns = useMemo(() => {
+    let userRole;
+    if (isAdminUser) userRole = "admin";
+    else if (isAlumno) userRole = "alumno";
+    else if (isAsesor) userRole = "asesor";
+    else userRole = "guest";
+
+    return allColumns.filter(column => 
+      column.roles.includes(userRole)
+    );
+  }, [allColumns, isAdminUser, isAlumno, isAsesor]);
 
   const table = useReactTable({
     data: participaciones || [],
@@ -248,7 +279,7 @@ function TablaPrincipal() {
         style={{ marginBottom: "1rem", width: "100%", padding: "0.5rem" }}
       />
 
-      {/* Filtros select con búsqueda */}
+      {/* Filtros select con búsqueda - Solo mostrar filtros para columnas visibles */}
       <form style={{ marginBottom: "1rem" }}>
         {table.getColumn("nombreAlumno") && (
           <SelectFilter

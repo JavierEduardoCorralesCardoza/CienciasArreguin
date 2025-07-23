@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ciencias_arreguin.arreguin.models.Alumnos;
 import com.ciencias_arreguin.arreguin.models.Asesores;
+import com.ciencias_arreguin.arreguin.models.Eventos;
 import com.ciencias_arreguin.arreguin.models.Participaciones;
 
 @Repository
@@ -15,4 +16,6 @@ public interface ParticipacionesRepository extends JpaRepository<Participaciones
     List<Participaciones> findByIdAlumnoParticipacion(Alumnos alumno);
 
     List<Participaciones> findByIdAsesorParticipacion(Asesores asesor);
+
+    boolean existsByIdEventoParticipacionAndIdAlumnoParticipacionAndIdAsesorParticipacion(Eventos idEvento, Alumnos idAlumno, Asesores idAsesor);
 }

@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ciencias_arreguin.arreguin.dtos.AlumnosDTO;
+import com.ciencias_arreguin.arreguin.exceptions.EmailAlreadyExistsException;
 import com.ciencias_arreguin.arreguin.models.Alumnos;
 import com.ciencias_arreguin.arreguin.repositories.AlumnosRepository;
 import com.ciencias_arreguin.arreguin.mappers.AlumnosMapper;
@@ -30,6 +31,10 @@ public class AlumnosServices {
 
     public AlumnosDTO postAlumno(AlumnosDTO alumnoDTO) {
         Alumnos alumno = alumnos_mapper.toEntity(alumnoDTO);
+
+        if (alumnos_repository.existsByCorreoAlumno(alumno.getCorreoAlumno())) {
+            throw new EmailAlreadyExistsException(alumno.getCorreoAlumno());
+        }
 
         if (alumno.getContrasenaAlumno() != null && !alumno.getContrasenaAlumno().isEmpty()) {
             String hashedPassword = passwordEncoder.encode(alumno.getContrasenaAlumno());

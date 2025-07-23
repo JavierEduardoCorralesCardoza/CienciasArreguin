@@ -10,4 +10,5 @@ import com.ciencias_arreguin.arreguin.models.Alumnos;
 @Repository
 public interface AlumnosRepository extends JpaRepository<Alumnos, Integer> {
     Optional<Alumnos> findByCorreoAlumno(String correoAlumno);
+    boolean existsByCorreoAlumno(String correoAlumno);
 }

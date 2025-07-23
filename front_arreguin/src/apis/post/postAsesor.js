@@ -1,7 +1,6 @@
 import apiService from "../apiService.js";
 
 async function postAsesor(event) {
-
     const data = {
         correoAsesor: event.target.asesorCorreo.value,
         contrasenaAsesor: event.target.asesorContraseña.value,
@@ -12,10 +11,11 @@ async function postAsesor(event) {
 
     try {
         const response = await apiService.post('/asesores', data);
+        console.log('Asesor creado exitosamente:', response);
         return response;
     } catch (error) {
-        console.error('Error:', error);
-        return null;
+        console.error('Error al crear asesor:', error);
+        throw error;
     }
 }
 

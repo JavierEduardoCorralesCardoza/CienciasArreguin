@@ -127,6 +127,13 @@ public class ParticipacionesServices {
             participacion.setIdApoyoAsesorParticipacion(apoyoAsesor);
         }
         
+        if(participaciones_repository.existsByIdEventoParticipacionAndIdAlumnoParticipacionAndIdAsesorParticipacion(
+                participacion.getIdEventoParticipacion(),
+                participacion.getIdAlumnoParticipacion(),
+                participacion.getIdAsesorParticipacion())) {
+            throw new RuntimeException("Ya existe una participación con el mismo evento, alumno y asesor.");
+        }
+
         Participaciones savedParticipacion = participaciones_repository.save(participacion);
         return participaciones_mapper.toDTO(savedParticipacion);
     }
