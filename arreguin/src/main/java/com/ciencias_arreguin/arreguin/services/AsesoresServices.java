@@ -3,10 +3,13 @@ package com.ciencias_arreguin.arreguin.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.ciencias_arreguin.arreguin.dtos.AsesoresDTO;
+import com.ciencias_arreguin.arreguin.exceptions.EmailAlreadyExistsException;
 import com.ciencias_arreguin.arreguin.models.Asesores;
 import com.ciencias_arreguin.arreguin.repositories.AsesoresRepository;
 import com.ciencias_arreguin.arreguin.mappers.AsesoresMapper;
@@ -30,6 +33,10 @@ public class AsesoresServices {
 
     public AsesoresDTO postAsesor(AsesoresDTO asesorDTO) {
         Asesores asesor = asesores_mapper.toEntity(asesorDTO);
+
+        if (asesores_repository.existsByCorreoAsesor(asesor.getCorreoAsesor())) {
+            throw new EmailAlreadyExistsException(asesor.getCorreoAsesor());
+        }
 
         if (asesor.getContrasenaAsesor() != null && !asesor.getContrasenaAsesor().isEmpty()) {
             String hashedPassword = passwordEncoder.encode(asesor.getContrasenaAsesor());

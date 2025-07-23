@@ -3,9 +3,14 @@ import postAlumno from "../../apis/post/postAlumno";
 
 function CrearAlumno(){
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        postAlumno(event);
+    const handleSubmit = async (event) => {
+        try{
+            event.preventDefault();
+            await postAlumno(event);
+            alert("Alumno creado exitosamente!");
+        } catch (error) {
+            alert(`${error.message || "No se pudo crear el alumno"}`);
+        }
     }
 
     return(

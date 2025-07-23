@@ -112,17 +112,6 @@ function Perfil() {
                 <br />
             </div>
 
-            {/* Sección específica para alumnos */}
-            {isAlumno && (
-                <div style={{ backgroundColor: '#d4edda', padding: '15px', marginBottom: '20px' }}>
-                    <h3>Mis Actividades</h3>
-                    <Link to={`/mis-proyectos/${currentUser.id}`}>Mis Proyectos</Link>
-                    <br />
-                    <Link to={`/mis-participaciones/${currentUser.id}`}>Mis Participaciones</Link>
-                    <br />
-                </div>
-            )}
-
             {/* Información de debugging (solo en desarrollo) */}
             {process.env.NODE_ENV === 'development' && (
                 <div>

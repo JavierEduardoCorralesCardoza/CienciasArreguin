@@ -10,4 +10,6 @@ import com.ciencias_arreguin.arreguin.models.Asesores;
 @Repository
 public interface AsesoresRepository extends JpaRepository<Asesores, Integer> {
     Optional<Asesores> findByCorreoAsesor(String correoAsesor);
+
+    boolean existsByCorreoAsesor(String correoAsesor);
 }
