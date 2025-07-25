@@ -1,2 +1,2 @@
-- Evitar que se creen cuentas con el mismo correo
-- Evitar que se creen participaciones iguales
+- Hacer que en la edicion de usuario, se pueda subir otra imagen aparte de la que ya esta
+- Hacer que se muestre la imagen en el perfil de usuario
