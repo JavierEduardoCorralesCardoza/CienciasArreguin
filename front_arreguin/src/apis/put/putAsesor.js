@@ -1,8 +1,6 @@
-import API_URL from "../../utils/config";
 import apiService from "../apiService.js";
 
-async function putAsesor(event,id) {
-
+async function putAsesor(event, id) {
     const data = {
         correoAsesor: event.target.correoAsesor.value,
         contrasenaAsesor: event.target.contrasenaAsesor.value,
@@ -15,7 +13,17 @@ async function putAsesor(event,id) {
         return response;
     } catch (error) {
         console.error('Error:', error);
-        return null;
+        
+        // Mostrar alert específico para errores de correo duplicado
+        if (error.type === 'VALIDATION_ERROR' || error.status === 400) {
+            alert(error.message || 'Error: El correo ya está en uso');
+        } else if (error.type === 'NETWORK_ERROR') {
+            alert('Error de conexión. Verifique su conexión a internet.');
+        } else {
+            alert('Error al actualizar el asesor: ' + error.message);
+        }
+        
+        throw error;
     }
 }
 
