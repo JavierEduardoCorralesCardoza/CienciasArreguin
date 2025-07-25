@@ -10,10 +10,13 @@ class apiService {
     }
 
     // Headers por defecto para las peticiones
-    getHeaders(includeAuth = true) {
-        const headers = {
-            'Content-Type': 'application/json'
-        };
+    getHeaders(includeAuth = true, isFormData = false) {
+        const headers = {};
+        
+        // Only set Content-Type if not FormData
+        if (!isFormData) {
+            headers['Content-Type'] = 'application/json';
+        }
 
         if (includeAuth) {
             const token = this.getAuthToken();
@@ -28,10 +31,18 @@ class apiService {
     // Método genérico para hacer peticiones
     async request(endpoint, options = {}) {
         const url = `${this.baseURL}${endpoint}`;
+        const isFormData = options.body instanceof FormData;
+        
         const config = {
-            headers: this.getHeaders(options.auth !== false),
+            method: options.method || 'GET',
+            headers: this.getHeaders(options.auth !== false, isFormData),
             ...options
         };
+
+        // Remove body if GET/HEAD request
+        if (['GET', 'HEAD'].includes(config.method.toUpperCase())) {
+            delete config.body;
+        }
 
         try {
             const response = await fetch(url, config);

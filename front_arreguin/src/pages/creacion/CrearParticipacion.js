@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import postParticipacion from "../../apis/post/postParticipacion";
 import getGeneral from "../../apis/get/getGeneral";
+import { 
+  FormContainer, 
+  Form, 
+  SelectField, 
+  SubmitButton, 
+  LoadingState, 
+  ErrorState,
+  BackButton
+} from "../../components/ui/FormComponents";
 
 function CrearParticipacion() {
   const [opciones, setOpciones] = useState({
@@ -54,121 +63,119 @@ function CrearParticipacion() {
     postParticipacion(formData);
   };
 
-  if (loading) return <div>Cargando datos...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) return <LoadingState />;
+  if (error) return <ErrorState message={error} />;
 
   return (
-    <div>
-      <h3>Crear Participacion</h3>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="alumnoParticipacionId">Alumno:</label>
-        <select
-          id="alumnoParticipacionId"
-          name="alumnoParticipacionId"
-          value={formData.alumnoParticipacionId}
-          onChange={handleChange}
-          required
-        >
-          <option value="" disabled>
-            Selecciona un alumno
-          </option>
-          {opciones.alumnos.map((alumno) => (
-            <option key={alumno.idAlumno} value={alumno.idAlumno}>
-              {alumno.nombreAlumno}
-            </option>
-          ))}
-        </select>
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="container mx-auto px-4">
+        <div className="mb-6 max-w-md mx-auto">
+          <BackButton>
+            ← Regresar
+          </BackButton>
+        </div>
+        <FormContainer title="Crear Participacion">
+              <Form onSubmit={handleSubmit}>
+                <SelectField
+                  label="Alumno:"
+                  id="alumnoParticipacionId"
+              name="alumnoParticipacionId"
+              value={formData.alumnoParticipacionId}
+              onChange={handleChange}
+              required
+              placeholder="Selecciona un alumno"
+            >
+              {opciones.alumnos.map((alumno) => (
+                <option key={alumno.idAlumno} value={alumno.idAlumno}>
+                  {alumno.nombreAlumno}
+                </option>
+              ))}
+            </SelectField>
 
-        <label htmlFor="asesorParticipacionId">Asesor:</label>
-        <select
-          id="asesorParticipacionId"
-          name="asesorParticipacionId"
-          value={formData.asesorParticipacionId}
-          onChange={handleChange}
-          required
-        >
-          <option value="" disabled>
-            Selecciona un asesor
-          </option>
-          {opciones.asesores.map((asesor) => (
-            <option key={asesor.idAsesor} value={asesor.idAsesor}>
-              {asesor.nombreAsesor}
-            </option>
-          ))}
-        </select>
+            <SelectField
+              label="Asesor:"
+              id="asesorParticipacionId"
+              name="asesorParticipacionId"
+              value={formData.asesorParticipacionId}
+              onChange={handleChange}
+              required
+              placeholder="Selecciona un asesor"
+            >
+              {opciones.asesores.map((asesor) => (
+                <option key={asesor.idAsesor} value={asesor.idAsesor}>
+                  {asesor.nombreAsesor}
+                </option>
+              ))}
+            </SelectField>
 
-        <label htmlFor="eventoParticipacionId">Evento:</label>
-        <select
-          id="eventoParticipacionId"
-          name="eventoParticipacionId"
-          value={formData.eventoParticipacionId}
-          onChange={handleChange}
-          required
-        >
-          <option value="" disabled>
-            Selecciona un evento
-          </option>
-          {opciones.eventos.map((evento) => (
-            <option key={evento.idEvento} value={evento.idEvento}>
-              {evento.nombreEvento}
-            </option>
-          ))}
-        </select>
+            <SelectField
+              label="Evento:"
+              id="eventoParticipacionId"
+              name="eventoParticipacionId"
+              value={formData.eventoParticipacionId}
+              onChange={handleChange}
+              required
+              placeholder="Selecciona un evento"
+            >
+              {opciones.eventos.map((evento) => (
+                <option key={evento.idEvento} value={evento.idEvento}>
+                  {evento.nombreEvento}
+                </option>
+              ))}
+            </SelectField>
 
-        <label htmlFor="proyectoParticipacionId">Proyecto:</label>
-        <select
-          id="proyectoParticipacionId"
-          name="proyectoParticipacionId"
-          value={formData.proyectoParticipacionId}
-          onChange={handleChange}
-          required
-        >
-          <option value="" disabled>
-            Selecciona un proyecto
-          </option>
-          {opciones.proyectos.map((proyecto) => (
-            <option key={proyecto.idProyecto} value={proyecto.idProyecto}>
-              {proyecto.nombreProyecto}
-            </option>
-          ))}
-        </select>
+            <SelectField
+              label="Proyecto:"
+              id="proyectoParticipacionId"
+              name="proyectoParticipacionId"
+              value={formData.proyectoParticipacionId}
+              onChange={handleChange}
+              required
+              placeholder="Selecciona un proyecto"
+            >
+              {opciones.proyectos.map((proyecto) => (
+                <option key={proyecto.idProyecto} value={proyecto.idProyecto}>
+                  {proyecto.nombreProyecto}
+                </option>
+              ))}
+            </SelectField>
 
-        <label htmlFor="apoyoAlumnoParticipacionId">Apoyo Alumno:</label>
-        <select
-          id="apoyoAlumnoParticipacionId"
-          name="apoyoAlumnoParticipacionId"
-          value={formData.apoyoAlumnoParticipacionId}
-          onChange={handleChange}
-        >
-          <option value="">
-            Selecciona un apoyo
-          </option>
-          {opciones.apoyos.map((apoyoItem) => (
-            <option key={apoyoItem.idApoyo} value={apoyoItem.idApoyo}>
-              {apoyoItem.descripcionApoyo}
-            </option>
-          ))}
-        </select>
+            <SelectField
+              label="Apoyo Alumno:"
+              id="apoyoAlumnoParticipacionId"
+              name="apoyoAlumnoParticipacionId"
+              value={formData.apoyoAlumnoParticipacionId}
+              onChange={handleChange}
+              placeholder="Selecciona un apoyo"
+            >
+              {opciones.apoyos.map((apoyoItem) => (
+                <option key={apoyoItem.idApoyo} value={apoyoItem.idApoyo}>
+                  {apoyoItem.descripcionApoyo}
+                </option>
+              ))}
+            </SelectField>
 
-        <label htmlFor="apoyoAsesorParticipacionId">Apoyo Asesor:</label>
-        <select
-          id="apoyoAsesorParticipacionId"
-          name="apoyoAsesorParticipacionId"
-          value={formData.apoyoAsesorParticipacionId}
-          onChange={handleChange}
-        >
-          <option value="">
-            Selecciona un apoyo
-          </option>
-          {opciones.apoyos.map((apoyoItem) => (
-            <option key={apoyoItem.idApoyo} value={apoyoItem.idApoyo}>
-              {apoyoItem.descripcionApoyo}
-            </option>
-          ))}
-        </select>
+            <SelectField
+              label="Apoyo Asesor:"
+              id="apoyoAsesorParticipacionId"
+              name="apoyoAsesorParticipacionId"
+              value={formData.apoyoAsesorParticipacionId}
+              onChange={handleChange}
+              placeholder="Selecciona un apoyo"
+            >
+              {opciones.apoyos.map((apoyoItem) => (
+                <option key={apoyoItem.idApoyo} value={apoyoItem.idApoyo}>
+                  {apoyoItem.descripcionApoyo}
+                </option>
+              ))}
+            </SelectField>
 
-        <button type="submit">Crear</button>
-      </form>
+            <SubmitButton>
+              Crear Participación
+            </SubmitButton>
+          </Form>
+        </FormContainer>
+      </div>
     </div>
   );
 }

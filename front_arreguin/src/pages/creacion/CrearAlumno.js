@@ -1,10 +1,10 @@
 import React from "react";
 import postAlumno from "../../apis/post/postAlumno";
+import { FormContainer, Form, InputField, FileInput, SubmitButton, BackButton } from "../../components/ui/FormComponents";
 
-function CrearAlumno(){
-
+function CrearAlumno() {
     const handleSubmit = async (event) => {
-        try{
+        try {
             event.preventDefault();
             await postAlumno(event);
             alert("Alumno creado exitosamente!");
@@ -13,21 +13,54 @@ function CrearAlumno(){
         }
     }
 
-    return(
-    <div>
-        <h3>Crear Alumno</h3>
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="alumnmoCorreo">Correo del Alumnmo:</label>
-            <input type="text" id="alumnmoCorreo" name="alumnmoCorreo" />
-            <label htmlFor="alumnmoContraseña">Contraseña del Alumnmo:</label>
-            <input type="text" id="alumnmoContraseña" name="alumnmoContraseña" />
-            <label htmlFor="alumnmoNombre">Nombre del Alumnmo:</label>
-            <input type="text" id="alumnmoNombre" name="alumnmoNombre" />
-            <label htmlFor="alumnmoFoto">Foto del Alumnmo:</label>
-            <input type="text" id="alumnmoFoto" name="alumnmoFoto" />
-            <button type="submit">Crear</button>
-        </form>
-    </div>)
+    return (
+        <div className="min-h-screen bg-gray-50 py-8">
+            <div className="container mx-auto px-4">
+                <div className="mb-6 max-w-md mx-auto">
+                    <BackButton>
+                        ← Regresar
+                    </BackButton>
+                </div>
+                <FormContainer title="Crear Alumno">
+                    <Form onSubmit={handleSubmit}>
+                        <InputField
+                            label="Correo del Alumno:"
+                            type="email"
+                            id="alumnmoCorreo"
+                            name="alumnmoCorreo"
+                            required
+                        />
+                        
+                        <InputField
+                            label="Contraseña del Alumno:"
+                            type="password"
+                            id="alumnmoContraseña"
+                            name="alumnmoContraseña"
+                            required
+                        />
+                        
+                        <InputField
+                            label="Nombre del Alumno:"
+                            type="text"
+                            id="alumnmoNombre"
+                            name="alumnmoNombre"
+                            required
+                        />
+                        
+                        <FileInput
+                            label="Foto del Alumno:"
+                            id="alumnmoFoto"
+                            name="alumnmoFoto"
+                        />
+                        
+                        <SubmitButton>
+                            Crear Alumno
+                        </SubmitButton>
+                    </Form>
+                </FormContainer>
+            </div>
+        </div>
+    );
 }
 
 export default CrearAlumno;

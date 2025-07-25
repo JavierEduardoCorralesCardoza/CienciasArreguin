@@ -1,25 +1,47 @@
-import React from 'react'
+import React from 'react';
 import postApoyo from '../../apis/post/postApoyo';
+import { FormContainer, Form, InputField, SubmitButton, BackButton } from "../../components/ui/FormComponents";
 
-function CrearApoyo(){
-
+function CrearApoyo() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         postApoyo(event);
     }
 
-    return(
-        <div>
-            <h3>Crear Apoyo</h3>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="apoyoPatrocinador">Patrocinador:</label>
-                <input type="text" id="apoyoPatrocinador" name="apoyoPatrocinador" />
-                <label htmlFor="apoyoDescripcion">Descripcion del apoyo:</label>
-                <input type="text" id="apoyoDescripcion" name="apoyoDescripcion" />
-                <button type="submit">Crear</button>
-            </form>
+    return (
+        <div className="min-h-screen bg-gray-50 py-8">
+            <div className="container mx-auto px-4">
+                <div className="mb-6 max-w-md mx-auto">
+                    <BackButton>
+                        ← Regresar
+                    </BackButton>
+                </div>
+                <FormContainer title="Crear Apoyo">
+                    <Form onSubmit={handleSubmit}>
+                        <InputField
+                            label="Patrocinador:"
+                            type="text"
+                            id="apoyoPatrocinador"
+                            name="apoyoPatrocinador"
+                            required
+                        />
+                        
+                        <InputField
+                            label="Descripción del Apoyo:"
+                            type="text"
+                            id="apoyoDescripcion"
+                            name="apoyoDescripcion"
+                            required
+                        />
+                        
+                        <SubmitButton>
+                            Crear Apoyo
+                        </SubmitButton>
+                    </Form>
+                </FormContainer>
+            </div>
         </div>
-    )
+    );
 }
 
 export default CrearApoyo;

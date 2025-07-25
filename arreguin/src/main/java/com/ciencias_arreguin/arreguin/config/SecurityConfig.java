@@ -42,6 +42,7 @@ public class SecurityConfig {
                 .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/public/**").permitAll()
                 .requestMatchers("/error").permitAll()
+                .requestMatchers("/uploads/**").permitAll()  // Permitir acceso a recursos estáticos
                 
                 // Endpoints específicos por rol
                 .requestMatchers("/api/asesor/**").hasRole("ASESOR")
