@@ -32,6 +32,16 @@ const getInputType = (tipo) => {
   }
 };
 
+// Función para verificar si el atributo es una imagen
+const isImageAttribute = (atributo) => {
+  return atributo === "imagenAlumno" || atributo === "imagenAsesor";
+};
+
+// Función para obtener la URL completa de la imagen
+const getImageUrl = (imageName) => {
+  return `http://localhost:8080/uploads/${imageName}`;
+};
+
 function PerfilGeneral() {
   const { entidad, id } = useParams();
   const [data, setData] = useState(null);
@@ -39,6 +49,7 @@ function PerfilGeneral() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [imageErrors, setImageErrors] = useState({});
 
   const { 
     isAlumno
@@ -97,7 +108,73 @@ function PerfilGeneral() {
         alert("Error al eliminar el registro");
       }
     }
-  }
+  };
+
+  const handleImageError = (atributo) => {
+    setImageErrors(prev => ({ ...prev, [atributo]: true }));
+  };
+
+  const renderAttributeValue = (atributo, valor) => {
+    // Si es un atributo de imagen
+    if (isImageAttribute(atributo) && valor) {
+      const imageUrl = getImageUrl(valor);
+      const hasError = imageErrors[atributo];
+
+      return (
+        <div className="flex flex-col space-y-2">
+          <div className="relative">
+            {!hasError ? (
+              <img
+                src={imageUrl}
+                alt={`Imagen de ${entidad}`}
+                className="w-32 h-32 object-cover rounded-lg border-2 border-gray-200 shadow-sm"
+                onError={() => handleImageError(atributo)}
+              />
+            ) : (
+              <div className="w-32 h-32 bg-gray-100 rounded-lg border-2 border-gray-200 flex items-center justify-center">
+                <div className="text-center">
+                  <svg className="w-8 h-8 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <p className="text-xs text-gray-500">Imagen no disponible</p>
+                </div>
+              </div>
+            )}
+          </div>
+          <span className="text-xs text-gray-500 break-all">
+            {valor}
+          </span>
+        </div>
+      );
+    }
+
+    // Si es un objeto
+    if (typeof valor === "object" && valor !== null) {
+      return (
+        <div className="bg-gray-50 rounded-lg p-4 border">
+          <ul className="space-y-2">
+            {Object.entries(valor).map(([subKey, subVal]) => (
+              <li key={subKey} className="flex justify-between items-start">
+                <span className="text-sm font-medium text-gray-600 capitalize">
+                  {subKey}:
+                </span>
+                <span className="text-sm text-gray-900 ml-4 text-right">
+                  {String(subVal)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    }
+
+    // Valor normal
+    return (
+      <span className="text-sm text-gray-900">
+        {valor || 'No especificado'}
+      </span>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -204,12 +281,14 @@ function PerfilGeneral() {
             </div>
           </div>
         )}
+        
         {/* Back Button */}
         <div className="mb-6 max-w-md">
           <BackButton>
             ← Regresar
           </BackButton>
         </div>
+        
         {/* Information Display */}
         {!loading && !error && (
           <div className="bg-white rounded-lg shadow">
@@ -228,26 +307,7 @@ function PerfilGeneral() {
                         {atributo}
                       </dt>
                       <dd className="mt-1">
-                        {typeof valor === "object" && valor !== null ? (
-                          <div className="bg-gray-50 rounded-lg p-4 border">
-                            <ul className="space-y-2">
-                              {Object.entries(valor).map(([subKey, subVal]) => (
-                                <li key={subKey} className="flex justify-between items-start">
-                                  <span className="text-sm font-medium text-gray-600 capitalize">
-                                    {subKey}:
-                                  </span>
-                                  <span className="text-sm text-gray-900 ml-4 text-right">
-                                    {String(subVal)}
-                                  </span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        ) : (
-                          <span className="text-sm text-gray-900">
-                            {valor || 'No especificado'}
-                          </span>
-                        )}
+                        {renderAttributeValue(atributo, valor)}
                       </dd>
                     </div>
                   );
