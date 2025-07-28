@@ -98,19 +98,19 @@ function Perfil() {
                             </h3>
                             <div className="space-y-3">
                                 <Link 
-                                    to="/crear_asesor" 
+                                    to="/crear/asesor" 
                                     className="block w-full text-left bg-blue-50 hover:bg-blue-100 text-blue-700 px-4 py-3 rounded-md text-sm font-medium transition duration-150 ease-in-out"
                                 >
                                     Crear Asesor
                                 </Link>
                                 <Link 
-                                    to="/crear_alumno" 
+                                    to="/crear/alumno" 
                                     className="block w-full text-left bg-blue-50 hover:bg-blue-100 text-blue-700 px-4 py-3 rounded-md text-sm font-medium transition duration-150 ease-in-out"
                                 >
                                     Crear Alumno
                                 </Link>
                                 <Link 
-                                    to="/crear_apoyo" 
+                                    to="/crear/apoyo" 
                                     className="block w-full text-left bg-blue-50 hover:bg-blue-100 text-blue-700 px-4 py-3 rounded-md text-sm font-medium transition duration-150 ease-in-out"
                                 >
                                     Crear Apoyo
@@ -142,19 +142,19 @@ function Perfil() {
                             </h3>
                             <div className="space-y-3">
                                 <Link 
-                                    to="/crear_participacion" 
+                                    to="/crear/participacion" 
                                     className="block w-full text-left bg-green-50 hover:bg-green-100 text-green-700 px-4 py-3 rounded-md text-sm font-medium transition duration-150 ease-in-out"
                                 >
                                     Crear Participación
                                 </Link>
                                 <Link 
-                                    to="/crear_evento" 
+                                    to="/crear/evento" 
                                     className="block w-full text-left bg-green-50 hover:bg-green-100 text-green-700 px-4 py-3 rounded-md text-sm font-medium transition duration-150 ease-in-out"
                                 >
                                     Crear Evento
                                 </Link>
                                 <Link 
-                                    to="/crear_proyecto" 
+                                    to="/crear/proyecto" 
                                     className="block w-full text-left bg-green-50 hover:bg-green-100 text-green-700 px-4 py-3 rounded-md text-sm font-medium transition duration-150 ease-in-out"
                                 >
                                     Crear Proyecto

@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ArreguinApplication<arreguin>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.ciencias_arreguin.arreguin.ArreguinApplication",
+            "projectName": "arreguin",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

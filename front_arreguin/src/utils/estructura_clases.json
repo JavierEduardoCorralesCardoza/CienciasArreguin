@@ -4,19 +4,27 @@
             "atributos": {
                 "correoAlumno": {
                     "tipo": "text",
-                    "requerido": true
+                    "requerido": true,
+                    "fieldName": "alumnmoCorreo",
+                    "label": "Correo del Alumno"
                 },
                 "contrasenaAlumno": {
                     "tipo": "text",
-                    "requerido": true
+                    "requerido": true,
+                    "fieldName": "alumnmoContraseña",
+                    "label": "Contraseña del Alumno"
                 },
                 "nombreAlumno": {
                     "tipo": "text",
-                    "requerido": true
+                    "requerido": true,
+                    "fieldName": "alumnmoNombre",
+                    "label": "Nombre del Alumno"
                 },
                 "imagenAlumno": {
                     "tipo": "text",
-                    "requerido": false
+                    "requerido": false,
+                    "fieldName": "alumnmoFoto",
+                    "label": "Foto del Alumno"
                 }
             },
             "plural": "alumnos"
@@ -25,19 +33,27 @@
             "atributos": {
                 "correoAsesor": {
                     "tipo": "text",
-                    "requerido": true
+                    "requerido": true,
+                    "fieldName": "asesorCorreo",
+                    "label": "Correo del Asesor"
                 },
                 "contrasenaAsesor": {
                     "tipo": "text",
-                    "requerido": true
+                    "requerido": true,
+                    "fieldName": "asesorContraseña",
+                    "label": "Contraseña del Asesor"
                 },
                 "nombreAsesor": {
                     "tipo": "text",
-                    "requerido": true
+                    "requerido": true,
+                    "fieldName": "asesorNombre",
+                    "label": "Nombre del Asesor"
                 },
                 "imagenAsesor": {
                     "tipo": "text",
-                    "requerido": false
+                    "requerido": false,
+                    "fieldName": "asesorFoto",
+                    "label": "Foto del Asesor"
                 }
             },
             "plural": "asesores"
@@ -46,11 +62,15 @@
             "atributos": {
                 "patrocinadorApoyo": {
                     "tipo": "text",
-                    "requerido": true
+                    "requerido": true,
+                    "fieldName": "apoyoPatrocinador",
+                    "label": "Patrocinador"
                 },
                 "descripcionApoyo": {
                     "tipo": "text",
-                    "requerido": true
+                    "requerido": true,
+                    "fieldName": "apoyoDescripcion",
+                    "label": "Descripción del Apoyo"
                 }
             },
             "plural": "apoyos"
@@ -59,11 +79,15 @@
             "atributos": {
                 "nombreEvento": {
                     "tipo": "text",
-                    "requerido": true
+                    "requerido": true,
+                    "fieldName": "eventoNombre",
+                    "label": "Nombre del Evento"
                 },
                 "fechaEvento": {
                     "tipo": "date",
-                    "requerido": true
+                    "requerido": true,
+                    "fieldName": "eventoFecha",
+                    "label": "Fecha del Evento"
                 }
             },
             "plural": "eventos"
@@ -72,138 +96,68 @@
             "atributos": {
                 "nombreProyecto": {
                     "tipo": "string",
-                    "requerido": true
+                    "requerido": true,
+                    "fieldName": "proyectoNombre",
+                    "label": "Nombre del Proyecto"
                 },
                 "categoriaProyecto": {
                     "tipo": "string",
-                    "requerido": true
+                    "requerido": true,
+                    "fieldName": "proyectoCategoria",
+                    "label": "Categoría del Proyecto"
                 },
                 "descripcionProyecto": {
                     "tipo": "string",
-                    "requerido": true
+                    "requerido": true,
+                    "fieldName": "proyectoDescripcion",
+                    "label": "Descripción del Proyecto"
                 }
             },
             "plural": "proyectos"
         },
         "participacion": {
             "atributos": {
+                "idParticipacion": {
+                    "tipo": "number",
+                    "requerido": false,
+                    "fieldName": "idParticipacion",
+                    "label": "ID de Participación"
+                },
                 "idAlumnoParticipacion": {
                     "tipo": "number",
                     "requerido": true,
-                    "atributos": {
-                        "idAlumno": {
-                            "tipo": "number",
-                            "requerido": true
-                        },
-                        "correoAlumno": {
-                            "tipo": "text",
-                            "requerido": true
-                        },
-                        "contrasenaAlumno": {
-                            "tipo": "text",
-                            "requerido": true
-                        },
-                        "nombreAlumno": {
-                            "tipo": "text",
-                            "requerido": true
-                        },
-                        "imagenAlumno": {
-                            "tipo": "text",
-                            "requerido": false
-                        }
-                    }
+                    "fieldName": "idAlumnoParticipacion",
+                    "label": "ID del Alumno"
                 },
                 "idAsesorParticipacion": {
-                    "atributos": {
-                        "idAsesor": {
-                            "tipo": "number",
-                            "requerido": true
-                        },
-                        "correoAsesor": {
-                            "tipo": "text",
-                            "requerido": true
-                        },
-                        "contrasenaAsesor": {
-                            "tipo": "text",
-                            "requerido": true
-                        },
-                        "nombreAsesor": {
-                            "tipo": "text",
-                            "requerido": true
-                        },
-                        "imagenAsesor": {
-                            "tipo": "text",
-                            "requerido": false
-                        }
-                    }
+                    "tipo": "number",
+                    "requerido": true,
+                    "fieldName": "idAsesorParticipacion",
+                    "label": "ID del Asesor"
                 },
                 "idEventoParticipacion": {
-                    "atributos": {
-                        "idEvento": {
-                            "tipo": "number",
-                            "requerido": true
-                        },
-                        "nombreEvento": {
-                            "tipo": "text",
-                            "requerido": true
-                        },
-                        "fechaEvento": {
-                            "tipo": "date",
-                            "requerido": true
-                        }
-                    }
+                    "tipo": "number",
+                    "requerido": true,
+                    "fieldName": "idEventoParticipacion",
+                    "label": "ID del Evento"
                 },
                 "idProyectoParticipacion": {
-                    "atributos": {
-                        "idProyecto": {
-                            "tipo": "number",
-                            "requerido": true
-                        },
-                        "nombreProyecto": {
-                            "tipo": "string",
-                            "requerido": true
-                        },
-                        "categoriaProyecto": {
-                            "tipo": "string",
-                            "requerido": true
-                        },
-                        "descripcionProyecto": {
-                            "tipo": "string",
-                            "requerido": true
-                        }
-                    }
+                    "tipo": "number",
+                    "requerido": true,
+                    "fieldName": "idProyectoParticipacion",
+                    "label": "ID del Proyecto"
                 },
                 "idApoyoAlumnoParticipacion": {
-                    "atributos": {
-                        "idApoyo": {
-                            "tipo": "number",
-                            "requerido": true
-                        },
-                        "nombreApoyo": {
-                            "tipo": "text",
-                            "requerido": true
-                        },
-                        "descripcionApoyo": {
-                            "tipo": "text",
-                            "requerido": true
-                        }
-                    }
+                    "tipo": "number",
+                    "requerido": false,
+                    "fieldName": "idApoyoAlumnoParticipacion",
+                    "label": "ID del Apoyo del Alumno"
                 },
                 "idApoyoAsesorParticipacion": {
-                    "atributos": {
-                        "idApoyo": {
-                            "tipo": "number",
-                            "requerido": true
-                        },
-                        "nombreApoyo": {
-                            "tipo": "text",
-                            "requerido": true
-                        },
-                        "descripcionApoyo": {
-                            "tipo": "text",
-                            "requerido": true
-                        }
-                    }
+                    "tipo": "number",
+                    "requerido": false,
+                    "fieldName": "idApoyoAsesorParticipacion",
+                    "label": "ID del Apoyo del Asesor"
                 }
             },
             "plural": "participaciones"
