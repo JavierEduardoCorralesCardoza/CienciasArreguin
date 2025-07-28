@@ -58,9 +58,15 @@ function CrearParticipacion() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (event) => {
+  // ✅ Función handleSubmit modificada para incluir el alert
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    postParticipacion(formData);
+    try {
+      await postParticipacion(formData);
+      alert("Participación creada exitosamente!"); // ✅ Alert agregado
+    } catch (error) {
+      setError(error.message || "No se pudo crear la participación");
+    }
   };
 
   if (loading) return <LoadingState />;
@@ -74,11 +80,12 @@ function CrearParticipacion() {
             ← Regresar
           </BackButton>
         </div>
+        
         <FormContainer title="Crear Participacion">
-              <Form onSubmit={handleSubmit}>
-                <SelectField
-                  label="Alumno:"
-                  id="alumnoParticipacionId"
+          <Form onSubmit={handleSubmit}>
+            <SelectField
+              label="Alumno:"
+              id="alumnoParticipacionId"
               name="alumnoParticipacionId"
               value={formData.alumnoParticipacionId}
               onChange={handleChange}
@@ -170,6 +177,7 @@ function CrearParticipacion() {
               ))}
             </SelectField>
 
+            {/* ✅ Botón con estado de loading */}
             <SubmitButton>
               Crear Participación
             </SubmitButton>

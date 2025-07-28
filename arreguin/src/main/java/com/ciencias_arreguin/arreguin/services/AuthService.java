@@ -40,11 +40,8 @@ public class AuthService {
 
             // Verificar contraseña según el tipo de usuario
             boolean isPasswordValid = false;
-            String userEmail = "";
-            
             if ("alumno".equals(searchResult.getUserType())) {
                 Alumnos alumno = searchResult.getUserAs(Alumnos.class);
-                userEmail = alumno.getCorreoAlumno();
                 // Verificar contraseña
                 isPasswordValid = verifyPassword(loginRequest.getContrasena(), alumno.getContrasenaAlumno());
                 
@@ -60,7 +57,6 @@ public class AuthService {
                 
             } else if ("asesor".equals(searchResult.getUserType())) {
                 Asesores asesor = searchResult.getUserAs(Asesores.class);
-                userEmail = asesor.getCorreoAsesor();
                 // Verificar contraseña
                 isPasswordValid = verifyPassword(loginRequest.getContrasena(), asesor.getContrasenaAsesor());
                 
@@ -92,12 +88,8 @@ public class AuthService {
                 return authMapper.toErrorResponseDTO("Token inválido o expirado");
             }
 
-            // Extraer información del token
-            Integer userId = jwtUtil.getUserIdFromToken(token);
             String tipoUsuario = jwtUtil.getTipoUsuarioFromToken(token);
             String email = jwtUtil.getEmailFromToken(token);
-            String rol = jwtUtil.getRolFromToken(token);
-
             // Buscar el usuario actualizado en la base de datos
             UserSearchResult searchResult = userSearchService.findUserByEmail(email);
             

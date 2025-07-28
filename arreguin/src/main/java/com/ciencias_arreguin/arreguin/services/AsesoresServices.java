@@ -5,18 +5,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.ciencias_arreguin.arreguin.dtos.AsesoresDTO;
 import com.ciencias_arreguin.arreguin.exceptions.EmailAlreadyExistsException;
@@ -36,12 +31,14 @@ public class AsesoresServices {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    private final String uploadDir = "uploads/";
+
     public List<AsesoresDTO> getAsesores() {
         List<Asesores> asesores = asesores_repository.findAll();
         return asesores_mapper.toDTOList(asesores);
     }
 
-    public AsesoresDTO postAsesor(AsesoresDTO asesorDTO) {
+    public AsesoresDTO postAsesor(AsesoresDTO asesorDTO, MultipartFile image) throws IOException {
         Asesores asesor = asesores_mapper.toEntity(asesorDTO);
 
         if (asesores_repository.existsByCorreoAsesor(asesor.getCorreoAsesor())) {
@@ -52,39 +49,14 @@ public class AsesoresServices {
             String hashedPassword = passwordEncoder.encode(asesor.getContrasenaAsesor());
             asesor.setContrasenaAsesor(hashedPassword);
         }
-        
+
+        if (image != null && !image.isEmpty()) {
+            String imageName = saveImage(image);
+            asesor.setImagenAsesor(imageName);
+        }
+
         Asesores savedAsesor = asesores_repository.save(asesor);
         return asesores_mapper.toDTO(savedAsesor);
-    }
-
-    public ResponseEntity<Map<String, String>> postAsesorImage(MultipartFile image) {
-        try {
-            String uploadDir = "uploads/";
-            
-            // Create uploads directory if it doesn't exist
-            Path uploadPath = Paths.get(uploadDir);
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-            
-            // Generate a unique filename
-            String originalFilename = image.getOriginalFilename();
-            String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
-            String imageName = UUID.randomUUID().toString() + fileExtension;
-            
-            // Save the file
-            Path filePath = uploadPath.resolve(imageName);
-            Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-            
-            Map<String, String> response = new HashMap<>();
-            response.put("fileName", imageName);
-            return ResponseEntity.ok(response);
-            
-        } catch (IOException e) {
-            e.printStackTrace(); // Log the error for debugging
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("error", "Failed to upload image: " + e.getMessage()));
-        }
     }
 
     public AsesoresDTO getAsesorById(int id) {
@@ -93,27 +65,76 @@ public class AsesoresServices {
         return asesores_mapper.toDTOWithPassword(asesor);
     }
 
-    public AsesoresDTO putAsesor(int id, AsesoresDTO asesorDTO) {
-        Asesores asesor_actual = asesores_repository.findById(id)
+    public AsesoresDTO putAsesor(int id, AsesoresDTO asesoresDTO, MultipartFile image) throws IOException {
+        Asesores asesor_actualizado = asesores_repository.findById(id)
             .orElseThrow(() -> new RuntimeException("Asesor no encontrado con ID: " + id));
 
-        if (!asesor_actual.getCorreoAsesor().equals(asesorDTO.getCorreoAsesor()) && 
-            asesores_repository.existsByCorreoAsesor(asesorDTO.getCorreoAsesor())) {
-            throw new EmailAlreadyExistsException(asesorDTO.getCorreoAsesor());
+        // Solo actualizar campos no nulos y no vacíos
+        if (asesoresDTO.getCorreoAsesor() != null && !asesoresDTO.getCorreoAsesor().trim().isEmpty()) {
+            if (!asesor_actualizado.getCorreoAsesor().equals(asesoresDTO.getCorreoAsesor()) && 
+                asesores_repository.existsByCorreoAsesor(asesoresDTO.getCorreoAsesor())) {
+                throw new EmailAlreadyExistsException(asesoresDTO.getCorreoAsesor());
+            }
+            asesor_actualizado.setCorreoAsesor(asesoresDTO.getCorreoAsesor());
         }
 
-        String hashedPassword = passwordEncoder.encode(asesorDTO.getContrasenaAsesor());
-        asesorDTO.setContrasenaAsesor(hashedPassword);
+        if (asesoresDTO.getNombreAsesor() != null && !asesoresDTO.getNombreAsesor().trim().isEmpty()) {
+            asesor_actualizado.setNombreAsesor(asesoresDTO.getNombreAsesor());
+        }
 
-        asesores_mapper.updateEntityFromDTO(asesorDTO, asesor_actual);
-        Asesores savedAsesor = asesores_repository.save(asesor_actual);
+        // Solo actualizar contraseña si no es null Y no está vacía
+        if (asesoresDTO.getContrasenaAsesor() != null && !asesoresDTO.getContrasenaAsesor().trim().isEmpty()) {
+            String hashedPassword = passwordEncoder.encode(asesoresDTO.getContrasenaAsesor());
+            asesor_actualizado.setContrasenaAsesor(hashedPassword);
+        }
+
+        if (image != null && !image.isEmpty()) {
+            deleteOldImage(asesor_actualizado.getImagenAsesor());
+            String newImageName = saveImage(image);
+            asesor_actualizado.setImagenAsesor(newImageName);
+        }
+
+        Asesores savedAsesor = asesores_repository.save(asesor_actualizado);
         return asesores_mapper.toDTO(savedAsesor);
     }
 
     public AsesoresDTO deleteAsesor(int id) {
         Asesores asesor = asesores_repository.findById(id)
             .orElseThrow(() -> new RuntimeException("Asesor no encontrado con ID: " + id));
+
+        deleteOldImage(asesor.getImagenAsesor());
+
         asesores_repository.delete(asesor);
         return asesores_mapper.toDTO(asesor);
+    }
+
+    private String saveImage(MultipartFile image) throws IOException {
+        Path uploadPath = Paths.get(uploadDir);
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        String originalFilename = image.getOriginalFilename();
+        @SuppressWarnings("null")
+        String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+        String imageName = UUID.randomUUID().toString() + fileExtension;
+
+        Path filePath = uploadPath.resolve(imageName);
+        Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        return imageName;
+    }
+
+    private void deleteOldImage(String imageName) {
+        if (imageName != null && !imageName.isEmpty()) {
+            try {
+                Path oldImagePath = Paths.get(uploadDir).resolve(imageName);
+                if (Files.exists(oldImagePath)) {
+                    Files.delete(oldImagePath);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al eliminar imagen anterior: " + imageName + " - " + e.getMessage());
+            }
+        }
     }
 }
